@@ -3,6 +3,7 @@ import React from 'react';
 import Time from './clock';
 import Logo from './logo';
 import Prediction from './prediction';
+import EmailSignup from './emailSignup';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -61,7 +62,7 @@ const NavigationTab = () => {
         FlightMap
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Email
+        <EmailSignup />
       </TabPanel>
     </Box>
   );
