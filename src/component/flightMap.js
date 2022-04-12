@@ -10,7 +10,7 @@ import {
 import {
   getImage
 } from '../util/helper';
-import Map, {
+import ReactMap, {
   Marker,
   FullscreenControl,
   NavigationControl,
@@ -19,7 +19,6 @@ import Map, {
 } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import icon from './../resource/icon.svg';
-
 import {getPath} from '../service/cubesatAPIService';
 // import SatelliteLayer from './satelliteLayer';
 
@@ -113,7 +112,7 @@ const FlightMap = (props) => {
   };
 
   return (
-    <Map
+    <ReactMap
       initialViewState={{
         longitude: DEFAULT_LONGITUDE,
         latitude: DEFAULT_LATITUDE,
@@ -158,7 +157,7 @@ const FlightMap = (props) => {
           <Layer {...pointLayer()} />
         </Source>
       )}
-    </Map>
+    </ReactMap>
   );
 };
 
