@@ -1,11 +1,23 @@
 /* eslint-disable react/prop-types */
-import React, {useState} from 'react';
-import {compose, withProps, withState, withHandlers} from 'recompose';
+import React, {
+  useEffect,
+  useState
+} from 'react';
+import {compose,
+  withProps,
+  withState,
+  withHandlers} from 'recompose';
 import {
-  withScriptjs, withGoogleMap, GoogleMap, Marker
+  withScriptjs,
+  withGoogleMap,
+  GoogleMap,
+  Marker
 } from 'react-google-maps';
 import _ from 'lodash';
-import {getAvailableSatellite, getPrediction} from './utils';
+import {
+  getAvailableSatellite,
+  getPrediction
+} from '../service/cubesatAPIService';
 import Select from '@mui/material/Select';
 import {
   FormControl,
@@ -22,13 +34,8 @@ import {
 import moment from 'moment';
 import {
   DEFAULT_ZOOM,
-  DEFAULT_LATITUDE,
-  DEFAULT_LONGITUDE
-} from './constant';
-
-// eslint-disable-next-line no-undef
-const API_KEY = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
-const DEFAULT_CURSOR = {lat: DEFAULT_LATITUDE, lng: DEFAULT_LONGITUDE};
+  DEFAULT_CURSOR
+} from '../util/constant';
 
 const Prediction = () => {
   const [cursorLatLng, setCursorLatLng] =
@@ -37,46 +44,57 @@ const Prediction = () => {
       useState({});
   const [dropdownSelect, setDropdownSelected] =
       useState('');
-  const [satelliteList, setSatelliteList] =
+  const [dropdownList, setDropdownList] =
       useState([]);
-  const [isInitialized, setIsInitialized] =
-      useState(false);
 
-  if (!isInitialized) {
-    getAvailableSatellite().then((data) => {
-      setSatelliteList(data);
-      setIsInitialized(true);
-    });
-  }
+  /**
+   * Initialize dropdown list on page load
+   */
+  useEffect(() => {
+    const getDropdownList = async() => {
+      setDropdownList(await getAvailableSatellite());
+    };
 
-  const handleSelectorChange = (event) => {
-    getPrediction({lat: _.get(cursorLatLng, 'lat', DEFAULT_CURSOR.lat),
-      lng: _.get(cursorLatLng, 'lng', DEFAULT_CURSOR.lng)},
-    dropdownSelect).then((prediction) => {
-      setUpcomingPass(prediction);
-    });
-    setDropdownSelected(event.target.value);
-  };
+    if (dropdownList.length === 0) {
+      getDropdownList().then();
+    }
+  });
+
+  /**
+   * Update upcomingPass whenever
+   * value of `dropdownSelect` or `cursorLatLng` change
+   */
+  useEffect(() => {
+    const getUpcomingPass = async() => {
+      setUpcomingPass(await getPrediction({
+        lat: _.get(cursorLatLng, 'lat', DEFAULT_CURSOR.lat),
+        lng: _.get(cursorLatLng, 'lng', DEFAULT_CURSOR.lng)
+      },
+      dropdownSelect));
+    };
+    getUpcomingPass().then();
+  }, [dropdownSelect, cursorLatLng]);
 
   const EmbeddedMap = compose(
       withProps({
-        googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.exp&libraries=geometry,drawing,places`,
+        // eslint-disable-next-line no-undef
+        googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}&v=3.exp&libraries=geometry,drawing,places`,
         loadingElement: <div style={{height: `100%`}} />,
         containerElement: <div style={{height: `400px`}} />,
         mapElement: <div style={{height: `100%`}} />
       }),
       withState('zoom', 'onZoomChange', DEFAULT_ZOOM),
       withHandlers(() => {
-        const refs = {
+        const mapReference = {
           map: undefined
         };
 
         return {
           onMapMounted: () => ref => {
-            refs.map = ref;
+            mapReference.map = ref;
           },
           onZoomChanged: ({onZoomChange}) => () => {
-            onZoomChange(refs.map.getZoom());
+            onZoomChange(mapReference.map.getZoom());
           }
         };
       }),
@@ -89,15 +107,14 @@ const Prediction = () => {
       defaultZoom={DEFAULT_ZOOM}
       zoom={props.zoom}
       onZoomChanged={props.onZoomChanged}
-      onClick={(mouseEvent) => {
-        setCursorLatLng({
-          lat: mouseEvent.latLng.lat(),
-          lng: mouseEvent.latLng.lng()
-        });
-        getPrediction(cursorLatLng, dropdownSelect).then((prediction) => {
-          setUpcomingPass(prediction);
-        });
-      }}
+      onClick={
+        (mouseEvent) => {
+          setCursorLatLng({
+            lat: mouseEvent.latLng.lat(),
+            lng: mouseEvent.latLng.lng()
+          });
+        }
+      }
     >
       {(<Marker position={cursorLatLng} />
       )}
@@ -108,27 +125,30 @@ const Prediction = () => {
     <EmbeddedMap />
 
     <FormControl sx={{m: 1, minWidth: 100}}>
-      <InputLabel id="demo-simple-select-label" >Tracking Satellite</InputLabel>
+      <InputLabel id="dropdown-selector" >Tracking Satellite</InputLabel>
       <Select
         labelId="satellite-selector"
         id="satellite-selector"
         value={dropdownSelect}
         label="Satellite"
-        onChange={handleSelectorChange}
+        onChange={
+          (event) => {
+            setDropdownSelected(event.target.value);
+          }
+        }
       >
-        {_.map(_.range(satelliteList.length), (index) => (
-          <MenuItem value={`${satelliteList[index]}`}>
-            {`${satelliteList[index]}`}</MenuItem>
-        ))}
+        {
+          _.map(_.range(dropdownList.length), (index) => (
+            <MenuItem value={`${dropdownList[index]}`}>
+              {`${dropdownList[index]}`}
+            </MenuItem>
+          ))
+        }
       </Select>
     </FormControl>
 
-    <p className="Marker">Cursor location: <br></br>
-      {`Latitude: ${cursorLatLng.lat} Longitude: ${cursorLatLng.lng}`} </p>
-
-    <p className="Pass">Upcoming pass: </p>
     <TableContainer component={Paper}>
-      <Table sx={{minWidth: 650}} aria-label="simple table">
+      <Table sx={{minWidth: 650}} aria-label="prediction table">
         <TableHead>
           <TableRow>
             <TableCell align="left">Peak Time</TableCell>

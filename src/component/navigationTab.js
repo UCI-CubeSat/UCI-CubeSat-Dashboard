@@ -4,6 +4,7 @@ import Time from './clock';
 import Logo from './logo';
 import Prediction from './prediction';
 import EmailSignup from './emailSignup';
+import MapView from './mapView';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -15,10 +16,10 @@ const TabPanel = (props) => {
 
   return (
     <div
-      role="tabpanel"
+      role="tabPanel"
       hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
+      id={`navigation-tabPanel-${index}`}
+      aria-labelledby={`tab-${index}`}
       {...other}
     >
       {value === index && (
@@ -39,17 +40,17 @@ TabPanel.propTypes = {
 const NavigationTab = () => {
   const [value, setValue] = React.useState(0);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
   return (
     <Box sx={{width: '100%'}}>
       <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-        <Tabs value={value}
-          onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Prediction" />
-          <Tab label="Live Map" />
+        <Tabs
+          value={value}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+          }}
+          aria-label="Navigation Tab">
+          <Tab label="Pass Prediction" />
+          <Tab label="Live Satellite Tracker" />
           <Tab label="Email" />
         </Tabs>
       </Box>
@@ -59,7 +60,7 @@ const NavigationTab = () => {
         <Prediction />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        FlightMap
+        <MapView />
       </TabPanel>
       <TabPanel value={value} index={2}>
         <EmailSignup />
