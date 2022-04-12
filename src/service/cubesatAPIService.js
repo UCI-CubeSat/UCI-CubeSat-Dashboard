@@ -18,6 +18,8 @@ export const getPrediction = async(latLng, satellite) => {
         });
     return await fetchResponse.json();
   } catch (error) {
+    console.log(`${SERVER_URL}/prediction?` +
+      `satellite=${satellite}&latitude=${latLng.lat}&longitude=${latLng.lng}`);
     console.log(error);
     return {};
   }
@@ -35,6 +37,7 @@ export const getAvailableSatellite = async() => {
     });
     return await fetchResponse.json();
   } catch (error) {
+    console.log(`${SERVER_URL}/available_satellite`);
     console.log(error);
     return [];
   }
