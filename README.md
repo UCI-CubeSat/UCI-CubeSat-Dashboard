@@ -86,22 +86,6 @@ Both `package.json` and `package-lock.json` at project's root directory
 
 Adding `NodeJS` and `https://github.com/mars/create-react-app-buildpack.git` build pack
 
-For Python Flask server, Heroku require you to have:
-
-`app.py` at project's root directory
-
-`web: gunicorn app:app` inside `Procfile` at project's root directory
-
-`pip` `requirements.txt` at project's root directory
-
-Adding `Python` build pack
-
-Additionally, proxies setting inside `package.json` should be removed prior to deploying to heroku
-
-Https requests inside both client and server should use the full address, eg: `https://server.herokuapp.com/endpoint`
-
-Instead of using proxy setting: `https://127.0.0.1/` and `/endpoint` in request
-
 ## Available Scripts
 
 In the project directory, you can run:
