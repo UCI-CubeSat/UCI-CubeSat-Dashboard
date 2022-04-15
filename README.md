@@ -6,7 +6,7 @@ Hailey Lin: weixil4@uci.edu,
 
 Jiaen Zhang: jiaenz@uci.edu,
 
-Ruby Tsai, Gabrielle Palar
+Yi-Ju Tsai, Gabrielle Palar
 
 ##
 
