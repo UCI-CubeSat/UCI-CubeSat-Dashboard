@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {
   DEFAULT_LONGITUDE,
   DEFAULT_LATITUDE,
@@ -17,49 +17,33 @@ import ReactMap, {
   Source,
   Layer
 } from 'react-map-gl';
+import _ from 'lodash';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import icon from './../resource/icon.svg';
-import {getPath} from '../service/cubesatAPIService';
+import {
+  getPath
+} from '../service/cubesatAPIService';
 // import SatelliteLayer from './satelliteLayer';
 
 const FlightMap = (props) => {
   FlightMap.propTypes = {
-    children: PropTypes.any,
+    tabContext: PropTypes.object,
     onMapChange: PropTypes.func,
     satelliteState: PropTypes.object
   };
 
-  // eslint-disable-next-line no-unused-vars
-  const pointLayer = () => {
-    return {
-      type: 'circle',
-      paint: {
-        'circle-radius': 10,
-        'circle-color': '#007cbf'
-      }
-    };
-  };
-
+  const context = useContext(props.tabContext);
   const [viewState, setViewState] = useState(DEFAULT_VIEW_STATE);
   const [pointData, setPointData] = useState(null);
   const mapReference = useRef(null);
-
-  // eslint-disable-next-line no-unused-vars
-  const featureLayer = () => {
-    return {
-      type: 'Feature',
-      id: `sample`,
-      geometry: pointData,
-      properties: {
-        ['iconName']: 'icon'
-      }
-    };
-  };
 
   // console.log(JSON.stringify(viewState));
   console.log(JSON.stringify(pointData));
 
   useEffect(() => {
+    if (context.tabName !== 'tracker') {
+      return;
+    }
     const animation = window.requestAnimationFrame(async() => {
       const pathResponse = await getPath();
       setPointData({
@@ -72,7 +56,7 @@ const FlightMap = (props) => {
     return () => {
       window.cancelAnimationFrame(animation);
     };
-  });
+  }, [context.tabName, pointData]);
 
   useEffect(() => {
     const mapBounds = getMapBounds();
@@ -125,10 +109,9 @@ const FlightMap = (props) => {
       {...viewState}
       {...DEFAULT_MAP_SETTING}
       mapStyle='mapbox://styles/mapbox/dark-v10'
-      /* eslint-disable-next-line no-undef */
       mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
       onLoad={(event) => {
-        const map = event.target;
+        const map = _.get(event, 'target', undefined);
         if (map === undefined) {
           return;
         }
@@ -154,7 +137,13 @@ const FlightMap = (props) => {
 
       {pointData && (
         <Source type="geojson" data={pointData}>
-          <Layer {...pointLayer()} />
+          <Layer {...{
+            type: 'circle',
+            paint: {
+              'circle-radius': 10,
+              'circle-color': '#007cbf'
+            }
+          }} />
         </Source>
       )}
     </ReactMap>

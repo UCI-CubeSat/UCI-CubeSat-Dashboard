@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
 import React, {
+  useContext,
   useEffect,
   useState
 } from 'react';
@@ -36,8 +36,18 @@ import {
   DEFAULT_ZOOM,
   DEFAULT_CURSOR
 } from '../util/constant';
+import PropTypes from 'prop-types';
 
-const Prediction = () => {
+const Prediction = (props) => {
+  Prediction.propTypes = {
+    tabContext: PropTypes.object,
+    onMapMounted: PropTypes.func,
+    onZoomChanged: PropTypes.func,
+    zoom: PropTypes.object
+  };
+
+  // eslint-disable-next-line no-unused-vars
+  const context = useContext(props.tabContext);
   const [cursorLatLng, setCursorLatLng] =
       useState(DEFAULT_CURSOR);
   const [upcomingPass, setUpcomingPass] =
@@ -77,7 +87,6 @@ const Prediction = () => {
 
   const EmbeddedMap = compose(
       withProps({
-        // eslint-disable-next-line no-undef
         googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}&v=3.exp&libraries=geometry,drawing,places`,
         loadingElement: <div style={{height: `100%`}} />,
         containerElement: <div style={{height: `400px`}} />,

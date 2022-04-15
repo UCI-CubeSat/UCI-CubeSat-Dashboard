@@ -1,5 +1,4 @@
-/* eslint-disable */
-const {when, whenDev, whenProd, whenTest} = require('@craco/craco');
+// const {when, whenDev, whenProd, whenTest} = require('@craco/craco');
 
 module.exports = {
   babel: {
