@@ -1,6 +1,14 @@
 # CubeSAT Satellite Server Dashboard
 
-Author: Jiaen Zhang: jiaenjez@gmail.com, Hailey Lin: weixil4@uci.edu
+Contributor:
+
+Hailey Lin: weixil4@uci.edu,
+
+Jiaen Zhang: jiaenz@uci.edu,
+
+Ruby Tsai, Gabrielle Palar
+
+##
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -8,27 +16,33 @@ Make sure you have `python3`, `pip3`, `brew`, `node`, `npm`, and `nvm` installed
 
 ## API dependency
 
-Map feature of this project is entirely dependent on Google and Bing map's API
+Map feature of this project is entirely dependent on Google, Bing and Mapbox map's API
 
-Since our GitHub repo is public, to prevent accidental billing charges
+Since our GitHub repo is public, API tokens are hidden in a `.env` file and stored locally to prevent accidental billing charges
 
-Google Map API is hidden in a `.env` file and stored locally
-
-[Getting a Google Map API key](https://developers.google.com/maps/documentation/javascript/get-api-key)
-
-Go to the root directory of this project: `cd .../py-satellite-dashboard`
 
 Create a hidden .env file: `touch .env`
 
-Open .env file: `vi .env` or `open .env`
+Open .env file: `open .env`
 
-Paste this line: `REACT_APP_GOOGLE_MAP_API_KEY=<YOUR API KEY GOES HERE>`
+Add secret token: `REACT_APP_<KEY_NAME>=<KEY_VALUE>`
+
+### `Google Map` [https://developers.google.com/maps/documentation/javascript](https://developers.google.com/maps/documentation/javascript)
+
+[Getting a Google Map API key](https://developers.google.com/maps/documentation/javascript/get-api-key)
+
+### `Mapbox` [https://docs.mapbox.com/api/overview/](https://docs.mapbox.com/api/overview/)
+
+[https://docs.mapbox.com/help/getting-started/access-tokens/](https://docs.mapbox.com/help/getting-started/access-tokens/)
+
+To use the maps from [mapbox](https://www.mapbox.com/),
+you need an appropriate token.
+You can create one on their website by registering there.
+Registration is free and all relevant things are covered for development purposes.
 
 ## Installing prerequisite
 
-Double check `Python3` and `Pip3` are installed
-
-[Homebrew installation](https://brew.sh/)
+[Homebrew installation for macOS](https://brew.sh/)
 
 `brew install node@14`
 
@@ -36,82 +50,27 @@ Double check `Python3` and `Pip3` are installed
 
 `brew install nvm`
 
-## Connecting to our SQL Database
+[Chocolatey installation for Windows](https://chocolatey.org/install)
 
-`brew install postgresql`
-
-`pip install psycopg2`
-
-A free SQL database was created on [elephantSQL](https://www.elephantsql.com/)
-
-Connection Information using [DataGrip](https://www.jetbrains.com/datagrip/)
-, can also work with other SQL database editor
-
-```
-Driver: PostgreSQL
-
-Host: castor.db.elephantsql.com
-
-User: omoglffn
-
-Password: Ask for password
-
-URL: jdbc:postgresql://castor.db.elephantsql.com/
-```
-
-ElephantSQL DB connection secret is hidden in a `.env` file and stored locally
-
-Inside `/py-satellite-dashboard/.env`
-
-Paste this line: `DB_URL=postgresql://omoglffn:<PASSWORD_GOES_HERE>@castor.db.elephantsql.com/omoglffn`
-
-## Setup Flask App
-
-Setup `venv` virtualenv
-
-`cd py-satellite-dashboard`
-
-`python3 -m venv venv`
-
-`. venv/bin/activate`
-
-`pip install -r 'requirements.txt'`
-
-Create a `.flaskenv` Flask config file
-
-`touch .flaskenv`
-
-Paste in
-
-```
-FLASK_DEBUG=1
-FLASK_APP=src/python/app.py
-FLASK_ENV=development
-```
+`choco install -y --force nodejs`
 
 ## Run React App
 
-`git clone https://github.com/UCI-CubeSat/py-satellite-dashboard/`
+`git clone https://github.com/UCI-CubeSat/UCI-Cubesat-Dashboard/`
 
-`cd py-satellite-dashboard`
+`cd UCI-Cubesat-Dashboard`
 
 `npm install`
 
-make sure Python requirements are all installed correctly
-
-### Using PyCharm, open project and add
-
-`app.py` and `npm start` in `Run/Debug Configuration`
-
-### Using Command Line Interface
-
-`cd py-satellite-dashboard`
-
-`flask run`
+### Run as dev environment
 
 `npm start`
 
-and Open http://localhost:3000 in browser
+### Run as prod environment
+
+`npm run build`
+
+`serve -s build`
 
 ## Deployment to Heroku
 
