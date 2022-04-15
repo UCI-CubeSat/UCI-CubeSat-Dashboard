@@ -1,6 +1,6 @@
-import React from 'react';
-import NavigationTab from './component/navigationTab';
-import {CssBaseline} from '@mui/material';
+import React from "react";
+import NavigationTab from "./component/navigationTab";
+import { CssBaseline } from "@mui/material";
 
 const App = () => {
   return (

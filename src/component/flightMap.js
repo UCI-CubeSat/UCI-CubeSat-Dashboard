@@ -1,35 +1,31 @@
-import PropTypes from 'prop-types';
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import PropTypes from "prop-types";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   DEFAULT_LONGITUDE,
   DEFAULT_LATITUDE,
   DEFAULT_ZOOM,
   DEFAULT_VIEW_STATE,
-  DEFAULT_MAP_SETTING
-} from '../util/constant';
-import {
-  getImage
-} from '../util/helper';
+  DEFAULT_MAP_SETTING,
+} from "../util/constant";
+import { getImage } from "../util/helper";
 import ReactMap, {
   Marker,
   FullscreenControl,
   NavigationControl,
   Source,
-  Layer
-} from 'react-map-gl';
-import _ from 'lodash';
-import 'mapbox-gl/dist/mapbox-gl.css';
-import icon from './../resource/icon.svg';
-import {
-  getPath
-} from '../service/cubesatAPIService';
+  Layer,
+} from "react-map-gl";
+import _ from "lodash";
+import "mapbox-gl/dist/mapbox-gl.css";
+import icon from "./../resource/icon.svg";
+import { getPath } from "../service/cubesatAPIService";
 // import SatelliteLayer from './satelliteLayer';
 
 const FlightMap = (props) => {
   FlightMap.propTypes = {
     tabContext: PropTypes.object,
     onMapChange: PropTypes.func,
-    satelliteState: PropTypes.object
+    satelliteState: PropTypes.object,
   };
 
   const context = useContext(props.tabContext);
@@ -41,15 +37,17 @@ const FlightMap = (props) => {
   console.log(JSON.stringify(pointData));
 
   useEffect(() => {
-    if (context.tabName !== 'tracker') {
+    if (context.tabName !== "tracker") {
       return;
     }
-    const animation = window.requestAnimationFrame(async() => {
+    const animation = window.requestAnimationFrame(async () => {
       const pathResponse = await getPath();
       setPointData({
-        type: 'Point',
-        coordinates: [pathResponse['latLng']['lng'],
-          pathResponse['latLng']['lat']]
+        type: "Point",
+        coordinates: [
+          pathResponse["latLng"]["lng"],
+          pathResponse["latLng"]["lat"],
+        ],
       });
     });
     // Unmount
@@ -63,8 +61,7 @@ const FlightMap = (props) => {
     if (props.onMapChange) {
       props.onMapChange(viewState, mapBounds);
     }
-    return () => {
-    };
+    return () => {};
   }, [viewState, props]);
 
   const getMapBounds = () => {
@@ -72,7 +69,7 @@ const FlightMap = (props) => {
       northernLatitude: 0.0,
       easternLongitude: 0.0,
       southernLatitude: 0.0,
-      westernLongitude: 0.0
+      westernLongitude: 0.0,
     };
 
     if (mapReference.current) {
@@ -88,9 +85,9 @@ const FlightMap = (props) => {
 
   const addResource = (map) => {
     getImage(icon, 24, 24).then((image) => {
-      if (!map.hasImage('icon')) {
-        console.log('adding image');
-        map.addImage('icon', image, {sdf: true});
+      if (!map.hasImage("icon")) {
+        console.log("adding image");
+        map.addImage("icon", image, { sdf: true });
       }
     });
   };
@@ -100,18 +97,18 @@ const FlightMap = (props) => {
       initialViewState={{
         longitude: DEFAULT_LONGITUDE,
         latitude: DEFAULT_LATITUDE,
-        zoom: DEFAULT_ZOOM
+        zoom: DEFAULT_ZOOM,
       }}
       style={{
         width: 1080,
-        height: 800
+        height: 800,
       }}
       {...viewState}
       {...DEFAULT_MAP_SETTING}
-      mapStyle='mapbox://styles/mapbox/dark-v10'
+      mapStyle="mapbox://styles/mapbox/dark-v10"
       mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
       onLoad={(event) => {
-        const map = _.get(event, 'target', undefined);
+        const map = _.get(event, "target", undefined);
         if (map === undefined) {
           return;
         }
@@ -123,27 +120,29 @@ const FlightMap = (props) => {
         if (props.onMapChange) {
           props.onMapChange(viewState, mapBounds);
         }
-      }}>
+      }}
+    >
+      <FullscreenControl position="bottom-right" />
 
-      <FullscreenControl
-        position='bottom-right' />
-
-      <NavigationControl
-        position='bottom-right' />
+      <NavigationControl position="bottom-right" />
 
       <Marker
-        longitude={DEFAULT_LONGITUDE} latitude={DEFAULT_LATITUDE} color="red"
+        longitude={DEFAULT_LONGITUDE}
+        latitude={DEFAULT_LATITUDE}
+        color="red"
       />
 
       {pointData && (
         <Source type="geojson" data={pointData}>
-          <Layer {...{
-            type: 'circle',
-            paint: {
-              'circle-radius': 10,
-              'circle-color': '#007cbf'
-            }
-          }} />
+          <Layer
+            {...{
+              type: "circle",
+              paint: {
+                "circle-radius": 10,
+                "circle-color": "#007cbf",
+              },
+            }}
+          />
         </Source>
       )}
     </ReactMap>

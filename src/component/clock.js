@@ -1,18 +1,17 @@
-import {useState, useEffect} from 'react';
-import React from 'react';
-import moment from 'moment';
+import { useState, useEffect } from "react";
+import React from "react";
+import moment from "moment";
 
 const Clock = () => {
-  const [time, setTime] = useState('');
+  const [time, setTime] = useState("");
 
   useEffect(() => {
     const tick = () => {
-      const timeStamp = moment().format('MMMM Do YYYY, h:mm:ss a');
+      const timeStamp = moment().format("MMMM Do YYYY, h:mm:ss a");
 
       setTime(timeStamp);
     };
-    const timerRefresh = setInterval(
-        () => tick(), 500);
+    const timerRefresh = setInterval(() => tick(), 500);
 
     return function cleanup() {
       clearInterval(timerRefresh);
@@ -29,4 +28,3 @@ const Clock = () => {
 };
 
 export default Clock;
-

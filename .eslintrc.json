@@ -1,33 +1,32 @@
 {
-    "env": {
-        "node": true,
-        "browser": true,
-        "es2021": true
+  "env": {
+    "node": true,
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "google",
+    "plugin:react-hooks/recommended"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
     },
-    "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended",
-        "google",
-        "plugin:react-hooks/recommended"
-    ],
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 12,
-        "sourceType": "module"
-    },
-    "plugins": [
-        "react"
-    ],
-    "rules": {
-        "quotes": ["error", "single", { "allowTemplateLiterals": true }],
-        "space-before-function-paren": ["error", "never"],
-        "no-param-reassign": "off",
-        "object-property-newline": "off",
-        "arrow-parens": "off",
-        "comma-dangle": ["error", "never"],
-        "camelcase": ["error", { "properties": "never" }],
-        "fp/no-loops": "off"
-    }
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": ["react"],
+  "rules": {
+    "quotes": ["error", "double", { "allowTemplateLiterals": true }],
+    "space-before-function-paren": "off",
+    "no-param-reassign": "off",
+    "object-property-newline": "off",
+    "object-curly-spacing": "off",
+    "arrow-parens": "off",
+    "comma-dangle": "off",
+    "camelcase": ["error", { "properties": "never" }],
+    "fp/no-loops": "off"
+  }
 }
