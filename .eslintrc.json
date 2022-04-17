@@ -27,6 +27,7 @@
     "arrow-parens": "off",
     "comma-dangle": "off",
     "camelcase": ["error", { "properties": "never" }],
-    "fp/no-loops": "off"
+    "fp/no-loops": "off",
+    "linebreak-style": 0
   }
 }
