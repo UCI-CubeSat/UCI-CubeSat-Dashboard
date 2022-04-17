@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { compose, withProps, withState, withHandlers } from "recompose";
+import { compose,
+  withProps,
+  withState,
+  withHandlers
+} from "recompose";
 import {
   withScriptjs,
   withGoogleMap,
@@ -11,15 +15,10 @@ import {
   getAvailableSatellite,
   getPrediction,
 } from "../service/cubesatAPIService";
-import Select from "@mui/material/Select";
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-} from "@mui/material";
 import { DEFAULT_ZOOM, DEFAULT_CURSOR } from "../util/constant";
 import PropTypes from "prop-types";
 import DataTable from "./dataTable";
+import DropDown from "./dropDown";
 
 const Prediction = (props) => {
   Prediction.propTypes = {
@@ -30,11 +29,11 @@ const Prediction = (props) => {
 
   const [cursorLatLng, setCursorLatLng] = useState(DEFAULT_CURSOR);
   const [upcomingPass, setUpcomingPass] = useState({});
-  const [dropdownSelect, setDropdownSelected] = useState("");
+  const [satellite, setSatellite] = useState("");
   const [dropdownList, setDropdownList] = useState([]);
 
   /**
-   * Initialize dropdown list on page load
+   * Initialize dropdown on page load
    */
   useEffect(() => {
     const getDropdownList = async () => {
@@ -58,12 +57,12 @@ const Prediction = (props) => {
                 lat: _.get(cursorLatLng, "lat", DEFAULT_CURSOR.lat),
                 lng: _.get(cursorLatLng, "lng", DEFAULT_CURSOR.lng),
               },
-              dropdownSelect
+              satellite
           )
       );
     };
     getUpcomingPass().then();
-  }, [dropdownSelect, cursorLatLng]);
+  }, [satellite, cursorLatLng]);
 
   const EmbeddedMap = compose(
       withProps({
@@ -110,29 +109,21 @@ const Prediction = (props) => {
   ));
 
   return (
-    <div className="Map">
+    <div className="Prediction Map">
       <EmbeddedMap />
 
-      <FormControl sx={{ m: 1, minWidth: 100 }}>
-        <InputLabel id="dropdown-selector">Tracking Satellite</InputLabel>
-        <Select
-          labelId="satellite-selector"
-          id="satellite-selector"
-          value={dropdownSelect}
-          label="Satellite"
-          onChange={(event) => {
-            setDropdownSelected(event.target.value);
-          }}
-        >
-          {_.map(_.range(dropdownList.length), (index) => (
-            <MenuItem value={`${dropdownList[index]}`}>
-              {`${dropdownList[index]}`}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <DropDown
+        displayText={"Satellite"}
+        id={"Dropdown-Selector"}
+        label={"Dropdown-Selector"}
+        selection={dropdownList}
+        selected={satellite}
+        setSelected={setSatellite}
+      />
 
-      <DataTable data={upcomingPass}/>
+      <DataTable
+        data={upcomingPass}
+      />
     </div>
   );
 };

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useEffect } from "react";
 import Time from "./clock";
-import Logo from "./logo";
+// import Logo from "./logo";
 import Prediction from "./prediction";
 import EmailSignup from "./emailSignup";
 import MapView from "./mapView";
@@ -70,7 +70,7 @@ const NavigationTab = () => {
       >
         <TabPanel value={currentTabIndex} index={0}>
           <Time />
-          <Logo />
+          {/* <Logo /> */}
           <Prediction />
         </TabPanel>
         <TabPanel value={currentTabIndex} index={1}>
