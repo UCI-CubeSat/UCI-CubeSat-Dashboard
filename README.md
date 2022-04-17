@@ -12,7 +12,7 @@ Yi-Ju Tsai, Gabrielle Palar
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Make sure you have `python3`, `pip3`, `brew`, `node`, `npm`, and `nvm` installed
+Make sure you have `git`, `brew` or `chocolatey`, `node`, `npm` installed
 
 ## API dependency
 
@@ -44,15 +44,29 @@ Registration is free and all relevant things are covered for development purpose
 
 [Homebrew installation for macOS](https://brew.sh/)
 
+`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+
+`brew install git`
+
 `brew install node@14`
 
 `brew install npm`
 
-`brew install nvm`
-
 [Chocolatey installation for Windows](https://chocolatey.org/install)
 
-`choco install -y --force nodejs`
+`Run Powershell as Admin`
+
+`Set-ExecutionPolicy AllSigned`
+
+`Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))`
+
+verify `chocolatey` is installed: `choco -?`
+
+`choco install git`
+
+`choco install nodejs.install`
+
+`choco install python --version=3.10.2`
 
 ## Run React App
 
