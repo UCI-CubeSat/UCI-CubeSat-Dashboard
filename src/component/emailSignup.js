@@ -1,5 +1,9 @@
 import React from "react";
-import { FormControl, FormHelperText, Input, InputLabel } from "@mui/material";
+import {
+  FormControl,
+  FormHelperText,
+  Input,
+  InputLabel } from "@mui/material";
 
 const EmailSignup = (props) => {
   EmailSignup.propTypes = {

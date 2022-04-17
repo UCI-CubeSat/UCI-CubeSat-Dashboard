@@ -19,7 +19,7 @@ import _ from "lodash";
 import "mapbox-gl/dist/mapbox-gl.css";
 import icon from "./../resource/icon.svg";
 import { getPath } from "../service/cubesatAPIService";
-import {PageContext} from "./navigationTab";
+import { PageContext } from "./navigationTab";
 // import SatelliteLayer from './satelliteLayer';
 
 const FlightMap = (props) => {

@@ -5,17 +5,16 @@ const SERVER_URL = PROD_SERVER_URL;
 
 export const getPrediction = async (latLng, satellite) => {
   try {
-    const fetchResponse = await fetch(
-        `${SERVER_URL}/prediction?` +
+    const fetchResponse = await fetch(`${SERVER_URL}/prediction?` +
         `satellite=${satellite}&latitude=${latLng.lat}&longitude=${latLng.lng}`,
-        {
-          method: "GET",
-          mode: "cors",
-          headers: {
-            "Content-Type": "application/json",
-            "accept": "application/json",
-          },
-        }
+    {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        "accept": "application/json",
+      },
+    }
     );
     return await fetchResponse.json();
   } catch (error) {
