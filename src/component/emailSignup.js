@@ -1,10 +1,9 @@
 import React from "react";
 import { FormControl, FormHelperText, Input, InputLabel } from "@mui/material";
-import PropTypes from "prop-types";
 
 const EmailSignup = (props) => {
   EmailSignup.propTypes = {
-    tabContext: PropTypes.object,
+
   };
 
   return (

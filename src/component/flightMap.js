@@ -19,25 +19,25 @@ import _ from "lodash";
 import "mapbox-gl/dist/mapbox-gl.css";
 import icon from "./../resource/icon.svg";
 import { getPath } from "../service/cubesatAPIService";
+import {PageContext} from "./navigationTab";
 // import SatelliteLayer from './satelliteLayer';
 
 const FlightMap = (props) => {
   FlightMap.propTypes = {
-    tabContext: PropTypes.object,
     onMapChange: PropTypes.func,
     satelliteState: PropTypes.object,
   };
 
-  const context = useContext(props.tabContext);
+  const context = useContext(PageContext);
   const [viewState, setViewState] = useState(DEFAULT_VIEW_STATE);
   const [pointData, setPointData] = useState(null);
   const mapReference = useRef(null);
 
-  // console.log(JSON.stringify(viewState));
   console.log(JSON.stringify(pointData));
 
   useEffect(() => {
     if (context.tabName !== "tracker") {
+      console.log("Out of context and no longer fetching!");
       return;
     }
     const animation = window.requestAnimationFrame(async () => {

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { compose, withProps, withState, withHandlers } from "recompose";
 import {
   withScriptjs,
@@ -30,14 +30,11 @@ import PropTypes from "prop-types";
 
 const Prediction = (props) => {
   Prediction.propTypes = {
-    tabContext: PropTypes.object,
     onMapMounted: PropTypes.func,
     onZoomChanged: PropTypes.func,
     zoom: PropTypes.object,
   };
 
-  // eslint-disable-next-line no-unused-vars
-  const context = useContext(props.tabContext);
   const [cursorLatLng, setCursorLatLng] = useState(DEFAULT_CURSOR);
   const [upcomingPass, setUpcomingPass] = useState({});
   const [dropdownSelect, setDropdownSelected] = useState("");

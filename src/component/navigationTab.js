@@ -12,6 +12,11 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { TAB_CONFIG } from "../util/config";
 
+export const PageContext = React.createContext({
+  tabIndex: 0,
+  tabName: TAB_CONFIG[0],
+});
+
 const TabPanel = (props) => {
   TabPanel.propTypes = {
     children: PropTypes.node,
@@ -37,23 +42,9 @@ const TabPanel = (props) => {
 
 const NavigationTab = () => {
   const [currentTabIndex, setCurrentTabIndex] = React.useState(0);
-  let currentTabName = TAB_CONFIG[0].name;
 
-  const NavigationContext = React.createContext({
-    tabIndex: currentTabIndex,
-    tabName: currentTabName,
-  });
-
-  /* TODO store currentTabName in a useRef hook
-  Warning:(56, 22) ESLint: Assignments to the 'currentTabName' variable from
-  inside React Hook useEffect will be lost after each render.
-  To preserve the value over time, store it in a useRef Hook and
-  keep the mutable value in the '.current' property.
-  Otherwise, you can move this variable directly
-  inside useEffect. (react-hooks/exhaustive-deps)
-   */
   useEffect(() => {
-    currentTabName = TAB_CONFIG[currentTabIndex].name;
+    console.log(TAB_CONFIG[currentTabIndex].name);
   }, [currentTabIndex]);
 
   return (
@@ -71,7 +62,7 @@ const NavigationTab = () => {
           <Tab label={TAB_CONFIG[2].label} />
         </Tabs>
       </Box>
-      <NavigationContext.Provider
+      <PageContext.Provider
         value={{
           tabIndex: currentTabIndex,
           tabName: TAB_CONFIG[currentTabIndex].name,
@@ -80,15 +71,15 @@ const NavigationTab = () => {
         <TabPanel value={currentTabIndex} index={0}>
           <Time />
           <Logo />
-          <Prediction tabContext={NavigationContext} />
+          <Prediction />
         </TabPanel>
         <TabPanel value={currentTabIndex} index={1}>
-          <MapView tabContext={NavigationContext} />
+          <MapView />
         </TabPanel>
         <TabPanel value={currentTabIndex} index={2}>
-          <EmailSignup tabContext={currentTabIndex} index={2} />
+          <EmailSignup />
         </TabPanel>
-      </NavigationContext.Provider>
+      </PageContext.Provider>
     </Box>
   );
 };
