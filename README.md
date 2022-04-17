@@ -86,6 +86,12 @@ verify `chocolatey` is installed: `choco -?`
 
 `serve -s build`
 
+### CRLF vs LF error on `npm start` or `npm run build`
+
+An eslint fix command should fix any `CRLF` vs `LF` error
+
+See [Linebreak Style](https://eslint.org/docs/rules/linebreak-style) for more details
+
 ## Deployment to Heroku
 
 Deploying to Heroku require significant configuration
