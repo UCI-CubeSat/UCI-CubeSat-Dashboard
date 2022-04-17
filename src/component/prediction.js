@@ -123,6 +123,8 @@ const Prediction = (props) => {
 
       <DataTable
         data={upcomingPass}
+        label={"prediction"}
+        columnText={["Peak", "Rise", "Set", "Duration"]}
       />
     </div>
   );

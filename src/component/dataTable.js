@@ -15,18 +15,21 @@ import PropTypes from "prop-types";
 const DataTable = (props) => {
   DataTable.propTypes = {
     data: PropTypes.object,
+    label: PropTypes.string,
+    columnText: PropTypes.array.text,
   };
 
   return (
     <div className="DataTable">
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="prediction table">
+        <Table sx={{ minWidth: 800 }} aria-label={props.label}>
           <TableHead>
             <TableRow>
-              <TableCell align="left">Peak Time</TableCell>
-              <TableCell align="left">Rise Time</TableCell>
-              <TableCell align="left">Set Time</TableCell>
-              <TableCell align="left">Duration</TableCell>
+              {
+                _.map(props.columnText, (text) => (
+                  <TableCell align="left">{text}</TableCell>
+                ))
+              }
             </TableRow>
           </TableHead>
           <TableBody>
@@ -40,12 +43,12 @@ const DataTable = (props) => {
                 </TableCell>
                 <TableCell align="left">
                   {moment(`${JSON.parse(value)["rise"]}+00:00`).format(
-                      "h:mm:ss a"
+                      "MMMM Do YYYY, h:mm:ss a"
                   )}
                 </TableCell>
                 <TableCell align="left">
                   {moment(`${JSON.parse(value)["set"]}+00:00`).format(
-                      "h:mm:ss a"
+                      "MMMM Do YYYY, h:mm:ss a"
                   )}
                 </TableCell>
                 <TableCell align="left">
