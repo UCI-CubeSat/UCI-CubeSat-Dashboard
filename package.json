@@ -1,44 +1,28 @@
 {
-  "name": "cubesat-server-dashboard",
-  "version": "0.1.1",
-  "private": true,
-  "dependencies": {
-    "@craco/craco": "^6.4.3",
-    "@emotion/react": "^11.7.1",
-    "@emotion/styled": "^11.6.0",
-    "@mui/material": "^5.4.0",
-    "@react-google-maps/api": "^2.7.0",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^12.8.3",
-    "formik": "^2.2.9",
-    "moment": "^2.29.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-google-maps": "^9.4.5",
-    "react-map-gl": "^7.0.10",
-    "react-scripts": "4.0.3",
-    "web-vitals": "^1.1.2"
-  },
-  "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
-    "eject": "react-scripts eject",
-    "lint": "eslint . --ext .js,.yaml,.yml",
-    "eslint": "eslint . --ext .js,.yaml,.yml"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "browserslist": [
     ">0.2%",
     "not dead",
     "not op_mini all"
   ],
+  "dependencies": {
+    "@craco/craco": "^6.4.3",
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@mui/icons-material": "^5.6.2",
+    "@mui/material": "^5.6.2",
+    "@react-google-maps/api": "^2.8.1",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
+    "mapbox-gl": "^2.8.1",
+    "moment": "^2.29.3",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-google-maps": "^9.4.5",
+    "react-map-gl": "^7.0.10",
+    "react-scripts": "^5.0.1",
+    "web-vitals": "^1.1.2"
+  },
   "devDependencies": {
     "eslint": "^7.32.0",
     "eslint-config-google": "^0.14.0",
@@ -47,6 +31,24 @@
     "geojson": "^0.5.0",
     "lodash": "^4.17.21",
     "prettier": "2.6.2",
-    "prop-types": "^15.8.1"
-  }
+    "prop-types": "^15.8.1",
+    "recompose": "^0.30.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "name": "cubesat-server-dashboard",
+  "private": true,
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "react-scripts eject",
+    "lint": "eslint . --ext .js,.yaml,.yml",
+    "eslint": "eslint . --ext .js,.yaml,.yml"
+  },
+  "version": "0.1.1"
 }
