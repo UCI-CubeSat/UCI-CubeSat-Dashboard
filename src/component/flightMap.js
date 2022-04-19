@@ -6,6 +6,7 @@ import {
   DEFAULT_ZOOM,
   DEFAULT_VIEW_STATE,
   DEFAULT_MAP_SETTING,
+  DEFAULT_CURSOR
 } from "../util/constant";
 import { getImage } from "../util/helper";
 import ReactMap, {
@@ -31,9 +32,12 @@ const FlightMap = (props) => {
   const context = useContext(PageContext);
   const [viewState, setViewState] = useState(DEFAULT_VIEW_STATE);
   const [pointData, setPointData] = useState(null);
+  const [marker, setMarker] = useState(DEFAULT_CURSOR);
   const mapReference = useRef(null);
 
-  console.log(JSON.stringify(pointData));
+  useEffect(() => {
+
+  }, [marker]);
 
   useEffect(() => {
     if (context.tabName !== "tracker") {
@@ -121,16 +125,20 @@ const FlightMap = (props) => {
           props.onMapChange(viewState, mapBounds);
         }
       }}
+      onClick={(event) => {
+        setMarker(event.lngLat);
+      }}
     >
       <FullscreenControl position="bottom-right" />
 
       <NavigationControl position="bottom-right" />
 
       <Marker
-        longitude={DEFAULT_LONGITUDE}
-        latitude={DEFAULT_LATITUDE}
-        color="red"
-      />
+        longitude={marker.lng}
+        latitude={marker.lat}
+        draggable={false}
+        color="red">
+      </Marker>
 
       {pointData && (
         <Source type="geojson" data={pointData}>
