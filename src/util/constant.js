@@ -1,6 +1,9 @@
 export const PROD_SERVER_URL =
   "https://uci-cubesat-server.herokuapp.com/api/v1";
-export const LOCAL_SERVER_URL = "http://127.0.0.1:5000/api/v1";
+export const DEV_SERVER_URL =
+  "http://127.0.0.1:5000/api/v1";
+export const SERVER_URL =
+  process.env.NODE_ENV === "development" ? DEV_SERVER_URL: PROD_SERVER_URL;
 export const DEFAULT_ZOOM = 8;
 export const DEFAULT_LATITUDE = 33.6405;
 export const DEFAULT_LONGITUDE = -117.8443;

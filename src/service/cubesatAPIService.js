@@ -1,7 +1,4 @@
-// eslint-disable-next-line no-unused-vars
-import { LOCAL_SERVER_URL, PROD_SERVER_URL } from "../util/constant";
-const SERVER_URL = PROD_SERVER_URL;
-// const SERVER_URL = LOCAL_SERVER_URL;
+import { SERVER_URL } from "../util/constant";
 
 export const getPrediction = async (latLng, satellite) => {
   try {

@@ -6,6 +6,9 @@ import reportWebVitals from "./reportWebVitals";
 import ReactDOM from "react-dom";
 
 const useReactLatest = true;
+if (process.env.NODE_ENV !== "production") {
+  console.log(`running in ${process.env.NODE_ENV} environment`);
+}
 if (useReactLatest) {
   createRoot(document.getElementById("root")).render(
       <React.StrictMode>
