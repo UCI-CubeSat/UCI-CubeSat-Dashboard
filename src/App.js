@@ -1,5 +1,5 @@
 import React from "react";
-import NavigationTab from "./component/navigationTab";
+import NavigationTab from "./component/tab/navigationTab";
 import { CssBaseline } from "@mui/material";
 
 const App = () => {

@@ -6,9 +6,8 @@ import {
   DEFAULT_ZOOM,
   DEFAULT_VIEW_STATE,
   DEFAULT_MAP_SETTING,
-  DEFAULT_CURSOR
-} from "../util/constant";
-import { getImage } from "../util/helper";
+} from "../../util/constant";
+import { getImage } from "../../util/helper";
 import ReactMap, {
   Marker,
   FullscreenControl,
@@ -18,30 +17,24 @@ import ReactMap, {
 } from "react-map-gl";
 import _ from "lodash";
 import "mapbox-gl/dist/mapbox-gl.css";
-import icon from "./../resource/icon.svg";
-import { getPath } from "../service/cubesatAPIService";
-import { PageContext } from "./navigationTab";
-// import SatelliteLayer from './satelliteLayer';
+import icon from "../../resource/icon.svg";
+import { getPath } from "../../service/cubesatAPIService";
+import { PageContext } from "../tab/navigationTab";
 
-const FlightMap = (props) => {
-  FlightMap.propTypes = {
+const MapLayer = (props) => {
+  MapLayer.propTypes = {
     onMapChange: PropTypes.func,
-    satelliteState: PropTypes.object,
+    marker: PropTypes.object,
+    setMarker: PropTypes.func,
   };
 
   const context = useContext(PageContext);
   const [viewState, setViewState] = useState(DEFAULT_VIEW_STATE);
   const [pointData, setPointData] = useState(null);
-  const [marker, setMarker] = useState(DEFAULT_CURSOR);
   const mapReference = useRef(null);
 
   useEffect(() => {
-
-  }, [marker]);
-
-  useEffect(() => {
     if (context.tabName !== "tracker") {
-      console.log("Out of context and no longer fetching!");
       return;
     }
     const animation = window.requestAnimationFrame(async () => {
@@ -90,7 +83,6 @@ const FlightMap = (props) => {
   const addResource = (map) => {
     getImage(icon, 24, 24).then((image) => {
       if (!map.hasImage("icon")) {
-        console.log("adding image");
         map.addImage("icon", image, { sdf: true });
       }
     });
@@ -105,7 +97,7 @@ const FlightMap = (props) => {
       }}
       style={{
         width: 1080,
-        height: 800,
+        height: 600,
       }}
       {...viewState}
       {...DEFAULT_MAP_SETTING}
@@ -126,7 +118,7 @@ const FlightMap = (props) => {
         }
       }}
       onClick={(event) => {
-        setMarker(event.lngLat);
+        props.setMarker(event.lngLat);
       }}
     >
       <FullscreenControl position="bottom-right" />
@@ -134,8 +126,8 @@ const FlightMap = (props) => {
       <NavigationControl position="bottom-right" />
 
       <Marker
-        longitude={marker.lng}
-        latitude={marker.lat}
+        longitude={props.marker.lng}
+        latitude={props.marker.lat}
         draggable={false}
         color="red">
       </Marker>
@@ -157,4 +149,4 @@ const FlightMap = (props) => {
   );
 };
 
-export default FlightMap;
+export default MapLayer;

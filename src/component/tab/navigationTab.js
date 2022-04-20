@@ -1,16 +1,14 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-import React, { useEffect } from "react";
-import Time from "./clock";
-// import Logo from "./logo";
-import Prediction from "./prediction";
-import EmailSignup from "./emailSignup";
-import MapView from "./mapView";
+import React from "react";
+import Time from "../util/clock";
+import EmailSignup from "../page/emailSignup";
+import Tracker from "../page/tracker";
+import Logo from "../util/logo";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { TAB_CONFIG } from "../util/config";
+import { TAB_CONFIG } from "../../util/config";
 
 export const PageContext = React.createContext({
   tabIndex: 0,
@@ -43,10 +41,6 @@ const TabPanel = (props) => {
 const NavigationTab = () => {
   const [currentTabIndex, setCurrentTabIndex] = React.useState(0);
 
-  useEffect(() => {
-    console.log(TAB_CONFIG[currentTabIndex].name);
-  }, [currentTabIndex]);
-
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -70,11 +64,10 @@ const NavigationTab = () => {
       >
         <TabPanel value={currentTabIndex} index={0}>
           <Time />
-          {/* <Logo /> */}
-          <Prediction />
+          <Logo />
         </TabPanel>
         <TabPanel value={currentTabIndex} index={1}>
-          <MapView />
+          <Tracker />
         </TabPanel>
         <TabPanel value={currentTabIndex} index={2}>
           <EmailSignup />

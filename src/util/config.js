@@ -1,7 +1,7 @@
 export const TAB_CONFIG = [
   {
-    name: "prediction",
-    label: "Pass Prediction",
+    name: "landing page",
+    label: "Landing",
     index: 1,
   },
   {

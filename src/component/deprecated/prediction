@@ -1,3 +1,4 @@
+/* es-lint disable */
 import React, { useEffect, useState } from "react";
 import { compose,
   withProps,
@@ -14,8 +15,8 @@ import _ from "lodash";
 import {
   getAvailableSatellite,
   getPrediction,
-} from "../service/cubesatAPIService";
-import { DEFAULT_ZOOM, DEFAULT_CURSOR } from "../util/constant";
+} from "../../service/cubesatAPIService";
+import { DEFAULT_ZOOM, DEFAULT_CURSOR } from "../../util/constant";
 import PropTypes from "prop-types";
 import DataTable from "./dataTable";
 import DropDown from "./dropDown";

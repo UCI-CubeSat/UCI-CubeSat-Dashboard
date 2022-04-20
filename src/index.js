@@ -5,7 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import ReactDOM from "react-dom";
 
-const useReactLatest = false;
+const useReactLatest = true;
 if (useReactLatest) {
   createRoot(document.getElementById("root")).render(
       <React.StrictMode>
