@@ -10,11 +10,11 @@ const CollapsibleTableHead = (props) => {
   };
 
   return (
-    <div className="collapsibleTableHead">
+    <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>Satellite Name</TableCell>
       </TableRow>
-    </div>
+    </React.Fragment>
   );
 };
 

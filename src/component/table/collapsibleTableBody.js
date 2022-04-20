@@ -19,7 +19,7 @@ const CollapsibleTableBody = (props) => {
   };
 
   return (
-    <div className="collapsibleTableBody">
+    <React.Fragment>
       <TableBody>
         {_.map(_.range(props.data.length), (index) => (
           <DataContext.Provider value={{arr: props.data, index: index}}>
@@ -30,7 +30,7 @@ const CollapsibleTableBody = (props) => {
           </DataContext.Provider>
         ))}
       </TableBody>
-    </div>
+    </React.Fragment>
   );
 };
 

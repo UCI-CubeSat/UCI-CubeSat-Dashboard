@@ -6,11 +6,7 @@ const App = () => {
   return (
     <React.Fragment>
       <CssBaseline />
-      <div className="App">
-        <header className="App-header">
-          <NavigationTab />
-        </header>
-      </div>
+      <NavigationTab />
     </React.Fragment>
   );
 };

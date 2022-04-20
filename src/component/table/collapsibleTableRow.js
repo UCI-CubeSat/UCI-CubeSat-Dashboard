@@ -44,9 +44,9 @@ const CollapsibleTableRow = (props) => {
   }, [open, props.marker, dataContext.arr, dataContext.index]);
 
   return (
-    <div className="collapsibleTableRow">
+    <React.Fragment>
 
-      <div className="unexpandedTableRow">
+      <React.Fragment>
         <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
           <TableCell>
             <IconButton
@@ -61,9 +61,9 @@ const CollapsibleTableRow = (props) => {
             {open ? "Detail Information" : dataContext.arr[dataContext.index]}
           </TableCell>
         </TableRow>
-      </div>
+      </React.Fragment>
 
-      <div className="expandedTableRow">
+      <React.Fragment>
         <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
           <TableCell
             style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -112,8 +112,8 @@ const CollapsibleTableRow = (props) => {
             </Collapse>
           </TableCell>
         </TableRow>
-      </div>
-    </div>
+      </React.Fragment>
+    </React.Fragment>
   );
 };
 

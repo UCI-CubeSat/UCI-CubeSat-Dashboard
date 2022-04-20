@@ -22,8 +22,8 @@ const SatelliteLayer = (props) => {
         id={satelliteLayerId}
         type='symbol'
         source='geojson'
-        layout={}
-        paint={} />
+        layout=""
+        paint="" />
     </Source>
   );
 };

@@ -19,11 +19,11 @@ const Clock = () => {
   });
 
   return (
-    <div className="clock">
-      <div className="screen">
-        <p className="time">{time}</p>
-      </div>
-    </div>
+    <React.Fragment>
+      <p className="time">
+        {time}
+      </p>
+    </React.Fragment>
   );
 };
 
