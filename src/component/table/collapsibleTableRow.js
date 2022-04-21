@@ -15,7 +15,7 @@ import { getPrediction } from "../../service/cubesatAPIService";
 import _ from "lodash";
 import { DEFAULT_CURSOR } from "../../util/constant";
 import PropTypes from "prop-types";
-import moment from "moment";
+// import moment from "moment";
 
 const CollapsibleTableRow = (props) => {
   CollapsibleTableRow.propTypes = {
@@ -89,20 +89,16 @@ const CollapsibleTableRow = (props) => {
                         key={key}
                         sx={{ "& > *": { borderBottom: "unset" } }}>
                         <TableCell align="left">
-                          {moment(key).format("MMMM Do YYYY, h:mm:ss a")}
+                          {key}
                         </TableCell>
                         <TableCell align="left">
-                          {moment(`${JSON.parse(value)["rise"]}+00:00`).format(
-                              "MMMM Do YYYY, h:mm:ss a"
-                          )}
+                          {value["rise"]}
                         </TableCell>
                         <TableCell align="left">
-                          {moment(`${JSON.parse(value)["set"]}+00:00`).format(
-                              "MMMM Do YYYY, h:mm:ss a"
-                          )}
+                          {value["set"]}
                         </TableCell>
                         <TableCell align="left">
-                          {JSON.parse(value)["duration"]}
+                          {value["duration"]}
                         </TableCell>
                       </TableRow>
                     ))}
