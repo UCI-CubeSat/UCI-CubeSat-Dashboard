@@ -34,7 +34,7 @@ const MapLayer = (props) => {
   const mapReference = useRef(null);
 
   useEffect(() => {
-    if (context.tabName !== "tracker") {
+    if (context.tabName !== "disabled") {
       return;
     }
     const animation = window.requestAnimationFrame(async () => {
