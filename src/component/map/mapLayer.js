@@ -20,6 +20,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import icon from "../../resource/icon.svg";
 import { getPath } from "../../service/cubesatAPIService";
 import { PageContext } from "../tab/navigationTab";
+// import Logo from "../util/logo";
 
 const MapLayer = (props) => {
   MapLayer.propTypes = {
@@ -33,12 +34,15 @@ const MapLayer = (props) => {
   const [pointData, setPointData] = useState(null);
   const mapReference = useRef(null);
 
+  // useEffect() performs a side effect
   useEffect(() => {
-    if (context.tabName !== "disabled") {
+    if (context.tabName !== "tracker") {
       return;
     }
+    // requestAnimationFrame returns a request id
     const animation = window.requestAnimationFrame(async () => {
       const pathResponse = await getPath();
+      // point data is an inline geojson source
       setPointData({
         type: "Point",
         coordinates: [
@@ -83,7 +87,7 @@ const MapLayer = (props) => {
   const addResource = (map) => {
     getImage(icon, 24, 24).then((image) => {
       if (!map.hasImage("icon")) {
-        map.addImage("icon", image, { sdf: true });
+        map.addImage("icon", image, { sdf: false });
       }
     });
   };
@@ -135,11 +139,17 @@ const MapLayer = (props) => {
       {pointData && (
         <Source type="geojson" data={pointData}>
           <Layer
+            // {...{
+            //   type: "circle",
+            //   paint: {
+            //     "circle-radius": 10,
+            //     "circle-color": "#0c7cbf",
+            //   },
+            // }}
             {...{
-              type: "circle",
-              paint: {
-                "circle-radius": 10,
-                "circle-color": "#007cbf",
+              type: "symbol",
+              layout: {
+                "icon-image": "icon",
               },
             }}
           />
