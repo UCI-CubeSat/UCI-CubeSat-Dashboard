@@ -62,7 +62,7 @@ const NavigationTab = () => {
           </Box>
           <Box>
             <Tabs
-              value={currentTabIndex}s
+              value={currentTabIndex}
               onChange={(event, newIndex) => {
                 setCurrentTabIndex(newIndex);
               }}
@@ -84,7 +84,7 @@ const NavigationTab = () => {
               <Tab
                 label={TAB_CONFIG[2].label}
                 icon={<EmailIcon/>}
-                style={{color: "#24363E", backgroundColor: "white"}}/>
+                style={styles.tab}/>
             </Tabs>
           </Box>
         </Toolbar>
