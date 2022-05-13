@@ -146,6 +146,7 @@ const MapLayer = (props) => {
             //     "circle-color": "#0c7cbf",
             //   },
             // }}
+            // the icon is the actual satellite image
             {...{
               type: "symbol",
               layout: {
