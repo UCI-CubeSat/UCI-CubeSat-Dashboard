@@ -29,39 +29,7 @@ export const satelliteLayerId = 'satellites';
 const SatelliteLayer = () => {
   const [path, setPath] = useState([]);
   const [featureCollection, setFeatureCollection] = useState<FeatureCollection | undefined>(undefined)
-  const [pathPredictions, setPathPredictions] = useState<Array<Feature<Point, GeoJsonProperties>>>([]);
-
-  const createFeatureCollection = async () => {
-      let featureCollection = {
-        type: "FeatureCollection",
-        features: []
-      }
-
-      const pathResponse = await getPath();
-
-      let point = {
-        type: 'Point',
-        coordinates: [
-          pathResponse["latLng"]["lng"],
-          pathResponse["latLng"]["lat"],
-        ]
-      }
-
-      let properties = {
-      }
-
-      let feature = {
-        type: 'Feature',
-        geometry: point,
-        properties: properties
-      }
-    }
-    
-    featureCollection.features.push(feature)
-
-    return featureCollection
-
-  }
+  const [pathPredictions, setPathPredictions] = useState([]);
   
 
   const context = useContext(PageContext);
@@ -74,24 +42,34 @@ const SatelliteLayer = () => {
     }
 
     const animation = window.requestAnimationFrame(async () => {
+      let featureCollection = {
+        type: "FeatureCollection",
+        features: []
+      }
+  
       const pathResponse = await getPath();
-      // point data is an inline geojson source
-      setFeature({
-        type: "Feature",
-        prooerties: {
-          "name": "satellite"
-        },
-        geometry: {
-          type: "Point",
-          coordinates: [
-            pathResponse["latLng"]["lng"],
-            pathResponse["latLng"]["lat"],
-          ],
-        }
-      });
-      console.log("feature: ", feature)
-      console.log("feature in the feature collection:", featureCollection.features)
+  
+      let point = {
+        type: 'Point',
+        coordinates: [
+          pathResponse["latLng"]["lng"],
+          pathResponse["latLng"]["lat"],
+        ]
+      }
+  
+      let properties = {
+      }
+  
+      let feature = {
+        type: 'Feature',
+        geometry: point,
+        properties: properties
+      }
+      
       featureCollection.features.push(feature)
+
+      setFeatureCollection(featureCollection)
+      console.log("feature in the feature collection:", featureCollection.features)
 
       return () => {
         window.cancelAnimationFrame(animation);
@@ -122,16 +100,16 @@ const SatelliteLayer = () => {
         }
         // addResource(map);
       }}
-      onMove={(event) => {
-        setViewState(event.viewState);
-        const mapBounds = getMapBounds();
-        if (props.onMapChange) {
-          props.onMapChange(viewState, mapBounds);
-        }
-      }}
-      onClick={(event) => {
-        props.setMarker(event.lngLat);
-      }}
+      // onMove={(event) => {
+      //   setViewState(event.viewState);
+      //   const mapBounds = getMapBounds();
+      //   if (props.onMapChange) {
+      //     props.onMapChange(viewState, mapBounds);
+      //   }
+      // }}
+      // onClick={(event) => {
+      //   props.setMarker(event.lngLat);
+      // }}
     >
       {/* <Marker
         longitude={props.marker.lng}
