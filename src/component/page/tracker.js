@@ -9,7 +9,7 @@ const Tracker = (props) => {
 
   };
 
-  // const [marker, setMarker] = useState(DEFAULT_CURSOR);
+  const [marker, setMarker] = useState(DEFAULT_CURSOR);
 
   return (
     <div className="Map View">
@@ -19,10 +19,10 @@ const Tracker = (props) => {
       /> */}
       <SatelliteLayer/>
 
-      {/* <CollapsibleTable
+      <CollapsibleTable
         marker={marker}
         setMarker={setMarker}
-      /> */}
+      />
     </div>
   );
 };

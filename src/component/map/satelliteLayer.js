@@ -18,7 +18,7 @@ import ReactMap, {
 import _ from "lodash";
 import "mapbox-gl/dist/mapbox-gl.css";
 import icon from "../../resource/icon.svg";
-import { getPath } from "../../service/cubesatAPIService";
+import { getAvailableSatellite, getPath } from "../../service/cubesatAPIService";
 import { PageContext } from "../tab/navigationTab";
 // import Logo from "../util/logo";
 /* eslint-disable*/
@@ -28,77 +28,43 @@ export const satelliteLayerId = 'satellites';
 
 const SatelliteLayer = () => {
   const [path, setPath] = useState([]);
-  const [featureCollection, setFeatureCollection] = useState<FeatureCollection | undefined>(undefined)
-  const [pathPredictions, setPathPredictions] = useState<Array<Feature<Point, GeoJsonProperties>>>([]);
-
-  const createFeatureCollection = async () => {
-      let featureCollection = {
-        type: "FeatureCollection",
-        features: []
-      }
-
-      const pathResponse = await getPath();
-
-      let point = {
-        type: 'Point',
-        coordinates: [
-          pathResponse["latLng"]["lng"],
-          pathResponse["latLng"]["lat"],
-        ]
-      }
-
-      let properties = {
-      }
-
-      let feature = {
-        type: 'Feature',
-        geometry: point,
-        properties: properties
-      }
-    }
-    
-    featureCollection.features.push(feature)
-
-    return featureCollection
-
-  }
-  
-
-  const context = useContext(PageContext);
-  const [viewState, setViewState] = useState(DEFAULT_VIEW_STATE);
-  const mapReference = useRef(null);
+  const [featureCollection, setFeatureCollection] = useState({
+    type: "FeatureCollection",
+    features: [],
+  })
+  const [pathPredictions, setPathPredictions] = useState([]); 
 
   useEffect(() => {
-    if (context.tabName !== "tracker") {
-      return;
-    }
+    let features = []
 
+    // requestAnimationFrame makes sure the function inside is called before the next repaint
     const animation = window.requestAnimationFrame(async () => {
+
       const pathResponse = await getPath();
-      // point data is an inline geojson source
-      setFeature({
+      
+
+      console.log("pathResponse is:", pathResponse)
+      features.push({
         type: "Feature",
-        prooerties: {
-          "name": "satellite"
-        },
         geometry: {
           type: "Point",
           coordinates: [
             pathResponse["latLng"]["lng"],
             pathResponse["latLng"]["lat"],
-          ],
+          ]
         }
       });
-      console.log("feature: ", feature)
-      console.log("feature in the feature collection:", featureCollection.features)
-      featureCollection.features.push(feature)
 
-      return () => {
-        window.cancelAnimationFrame(animation);
-      };
-    }, [context.tabName, featureCollection]);
-    
-  })
+      setFeatureCollection({
+        type: "FeatureCollection",
+        features: features,
+      })
+    })
+
+    return () => {
+      window.cancelAnimationFrame(animation);
+    };
+  }, [featureCollection]);
 
   return (
     <ReactMap
@@ -111,27 +77,27 @@ const SatelliteLayer = () => {
         width: 1080,
         height: 600,
       }}
-      {...viewState}
+      // {...viewState}
       {...DEFAULT_MAP_SETTING}
       mapStyle="mapbox://styles/mapbox/dark-v10"
       mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
       onLoad={(event) => {
-        const map = _.get(event, "target", undefined);
-        if (map === undefined) {
-          return;
-        }
+        // const map = _.get(event, "target", undefined);
+        // if (map === undefined) {
+        //   return;
+        // }
         // addResource(map);
       }}
-      onMove={(event) => {
-        setViewState(event.viewState);
-        const mapBounds = getMapBounds();
-        if (props.onMapChange) {
-          props.onMapChange(viewState, mapBounds);
-        }
-      }}
-      onClick={(event) => {
-        props.setMarker(event.lngLat);
-      }}
+      // onMove={(event) => {
+      //   setViewState(event.viewState);
+      //   const mapBounds = getMapBounds();
+      //   if (props.onMapChange) {
+      //     props.onMapChange(viewState, mapBounds);
+      //   }
+      // }}
+      // onClick={(event) => {
+      //   props.setMarker(event.lngLat);
+      // }}
     >
       {/* <Marker
         longitude={props.marker.lng}
@@ -161,9 +127,3 @@ const SatelliteLayer = () => {
 };
 
 export default SatelliteLayer;
-
-
-
-
-
-
