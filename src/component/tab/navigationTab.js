@@ -36,7 +36,7 @@ const TabPanel = (props) => {
       aria-labelledby={`tab-${props.index}`}
     >
       {props.value === props.index && (
-        <Box sx={{ p: 3, color: "white" }}>
+        <Box sx={{ p: 3, height: "100vh", color: "white"}}>
           <Typography>{props.children}</Typography>
         </Box>
       )}
@@ -54,9 +54,9 @@ const NavigationTab = () => {
   const [currentTabIndex, setCurrentTabIndex] = React.useState(0);
 
   return (
-    <Box sx={{ width: "100%", min_height: "100vh", bgcolor: "#24363E" }}>
+    <Box sx={{ width: "100%", min_height: "100vh", bgcolor: "#455c82" }}>
       <AppBar position="sticky">
-        <Toolbar sx={{justifyContent: "space-between", bgcolor: "#24363E"}}>
+        <Toolbar sx={{justifyContent: "space-between", bgcolor: "#455c82"}}>
           <Box sx={{marginTop: "8px"}}>
             <Logo />
           </Box>
@@ -84,7 +84,7 @@ const NavigationTab = () => {
               <Tab
                 label={TAB_CONFIG[2].label}
                 icon={<EmailIcon/>}
-                style={{color: "#24363E", backgroundColor: "white"}}/>
+                style={{color: "#455c82", backgroundColor: "white"}}/>
             </Tabs>
           </Box>
         </Toolbar>
