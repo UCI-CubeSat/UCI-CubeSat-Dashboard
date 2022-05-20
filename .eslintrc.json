@@ -29,7 +29,6 @@
     "camelcase": ["error", { "properties": "never" }],
     "fp/no-loops": "off",
     "linebreak-style": 0,
-    "no-unused-vars": "off",
-    "max-len": 100
+    "no-unused-vars": "off"
   }
 }

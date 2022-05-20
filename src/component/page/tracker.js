@@ -13,11 +13,10 @@ const Tracker = (props) => {
 
   return (
     <div className="Map View">
-      {/* <MapLayer
+      <MapLayer
         marker={marker}
         setMarker={setMarker}
-      /> */}
-      <SatelliteLayer/>
+      />
 
       <CollapsibleTable
         marker={marker}

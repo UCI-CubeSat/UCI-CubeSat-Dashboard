@@ -18,15 +18,17 @@ import ReactMap, {
 import _ from "lodash";
 import "mapbox-gl/dist/mapbox-gl.css";
 import icon from "../../resource/icon.svg";
-import { getAvailableSatellite, getPath } from "../../service/cubesatAPIService";
+import {getAvailableSatellite, getPath} from "../../service/cubesatAPIService";
 import { PageContext } from "../tab/navigationTab";
 // import Logo from "../util/logo";
 /* eslint-disable*/
 import {Feature, FeatureCollection, GeoJsonProperties, Point, Position} from 'geojson';
+import MapLayer from "./mapLayer"
 
 export const satelliteLayerId = 'satellites';
 
-const SatelliteLayer = () => {
+const SatelliteLayer = (props) => {
+
   const [path, setPath] = useState([]);
   const [featureCollection, setFeatureCollection] = useState({
     type: "FeatureCollection",
@@ -39,21 +41,29 @@ const SatelliteLayer = () => {
 
     // requestAnimationFrame makes sure the function inside is called before the next repaint
     const animation = window.requestAnimationFrame(async () => {
+      const availableSats = await getAvailableSatellite()
+      console.log("available sats are: ", availableSats)
+      for (let i in availableSats) {
+        console.log("sat name: ", availableSats[i])
+        const pathResponse = await getPath(availableSats[i]);
 
-      const pathResponse = await getPath();
-      
-
-      console.log("pathResponse is:", pathResponse)
-      features.push({
-        type: "Feature",
-        geometry: {
-          type: "Point",
-          coordinates: [
-            pathResponse["latLng"]["lng"],
-            pathResponse["latLng"]["lat"],
-          ]
+        console.log("pathResponse is:", pathResponse, "and the length is: ", Object.keys(pathResponse).length)
+        if (Object.keys(pathResponse).length !== 0) {
+          console.log("enter the if statement")
+          features.push({
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [
+                pathResponse["latLng"]["lng"],
+                pathResponse["latLng"]["lat"],
+              ]
+            }
+          });
         }
-      });
+        
+      }
+      
 
       setFeatureCollection({
         type: "FeatureCollection",
@@ -66,28 +76,59 @@ const SatelliteLayer = () => {
     };
   }, [featureCollection]);
 
-  return (
-    <ReactMap
-      initialViewState={{
-        longitude: DEFAULT_LONGITUDE,
-        latitude: DEFAULT_LATITUDE,
-        zoom: DEFAULT_ZOOM,
-      }}
-      style={{
-        width: 1080,
-        height: 600,
-      }}
-      // {...viewState}
-      {...DEFAULT_MAP_SETTING}
-      mapStyle="mapbox://styles/mapbox/dark-v10"
-      mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-      onLoad={(event) => {
-        // const map = _.get(event, "target", undefined);
-        // if (map === undefined) {
-        //   return;
-        // }
-        // addResource(map);
-      }}
+  const addResource = (map) => {
+    getImage(icon, 24, 24).then((image) => {
+      if (!map.hasImage("icon")) {
+        map.addImage("icon", image, { sdf: false });
+      }
+    });
+  };
+
+  if (featureCollection) {
+    return (
+      <Source
+        type="geojson"
+        data={featureCollection}>
+  
+        <Layer
+          // {...{
+          //   type: "circle",
+          //   paint: {
+          //     "circle-radius": 10,
+          //     "circle-color": "#0c7cbf"
+          //   }
+          // }}
+          {...{
+            type: "symbol",
+            layout: {
+              "icon-image": "icon",
+            },
+          }}
+        />
+      </Source>
+    )
+  }
+  //return (
+    // <ReactMap
+    //   initialViewState={{
+    //     longitude: DEFAULT_LONGITUDE,
+    //     latitude: DEFAULT_LATITUDE,
+    //     zoom: DEFAULT_ZOOM,
+    //   }}
+    //   style={{
+    //     width: 1080,
+    //     height: 600,
+    //   }}
+    //   // {...viewState}
+    //   {...DEFAULT_MAP_SETTING}
+    //   mapStyle="mapbox://styles/mapbox/dark-v10"
+    //   mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+    //   onLoad={(event) => {
+    //     if (props.map === undefined) {
+    //       return;
+    //     }
+    //     addResource(props.map);
+    //   }}
       // onMove={(event) => {
       //   setViewState(event.viewState);
       //   const mapBounds = getMapBounds();
@@ -98,32 +139,38 @@ const SatelliteLayer = () => {
       // onClick={(event) => {
       //   props.setMarker(event.lngLat);
       // }}
-    >
-      {/* <Marker
+    // >
+      /* {<Marker
         longitude={props.marker.lng}
         latitude={props.marker.lat}
         draggable={false}
         color="red">
-      </Marker> */}
+      </Marker> } */
 
-      {featureCollection && (
-        <Source
-        type="geojson"
-        data={featureCollection}>
-  
-        <Layer
-          {...{
-            type: "circle",
-            paint: {
-              "circle-radius": 10,
-              "circle-color": "#0c7cbf"
-            }
-          }}
-        />
-      </Source>
-      )}
-    </ReactMap>
-  );
+      // {featureCollection && (
+      //   <Source
+      //     type="geojson"
+      //     data={featureCollection}>
+    
+      //     <Layer
+      //       // {...{
+      //       //   type: "circle",
+      //       //   paint: {
+      //       //     "circle-radius": 10,
+      //       //     "circle-color": "#0c7cbf"
+      //       //   }
+      //       // }}
+      //       {...{
+      //         type: "symbol",
+      //         layout: {
+      //           "icon-image": "icon",
+      //         },
+      //       }}
+      //     />
+      //   </Source>
+      // )}
+    //</ReactMap>
+  //);
 };
 
 export default SatelliteLayer;
