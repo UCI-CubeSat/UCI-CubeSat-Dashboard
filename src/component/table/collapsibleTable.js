@@ -36,7 +36,7 @@ const CollapsibleTable = (props) => {
         <Table aria-label="collapsible table">
           <CollapsibleTableHead />
           <CollapsibleTableBody
-            data={data}
+            data={data.slice(page* rowsPerPage, page*rowsPerPage+rowsPerPage)}
             marker={props.marker}
             setMarker={props.setMarker}
           />
