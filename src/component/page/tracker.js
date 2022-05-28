@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import { React, useState } from "react";
 import MapLayer from "../map/mapLayer";
 import { DEFAULT_CURSOR } from "../../util/constant";
 import CollapsibleTable from "../table/collapsibleTable";
+import SatelliteLayer from "../map/satelliteLayer";
 
 const Tracker = (props) => {
   Tracker.propTypes = {

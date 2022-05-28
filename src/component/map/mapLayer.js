@@ -20,6 +20,8 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import icon from "../../resource/icon.svg";
 import { getPath } from "../../service/cubesatAPIService";
 import { PageContext } from "../tab/navigationTab";
+// import Logo from "../util/logo";
+import SatelliteLayer from "./satelliteLayer";
 
 const MapLayer = (props) => {
   MapLayer.propTypes = {
@@ -32,26 +34,30 @@ const MapLayer = (props) => {
   const [viewState, setViewState] = useState(DEFAULT_VIEW_STATE);
   const [pointData, setPointData] = useState(null);
   const mapReference = useRef(null);
+  const [map, setMap] = useState(undefined);
 
+  // useEffect() performs a side effect
   useEffect(() => {
-    if (context.tabName !== "disabled") {
+    if (context.tabName !== "tracker") {
       return;
     }
-    const animation = window.requestAnimationFrame(async () => {
-      const pathResponse = await getPath();
-      setPointData({
-        type: "Point",
-        coordinates: [
-          pathResponse["latLng"]["lng"],
-          pathResponse["latLng"]["lat"],
-        ],
-      });
-    });
-    // Unmount
-    return () => {
-      window.cancelAnimationFrame(animation);
-    };
-  }, [context.tabName, pointData]);
+    // // requestAnimationFrame returns a request id
+    // const animation = window.requestAnimationFrame(async () => {
+    //   const pathResponse = await getPath();
+    //   // point data is an inline geojson source
+    //   setPointData({
+    //     type: "Point",
+    //     coordinates: [
+    //       pathResponse["latLng"]["lng"],
+    //       pathResponse["latLng"]["lat"],
+    //     ],
+    //   });
+    // });
+    // // Unmount
+    // return () => {
+    //   window.cancelAnimationFrame(animation);
+    // };
+  }, [context.tabName]);
 
   useEffect(() => {
     const mapBounds = getMapBounds();
@@ -83,7 +89,7 @@ const MapLayer = (props) => {
   const addResource = (map) => {
     getImage(icon, 24, 24).then((image) => {
       if (!map.hasImage("icon")) {
-        map.addImage("icon", image, { sdf: true });
+        map.addImage("icon", image, { sdf: false });
       }
     });
   };
@@ -132,19 +138,7 @@ const MapLayer = (props) => {
         color="red">
       </Marker>
 
-      {pointData && (
-        <Source type="geojson" data={pointData}>
-          <Layer
-            {...{
-              type: "circle",
-              paint: {
-                "circle-radius": 10,
-                "circle-color": "#007cbf",
-              },
-            }}
-          />
-        </Source>
-      )}
+      <SatelliteLayer map={map} />;
     </ReactMap>
   );
 };

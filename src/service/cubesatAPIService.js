@@ -42,9 +42,9 @@ export const getAvailableSatellite = async () => {
   }
 };
 
-export const getPath = async () => {
+export const getPath = async (satName) => {
   try {
-    const fetchResponse = await fetch(`${SERVER_URL}/states?name=amicalsat`, {
+    const fetchResponse = await fetch(`${SERVER_URL}/states?name=${satName}`, {
       method: "GET",
       mode: "cors",
       headers: {
