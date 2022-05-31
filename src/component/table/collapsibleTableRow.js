@@ -47,29 +47,33 @@ const CollapsibleTableRow = (props) => {
     <React.Fragment>
 
       <React.Fragment>
-        <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+        <TableRow sx={{ "& > *": { borderBottom: "unset" },
+          "bgcolor": "#242526", "color": "white"}}>
           <TableCell>
             <IconButton
               aria-label="expand row"
               size="small"
               onClick={() => setOpen(!open)}
+              sx={{color: "white"}}
             >
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
           </TableCell>
-          <TableCell align="left">
+          <TableCell align="left" sx={{bgcolor: "#242526", color: "white"}}>
             {open ? "Detail Information" : dataContext.arr[dataContext.index]}
           </TableCell>
         </TableRow>
       </React.Fragment>
 
       <React.Fragment>
-        <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+        <TableRow sx={{ "bgcolor": "#242526",
+          "& > *": { borderBottom: "unset" } }}>
           <TableCell
             style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
-                <Typography variant="h6" gutterBottom component="div">
+                <Typography variant="h6" gutterBottom component="div"
+                  sx={{ color: "white" }}>
                   {`Prediction:
                   ${dataContext.arr[dataContext.index]}
                   for the next 24 hours`}
@@ -77,10 +81,10 @@ const CollapsibleTableRow = (props) => {
                 <Table size="small" aria-label="purchases">
                   <TableHead>
                     <TableRow>
-                      <TableCell>Peak</TableCell>
-                      <TableCell>Rise</TableCell>
-                      <TableCell>Set</TableCell>
-                      <TableCell>Duration</TableCell>
+                      <TableCell sx={{ color: "white" }}>Peak</TableCell>
+                      <TableCell sx={{ color: "white" }}>Rise</TableCell>
+                      <TableCell sx={{ color: "white" }}>Set</TableCell>
+                      <TableCell sx={{ color: "white" }}>Duration</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -88,16 +92,16 @@ const CollapsibleTableRow = (props) => {
                       <TableRow
                         key={key}
                         sx={{ "& > *": { borderBottom: "unset" } }}>
-                        <TableCell align="left">
+                        <TableCell align="left" sx={{ color: "white" }}>
                           {key}
                         </TableCell>
-                        <TableCell align="left">
+                        <TableCell align="left" sx={{ color: "white" }}>
                           {value["rise"]}
                         </TableCell>
-                        <TableCell align="left">
+                        <TableCell align="left" sx={{ color: "white" }}>
                           {value["set"]}
                         </TableCell>
-                        <TableCell align="left">
+                        <TableCell align="left" sx={{ color: "white" }}>
                           {value["duration"]}
                         </TableCell>
                       </TableRow>

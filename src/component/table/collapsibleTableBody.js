@@ -20,7 +20,7 @@ const CollapsibleTableBody = (props) => {
 
   return (
     <React.Fragment>
-      <TableBody>
+      <TableBody sx={{bgcolor: "#3A3B3C"}}>
         {_.map(_.range(props.data.length), (index) => (
           <DataContext.Provider value={{arr: props.data, index: index}}>
             <CollapsibleTableRow
