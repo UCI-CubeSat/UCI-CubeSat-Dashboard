@@ -3,6 +3,7 @@ import Time from "../util/clock";
 import EmailSignup from "../page/emailSignup";
 import Tracker from "../page/tracker";
 import Logo from "../util/logo";
+import Dashboard from "../page/dashboard";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -15,6 +16,7 @@ import { Toolbar } from "@mui/material";
 import SatelliteAltIcon from "@mui/icons-material/SatelliteAlt";
 import EmailIcon from "@mui/icons-material/Email";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 
 export const PageContext = React.createContext({
   tabIndex: 0,
@@ -62,7 +64,7 @@ const NavigationTab = () => {
           </Box>
           <Box>
             <Tabs
-              value={currentTabIndex}s
+              value={currentTabIndex}
               onChange={(event, newIndex) => {
                 setCurrentTabIndex(newIndex);
               }}
@@ -84,7 +86,11 @@ const NavigationTab = () => {
               <Tab
                 label={TAB_CONFIG[2].label}
                 icon={<EmailIcon/>}
-                style={{color: "#24363E", backgroundColor: "white"}}/>
+                style={styles.tab}/>
+              <Tab
+                label={TAB_CONFIG[3].label}
+                icon={<DashboardIcon/>}
+                style={styles.tab}/>
             </Tabs>
           </Box>
         </Toolbar>
@@ -103,6 +109,9 @@ const NavigationTab = () => {
         </TabPanel>
         <TabPanel value={currentTabIndex} index={2}>
           <EmailSignup />
+        </TabPanel>
+        <TabPanel value={currentTabIndex} index={3}>
+          <Dashboard />
         </TabPanel>
       </PageContext.Provider>
     </Box>

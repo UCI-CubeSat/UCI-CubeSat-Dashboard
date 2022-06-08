@@ -58,3 +58,20 @@ export const getPath = async () => {
     return [];
   }
 };
+
+export const getVoltage = async () => {
+  try {
+    const fetchResponse = await fetch(`${SERVER_URL}/dashboard/voltage`, {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        "accept": "application/json",
+      },
+    });
+    return await fetchResponse.json();
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};

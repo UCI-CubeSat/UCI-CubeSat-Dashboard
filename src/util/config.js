@@ -14,4 +14,9 @@ export const TAB_CONFIG = [
     label: "Email Signup",
     index: 3,
   },
+  {
+    name: "dashboard",
+    label: "Mission Control",
+    index: 4,
+  },
 ];
