@@ -1,6 +1,7 @@
 # CubeSAT Satellite Server Dashboard
 
 ## Contributor:
+Katherine Hsu: kaishih@uci.edu,
 
 Hailey Lin: weixil4@uci.edu,
 
