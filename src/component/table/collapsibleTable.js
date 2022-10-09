@@ -31,10 +31,10 @@ const CollapsibleTable = (props) => {
   }, [data.length]);
 
   return (
-    <Paper sx={{ width: "100%" }}>
-      <TableContainer component={Paper}>
+    <Paper sx={{ width: "100%", bgcolor: "#18191A" }}>
+      <TableContainer component={Paper} sx={{bgcolor: "#18191A"}}>
         <Table aria-label="collapsible table">
-          <CollapsibleTableHead />
+          <CollapsibleTableHead/>
           <CollapsibleTableBody
             data={data.slice(page* rowsPerPage, page*rowsPerPage+rowsPerPage)}
             marker={props.marker}
@@ -55,6 +55,7 @@ const CollapsibleTable = (props) => {
           setRowsPerPage(+event.target.value);
           setPage(0);
         }}
+        sx={{color: "white"}}
       />
     </Paper>
   );

@@ -54,9 +54,9 @@ const NavigationTab = () => {
   const [currentTabIndex, setCurrentTabIndex] = React.useState(0);
 
   return (
-    <Box sx={{ width: "100%", min_height: "100vh", bgcolor: "#24363E" }}>
+    <Box sx={{width: "100%", minHeight: "300vh", bgcolor: "#464a54" }}>
       <AppBar position="sticky">
-        <Toolbar sx={{justifyContent: "space-between", bgcolor: "#24363E"}}>
+        <Toolbar sx={{justifyContent: "space-between", bgcolor: "#464a54"}}>
           <Box sx={{marginTop: "8px"}}>
             <Logo />
           </Box>
@@ -84,7 +84,7 @@ const NavigationTab = () => {
               <Tab
                 label={TAB_CONFIG[2].label}
                 icon={<EmailIcon/>}
-                style={{color: "#24363E", backgroundColor: "white"}}/>
+                style={{color: "#464a54", backgroundColor: "white"}}/>
             </Tabs>
           </Box>
         </Toolbar>

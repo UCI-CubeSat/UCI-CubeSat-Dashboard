@@ -16,7 +16,7 @@ const Tracker = (props) => {
         marker={marker}
         setMarker={setMarker}
       />
-
+      <br/>
       <CollapsibleTable
         marker={marker}
         setMarker={setMarker}
