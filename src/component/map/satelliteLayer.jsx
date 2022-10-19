@@ -1,7 +1,7 @@
 /* eslint-disable*/
-import React, {useEffect, useRef, useState} from 'react';
-import {Layer, Source} from 'react-map-gl';
-import {Feature, FeatureCollection, GeoJsonProperties, Point, Position} from 'geojson';
+import React, { useEffect, useRef, useState } from 'react';
+import { Layer, Source } from 'react-map-gl';
+import { Feature, FeatureCollection, GeoJsonProperties, Point, Position } from 'geojson';
 
 export const satelliteLayerId = 'satellites';
 
