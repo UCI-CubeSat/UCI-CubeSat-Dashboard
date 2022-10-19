@@ -58,7 +58,7 @@ const MapLayer = (props) => {
     if (props.onMapChange) {
       props.onMapChange(viewState, mapBounds);
     }
-    return () => {};
+    return () => { };
   }, [viewState, props]);
 
   const getMapBounds = () => {
@@ -102,7 +102,7 @@ const MapLayer = (props) => {
       {...viewState}
       {...DEFAULT_MAP_SETTING}
       mapStyle="mapbox://styles/mapbox/dark-v10"
-      mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+      mapboxAccessToken={import.meta.env.REACT_APP_MAPBOX_TOKEN}
       onLoad={(event) => {
         const map = _.get(event, "target", undefined);
         if (map === undefined) {

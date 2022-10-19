@@ -6,21 +6,21 @@ import reportWebVitals from "./reportWebVitals";
 import ReactDOM from "react-dom";
 
 const useReactLatest = true;
-if (process.env.NODE_ENV !== "production") {
-  console.log(`running in ${process.env.NODE_ENV} environment`);
+if (import.meta.env.MODE !== "production") {
+  console.log(`running in ${import.meta.env.MODE} environment`);
 }
 if (useReactLatest) {
   createRoot(document.getElementById("root")).render(
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>,
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>,
   );
 } else {
   ReactDOM.render(
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>,
-      document.getElementById("root")
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>,
+    document.getElementById("root")
   );
 }
 
