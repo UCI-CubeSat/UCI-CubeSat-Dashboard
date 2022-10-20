@@ -20,12 +20,7 @@ type Props = {
   setMarker: (arg0: LatLng) => void
 }
 
-const CollapsibleTableBody: React.FC<any> = (props) => {
-  CollapsibleTableBody.propTypes = {
-    data: PropTypes.array,
-    marker: PropTypes.object,
-    setMarker: PropTypes.func,
-  };
+const CollapsibleTableBody: React.FC<Props> = (props) => {
 
   return (
     <React.Fragment>
