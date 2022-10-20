@@ -1,6 +1,14 @@
 {
   "compilerOptions": {
+    "paths": {
+      "@util/*": [
+        "./src/util/*"
+      ]
+    },
     "target": "ESNext",
+    "types": [
+      "vite/client"
+    ],
     "useDefineForClassFields": true,
     "lib": [
       "DOM",
