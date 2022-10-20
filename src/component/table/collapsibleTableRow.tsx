@@ -15,7 +15,7 @@ import { getPrediction } from "../../service/cubesatAPIService";
 import _ from "lodash";
 import { DEFAULT_CURSOR } from "../../util/constant";
 import PropTypes from "prop-types";
-import { LatLng } from "@util/general.types";
+import { LatLng } from "@/util/general.types";
 // import moment from "moment";
 
 type Props = {

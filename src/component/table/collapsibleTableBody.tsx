@@ -1,8 +1,8 @@
 import {
   TableBody
 } from "@mui/material";
-import { getAvailableSatelliteResponse, getAvailableSatelliteValidator } from "@service/cubsesatAPIService.validators";
-import { LatLng } from "@util/general.types";
+import { getAvailableSatelliteResponse, getAvailableSatelliteValidator } from "@/service/cubsesatAPIService.validators";
+import { LatLng } from "@/util/general.types";
 import _ from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
