@@ -5,11 +5,8 @@ import {
 } from "@mui/material";
 import Box from "@mui/material/Box";
 
-const CollapsibleTableHead = (props) => {
-  CollapsibleTableHead.prototype = {
 
-  };
-
+const CollapsibleTableHead: React.FC<{}> = () => {
   return (
     <React.Fragment>
       <Box>
