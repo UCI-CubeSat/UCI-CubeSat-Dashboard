@@ -1,8 +1,15 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "paths": {
       "@util/*": [
         "./src/util/*"
+      ],
+      "@service/*": [
+        "./src/service/*"
+      ],
+      "@resource/*": [
+        "./src/resource"
       ]
     },
     "target": "ESNext",
