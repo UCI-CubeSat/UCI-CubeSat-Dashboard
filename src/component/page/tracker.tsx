@@ -3,10 +3,7 @@ import MapLayer from "../map/mapLayer";
 import { DEFAULT_CURSOR } from "../../util/constant";
 import CollapsibleTable from "../table/collapsibleTable";
 
-const Tracker = (props) => {
-  Tracker.propTypes = {
-
-  };
+const Tracker: React.FC<{}> = () => {
 
   const [marker, setMarker] = useState(DEFAULT_CURSOR);
 
@@ -16,7 +13,7 @@ const Tracker = (props) => {
         marker={marker}
         setMarker={setMarker}
       />
-      <br/>
+      <br />
       <CollapsibleTable
         marker={marker}
         setMarker={setMarker}

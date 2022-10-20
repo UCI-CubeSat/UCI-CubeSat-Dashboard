@@ -20,32 +20,35 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import icon from "../../resource/icon.svg";
 import { getPath } from "../../service/cubesatAPIService";
 import { PageContext } from "../tab/navigationTab";
+import type { LatLng, Point } from "@/util/general.types";
 
-const MapLayer = (props) => {
-  MapLayer.propTypes = {
-    onMapChange: PropTypes.func,
-    marker: PropTypes.object,
-    setMarker: PropTypes.func,
-  };
+type Props = {
+  marker: LatLng,
+  setMarker: (arg0: LatLng) => void
+}
+
+const MapLayer: React.FC<Props> = (props) => {
 
   const context = useContext(PageContext);
   const [viewState, setViewState] = useState(DEFAULT_VIEW_STATE);
-  const [pointData, setPointData] = useState(null);
+  const [pointData, setPointData] = useState<null | Point>(null);
   const mapReference = useRef(null);
 
   useEffect(() => {
-    if (context.tabName !== "disabled") {
+    if (context.tabName.name !== "disabled") {
       return;
     }
     const animation = window.requestAnimationFrame(async () => {
       const pathResponse = await getPath();
-      setPointData({
-        type: "Point",
-        coordinates: [
-          pathResponse["latLng"]["lng"],
-          pathResponse["latLng"]["lat"],
-        ],
-      });
+      if (!Array.isArray(pathResponse)) {
+        setPointData({
+          type: "Point",
+          coordinates: [
+            pathResponse.latLng.lng,
+            pathResponse.latLng.lat,
+          ],
+        });
+      }
     });
     // Unmount
     return () => {
@@ -55,9 +58,10 @@ const MapLayer = (props) => {
 
   useEffect(() => {
     const mapBounds = getMapBounds();
-    if (props.onMapChange) {
-      props.onMapChange(viewState, mapBounds);
-    }
+    // FIXME MapLayer component doesn't recieve an onMapChange prop from anywhere it is called
+    // if (props.onMapChange) {
+    //   props.onMapChange(viewState, mapBounds);
+    // }
     return () => { };
   }, [viewState, props]);
 
@@ -69,18 +73,19 @@ const MapLayer = (props) => {
       westernLongitude: 0.0,
     };
 
-    if (mapReference.current) {
-      const mapBounds = mapReference.current.getMap().getBounds();
-      mapBounds.northernLatitude = mapBounds.getNorthEast().lat;
-      mapBounds.easternLongitude = mapBounds.getNorthEast().lng;
-      mapBounds.southernLatitude = mapBounds.getSouthWest().lat;
-      mapBounds.westernLongitude = mapBounds.getSouthWest().lng;
-    }
+    //FIXME mapReference is never updated from null, thus this code won't run
+    // if (mapReference.current) {
+    //   const mapBounds = mapReference.current.getMap().getBounds();
+    //   mapBounds.northernLatitude = mapBounds.getNorthEast().lat;
+    //   mapBounds.easternLongitude = mapBounds.getNorthEast().lng;
+    //   mapBounds.southernLatitude = mapBounds.getSouthWest().lat;
+    //   mapBounds.westernLongitude = mapBounds.getSouthWest().lng;
+    // }
 
     return mapBounds;
   };
 
-  const addResource = (map) => {
+  const addResource = (map: mapboxgl.Map) => {
     getImage(icon, 24, 24).then((image) => {
       if (!map.hasImage("icon")) {
         map.addImage("icon", image, { sdf: true });
@@ -113,9 +118,10 @@ const MapLayer = (props) => {
       onMove={(event) => {
         setViewState(event.viewState);
         const mapBounds = getMapBounds();
-        if (props.onMapChange) {
-          props.onMapChange(viewState, mapBounds);
-        }
+        // FIXME onMapChange is not provided where MapLayer is used.
+        // if (props.onMapChange) {
+        //   props.onMapChange(viewState, mapBounds);
+        // }
       }}
       onClick={(event) => {
         props.setMarker(event.lngLat);

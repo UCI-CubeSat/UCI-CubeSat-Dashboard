@@ -21,12 +21,12 @@ export const PageContext = React.createContext({
   tabName: TAB_CONFIG[0],
 });
 
-const TabPanel = (props) => {
-  TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-  };
+type TabPanelProps = {
+  value: number,
+  index: number,
+}
+
+const TabPanel: React.FC<React.PropsWithChildren<TabPanelProps>> = (props) => {
 
   return (
     <div
@@ -36,7 +36,7 @@ const TabPanel = (props) => {
       aria-labelledby={`tab-${props.index}`}
     >
       {props.value === props.index && (
-        <Box sx={{ p: 3, height: "100vh", color: "white"}}>
+        <Box sx={{ p: 3, height: "100vh", color: "white" }}>
           <Typography>{props.children}</Typography>
         </Box>
       )}
@@ -54,15 +54,15 @@ const NavigationTab = () => {
   const [currentTabIndex, setCurrentTabIndex] = React.useState(0);
 
   return (
-    <Box sx={{width: "100%", minHeight: "300vh", bgcolor: "#464a54" }}>
+    <Box sx={{ width: "100%", minHeight: "300vh", bgcolor: "#464a54" }}>
       <AppBar position="sticky">
-        <Toolbar sx={{justifyContent: "space-between", bgcolor: "#464a54"}}>
-          <Box sx={{marginTop: "8px"}}>
+        <Toolbar sx={{ justifyContent: "space-between", bgcolor: "#464a54" }}>
+          <Box sx={{ marginTop: "8px" }}>
             <Logo />
           </Box>
           <Box>
             <Tabs
-              value={currentTabIndex}s
+              value={currentTabIndex}
               onChange={(event, newIndex) => {
                 setCurrentTabIndex(newIndex);
               }}
@@ -75,16 +75,16 @@ const NavigationTab = () => {
             >
               <Tab
                 label={TAB_CONFIG[0].label}
-                icon={<SatelliteAltIcon/>}
-                style={styles.tab}/>
+                icon={<SatelliteAltIcon />}
+                style={styles.tab} />
               <Tab
                 label={TAB_CONFIG[1].label}
-                icon={<LocationOnIcon/>}
-                style={styles.tab}/>
+                icon={<LocationOnIcon />}
+                style={styles.tab} />
               <Tab
                 label={TAB_CONFIG[2].label}
-                icon={<EmailIcon/>}
-                style={{color: "#464a54", backgroundColor: "white"}}/>
+                icon={<EmailIcon />}
+                style={{ color: "#464a54", backgroundColor: "white" }} />
             </Tabs>
           </Box>
         </Toolbar>
@@ -92,7 +92,7 @@ const NavigationTab = () => {
       <PageContext.Provider
         value={{
           tabIndex: currentTabIndex,
-          tabName: TAB_CONFIG[currentTabIndex].name,
+          tabName: TAB_CONFIG[currentTabIndex],
         }}
       >
         <TabPanel value={currentTabIndex} index={0}>
