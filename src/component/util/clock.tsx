@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
 import moment from "moment";
+import React, { useEffect, useState } from "react";
 
 const Clock: React.FC<{}> = () => {
   const [time, setTime] = useState("");

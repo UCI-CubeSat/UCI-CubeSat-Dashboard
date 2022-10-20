@@ -1,12 +1,12 @@
+import { getAvailableSatellite } from "@/service/cubesatAPIService";
+import { getAvailableSatelliteResponse } from "@/service/cubsesatAPIService.validators";
+import type { LatLng } from '@/util/general.types';
 import {
   Paper,
   Table,
   TableContainer,
   TablePagination
 } from "@mui/material";
-import { getAvailableSatellite } from "@/service/cubesatAPIService";
-import { getAvailableSatelliteResponse } from "@/service/cubsesatAPIService.validators";
-import type { LatLng } from '@/util/general.types';
 import React, { useEffect } from "react";
 import CollapsibleTableBody from "./collapsibleTableBody";
 import CollapsibleTableHead from "./collapsibleTableHead";

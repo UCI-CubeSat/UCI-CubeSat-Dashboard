@@ -1,3 +1,8 @@
+import { getPrediction } from "@/service/cubesatAPIService";
+import { DEFAULT_CURSOR } from "@/util/constant";
+import { LatLng } from "@/util/general.types";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import {
   Box,
   Collapse,
@@ -7,15 +12,9 @@ import {
   TableHead,
   TableRow, Typography
 } from "@mui/material";
+import _ from "lodash";
 import React, { useContext, useEffect } from "react";
 import { DataContext } from "./collapsibleTableBody";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { getPrediction } from "../../service/cubesatAPIService";
-import _ from "lodash";
-import { DEFAULT_CURSOR } from "../../util/constant";
-import PropTypes from "prop-types";
-import { LatLng } from "@/util/general.types";
 // import moment from "moment";
 
 type Props = {

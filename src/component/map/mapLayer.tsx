@@ -1,26 +1,18 @@
-import PropTypes from "prop-types";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { PageContext } from "@/component/tab/navigationTab";
+import icon from "@/resource/icon.svg";
+import { getPath } from "@/service/cubesatAPIService";
 import {
-  DEFAULT_LONGITUDE,
-  DEFAULT_LATITUDE,
-  DEFAULT_ZOOM,
-  DEFAULT_VIEW_STATE,
-  DEFAULT_MAP_SETTING,
-} from "../../util/constant";
-import { getImage } from "../../util/helper";
-import ReactMap, {
-  Marker,
-  FullscreenControl,
-  NavigationControl,
-  Source,
-  Layer,
-} from "react-map-gl";
+  DEFAULT_LATITUDE, DEFAULT_LONGITUDE, DEFAULT_MAP_SETTING, DEFAULT_VIEW_STATE, DEFAULT_ZOOM
+} from "@/util/constant";
+import type { LatLng, Point } from "@/util/general.types";
+import { getImage } from "@/util/helper";
 import _ from "lodash";
 import "mapbox-gl/dist/mapbox-gl.css";
-import icon from "../../resource/icon.svg";
-import { getPath } from "../../service/cubesatAPIService";
-import { PageContext } from "../tab/navigationTab";
-import type { LatLng, Point } from "@/util/general.types";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import ReactMap, {
+  FullscreenControl, Layer, Marker, NavigationControl,
+  Source
+} from "react-map-gl";
 
 type Props = {
   marker: LatLng,

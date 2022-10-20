@@ -1,6 +1,7 @@
-import { SERVER_URL } from "../util/constant";
-import { getAvailableSatelliteValidator, getPredictionValidator, getPathValidator } from "./cubsesatAPIService.validators";
-export const getPrediction = async (latLng: { lat: number, lng: number }, satellite: string) => {
+import { SERVER_URL } from "@/util/constant";
+import { LatLng } from "@/util/general.types";
+import { getAvailableSatelliteValidator, getPathValidator, getPredictionValidator } from "./cubsesatAPIService.validators";
+export const getPrediction = async (latLng: LatLng, satellite: string) => {
   try {
     const fetchResponse = await fetch(`${SERVER_URL}/prediction?` +
       `satellite=${satellite}&latitude=${latLng.lat}&longitude=${latLng.lng}`,

@@ -1,12 +1,10 @@
+import { getAvailableSatelliteResponse } from "@/service/cubsesatAPIService.validators";
+import { LatLng } from "@/util/general.types";
 import {
   TableBody
 } from "@mui/material";
-import { getAvailableSatelliteResponse, getAvailableSatelliteValidator } from "@/service/cubsesatAPIService.validators";
-import { LatLng } from "@/util/general.types";
 import _ from "lodash";
-import PropTypes from "prop-types";
 import React from "react";
-import { z } from "zod";
 import CollapsibleTableRow from "./collapsibleTableRow";
 
 export const DataContext = React.createContext<{ arr: getAvailableSatelliteResponse, index?: number }>({

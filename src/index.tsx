@@ -1,20 +1,26 @@
 import React from "react";
-import { createRoot } from "react-dom/client";
-import "./index.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
 import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
+import App from "./App";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
 
 const useReactLatest = true;
 if (import.meta.env.MODE !== "production") {
   console.log(`running in ${import.meta.env.MODE} environment`);
 }
 if (useReactLatest) {
-  createRoot(document.getElementById("root")).render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>,
-  );
+  const rootElem = document.getElementById("root")
+  if (!rootElem) {
+    throw new Error("Root div with id root could not be found")
+  }
+  else {
+    createRoot(rootElem).render(
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>,
+    );
+  }
 } else {
   ReactDOM.render(
     <React.StrictMode>
