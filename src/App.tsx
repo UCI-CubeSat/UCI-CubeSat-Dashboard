@@ -1,8 +1,8 @@
+import { CssBaseline } from "@mui/material";
 import React from "react";
 import NavigationTab from "./component/tab/navigationTab";
-import { CssBaseline } from "@mui/material";
 
-const App = () => {
+const App: React.FC<{}> = () => {
   return (
     <React.Fragment>
       <CssBaseline />

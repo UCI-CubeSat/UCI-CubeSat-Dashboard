@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
-import React from "react";
 import moment from "moment";
+import React, { useEffect, useState } from "react";
 
-const Clock = () => {
+const Clock: React.FC<{}> = () => {
   const [time, setTime] = useState("");
 
   useEffect(() => {

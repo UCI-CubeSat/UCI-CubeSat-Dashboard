@@ -1,32 +1,31 @@
-import React from "react";
-import Time from "../util/clock";
-import EmailSignup from "../page/emailSignup";
-import Tracker from "../page/tracker";
-import Logo from "../util/logo";
-import PropTypes from "prop-types";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
+import EmailSignup from "@/component/page/emailSignup";
+import Tracker from "@/component/page/tracker";
+import Time from "@/component/util/clock";
+import Logo from "@/component/util/logo";
 import Box from "@mui/material/Box";
-import { TAB_CONFIG } from "../../util/config";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import Typography from "@mui/material/Typography";
+import React from "react";
+import { TAB_CONFIG } from "@/util/config";
 
-import AppBar from "@mui/material/AppBar";
-import { Toolbar } from "@mui/material";
-import SatelliteAltIcon from "@mui/icons-material/SatelliteAlt";
 import EmailIcon from "@mui/icons-material/Email";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import SatelliteAltIcon from "@mui/icons-material/SatelliteAlt";
+import { Toolbar } from "@mui/material";
+import AppBar from "@mui/material/AppBar";
 
 export const PageContext = React.createContext({
   tabIndex: 0,
   tabName: TAB_CONFIG[0],
 });
 
-const TabPanel = (props) => {
-  TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-  };
+type TabPanelProps = {
+  value: number,
+  index: number,
+}
+
+const TabPanel: React.FC<React.PropsWithChildren<TabPanelProps>> = (props) => {
 
   return (
     <div
@@ -36,7 +35,7 @@ const TabPanel = (props) => {
       aria-labelledby={`tab-${props.index}`}
     >
       {props.value === props.index && (
-        <Box sx={{ p: 3, height: "100vh", color: "white"}}>
+        <Box sx={{ p: 3, height: "100vh", color: "white" }}>
           <Typography>{props.children}</Typography>
         </Box>
       )}
@@ -54,15 +53,15 @@ const NavigationTab = () => {
   const [currentTabIndex, setCurrentTabIndex] = React.useState(0);
 
   return (
-    <Box sx={{width: "100%", minHeight: "300vh", bgcolor: "#464a54" }}>
+    <Box sx={{ width: "100%", minHeight: "300vh", bgcolor: "#464a54" }}>
       <AppBar position="sticky">
-        <Toolbar sx={{justifyContent: "space-between", bgcolor: "#464a54"}}>
-          <Box sx={{marginTop: "8px"}}>
+        <Toolbar sx={{ justifyContent: "space-between", bgcolor: "#464a54" }}>
+          <Box sx={{ marginTop: "8px" }}>
             <Logo />
           </Box>
           <Box>
             <Tabs
-              value={currentTabIndex}s
+              value={currentTabIndex}
               onChange={(event, newIndex) => {
                 setCurrentTabIndex(newIndex);
               }}
@@ -75,16 +74,16 @@ const NavigationTab = () => {
             >
               <Tab
                 label={TAB_CONFIG[0].label}
-                icon={<SatelliteAltIcon/>}
-                style={styles.tab}/>
+                icon={<SatelliteAltIcon />}
+                style={styles.tab} />
               <Tab
                 label={TAB_CONFIG[1].label}
-                icon={<LocationOnIcon/>}
-                style={styles.tab}/>
+                icon={<LocationOnIcon />}
+                style={styles.tab} />
               <Tab
                 label={TAB_CONFIG[2].label}
-                icon={<EmailIcon/>}
-                style={{color: "#464a54", backgroundColor: "white"}}/>
+                icon={<EmailIcon />}
+                style={{ color: "#464a54", backgroundColor: "white" }} />
             </Tabs>
           </Box>
         </Toolbar>
@@ -92,7 +91,7 @@ const NavigationTab = () => {
       <PageContext.Provider
         value={{
           tabIndex: currentTabIndex,
-          tabName: TAB_CONFIG[currentTabIndex].name,
+          tabName: TAB_CONFIG[currentTabIndex],
         }}
       >
         <TabPanel value={currentTabIndex} index={0}>

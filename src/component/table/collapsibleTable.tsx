@@ -1,24 +1,28 @@
-import React, { useEffect } from "react";
-import PropTypes from "prop-types";
+import { getAvailableSatellite } from "@/service/cubesatAPIService";
+import { getAvailableSatelliteResponse } from "@/service/cubsesatAPIService.validators";
+import type { LatLng } from '@/util/general.types';
 import {
   Paper,
   Table,
   TableContainer,
-  TablePagination,
+  TablePagination
 } from "@mui/material";
-import CollapsibleTableHead from "./collapsibleTableHead";
+import React, { useEffect } from "react";
 import CollapsibleTableBody from "./collapsibleTableBody";
-import { getAvailableSatellite } from "../../service/cubesatAPIService";
+import CollapsibleTableHead from "./collapsibleTableHead";
 
-const CollapsibleTable = (props) => {
-  CollapsibleTable.propTypes = {
-    marker: PropTypes.object,
-    setMarker: PropTypes.func,
-  };
+
+
+type Props = {
+  marker: LatLng,
+  setMarker: (arg0: LatLng) => void
+}
+
+const CollapsibleTable: React.FC<Props> = (props) => {
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [data, setData] = React.useState([]);
+  const [data, setData] = React.useState<getAvailableSatelliteResponse>([]);
 
   useEffect(() => {
     const getData = async () => {
@@ -32,11 +36,11 @@ const CollapsibleTable = (props) => {
 
   return (
     <Paper sx={{ width: "100%", bgcolor: "#18191A" }}>
-      <TableContainer component={Paper} sx={{bgcolor: "#18191A"}}>
+      <TableContainer component={Paper} sx={{ bgcolor: "#18191A" }}>
         <Table aria-label="collapsible table">
-          <CollapsibleTableHead/>
+          <CollapsibleTableHead />
           <CollapsibleTableBody
-            data={data.slice(page* rowsPerPage, page*rowsPerPage+rowsPerPage)}
+            data={data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
             marker={props.marker}
             setMarker={props.setMarker}
           />
@@ -55,7 +59,7 @@ const CollapsibleTable = (props) => {
           setRowsPerPage(+event.target.value);
           setPage(0);
         }}
-        sx={{color: "white"}}
+        sx={{ color: "white" }}
       />
     </Paper>
   );
