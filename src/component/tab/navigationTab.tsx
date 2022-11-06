@@ -1,5 +1,6 @@
 import EmailSignup from "@/component/page/emailSignup";
 import Tracker from "@/component/page/tracker";
+import Dashboard from "@/component/page/dashboard";
 import Time from "@/component/util/clock";
 import Logo from "@/component/util/logo";
 import Box from "@mui/material/Box";
@@ -12,6 +13,7 @@ import { TAB_CONFIG } from "@/util/config";
 import EmailIcon from "@mui/icons-material/Email";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SatelliteAltIcon from "@mui/icons-material/SatelliteAlt";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 import { Toolbar } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 
@@ -84,6 +86,10 @@ const NavigationTab = () => {
                 label={TAB_CONFIG[2].label}
                 icon={<EmailIcon />}
                 style={{ color: "#464a54", backgroundColor: "white" }} />
+              <Tab
+                label={TAB_CONFIG[3].label}
+                icon={<DashboardIcon />}
+                style={styles.tab} />
             </Tabs>
           </Box>
         </Toolbar>
@@ -102,6 +108,9 @@ const NavigationTab = () => {
         </TabPanel>
         <TabPanel value={currentTabIndex} index={2}>
           <EmailSignup />
+        </TabPanel>
+        <TabPanel value={currentTabIndex} index={3}>
+          <Dashboard />
         </TabPanel>
       </PageContext.Provider>
     </Box>
