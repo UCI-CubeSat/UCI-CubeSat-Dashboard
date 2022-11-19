@@ -1,5 +1,6 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
+import Typography from "@mui/material/Typography";
 
 const Clock: React.FC<{}> = () => {
   const [time, setTime] = useState("");
@@ -19,9 +20,14 @@ const Clock: React.FC<{}> = () => {
 
   return (
     <React.Fragment>
-      <p className="time">
-        {time}
-      </p>
+    <Typography>
+      <h4 align="center">
+      Internal Dashboard
+           <h1 className="time" align="center">
+                {time}
+            </h1>
+      </h4>
+      </Typography>
     </React.Fragment>
   );
 };

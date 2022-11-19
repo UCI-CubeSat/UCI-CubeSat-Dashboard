@@ -55,7 +55,7 @@ const NavigationTab = () => {
   return (
     <Box sx={{ width: "100%", minHeight: "300vh", bgcolor: "#464a54" }}>
       <AppBar position="sticky">
-        <Toolbar sx={{ justifyContent: "space-between", bgcolor: "#464a54" }}>
+        <Toolbar sx={{ justifyContent: "space-between", bgcolor: "#000000" }}>
           <Box sx={{ marginTop: "8px" }}>
             <Logo />
           </Box>
