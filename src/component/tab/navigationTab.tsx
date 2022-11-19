@@ -68,14 +68,14 @@ const NavigationTab = () => {
               aria-label="Navigation Tab"
               TabIndicatorProps={{
                 sx: {
-                  bgcolor: "gray"
+                  bgcolor: "white"
                 }
               }}
             >
               <Tab
                 label={TAB_CONFIG[0].label}
                 icon={<SatelliteAltIcon />}
-                style={styles.tab} />
+                style={{ color: "#464a54", backgroundColor: "white" }} />
               <Tab
                 label={TAB_CONFIG[1].label}
                 icon={<LocationOnIcon />}
