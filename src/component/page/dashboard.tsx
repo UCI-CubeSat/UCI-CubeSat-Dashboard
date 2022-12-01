@@ -1,8 +1,27 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-import { LineChart, Line } from 'recharts';
-import { CartesianGrid, XAxis, YAxis } from 'recharts';
-const data = [{name: 'A', uv: 100, pv: 2400, amt: 2400}, {name: 'B', uv: 200, pv: 2400, amt: 2400}, {name: 'C', uv: 300, pv: 2400, amt: 2400}, {name: 'D', uv: 200, pv: 2400, amt: 2400}, {name: 'E', uv: 100, pv: 2400, amt: 2400}];
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, BarChart, Bar } from 'recharts';
+
+// sample data (to test out rechart graphing)
+const data1 = [{name: 'A', uv: 0}, 
+              {name: 'B', uv: 170}, 
+              {name: 'C', uv: 300}, 
+              {name: 'D', uv: 170}, 
+              {name: 'E', uv: 0}, 
+              {name: 'F', uv: -170}, 
+              {name: 'G', uv: -300}, 
+              {name: 'H', uv: -170},
+              {name: 'I', uv: 0}];
+
+const data2 = [{name: 'A', uv: 5}, 
+              {name: 'B', uv: 170}, 
+              {name: 'C', uv: 300}, 
+              {name: 'D', uv: 200}, 
+              {name: 'E', uv: 150}, 
+              {name: 'F', uv: 100}, 
+              {name: 'G', uv: 160}, 
+              {name: 'H', uv: 10},
+              {name: 'I', uv: 50}];
 
 const Dashboard: React.FC<{}> = () => {
   const [time, setTime] = useState("");
@@ -25,12 +44,23 @@ const Dashboard: React.FC<{}> = () => {
       <p className="time">
         {time}
       </p>
-      <LineChart width={600} height={300} data={data}>
-        <Line type="monotone" dataKey="uv" stroke="#8884d8" />
+      <br />
+
+      <LineChart width={700} height={450} data={data1}>
+        <Line type="monotone" dataKey="uv" stroke="#55AAFF" />
         <CartesianGrid stroke="#ccc" />
         <XAxis dataKey="name" />
         <YAxis />
+        <Tooltip />
       </LineChart>
+
+      <br />
+
+      <BarChart width={700} height={450} data={data2}>
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Bar dataKey="uv" barSize={30} fill="#55AAFF" />
+      </BarChart>
     </React.Fragment>
   );
 
