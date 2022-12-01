@@ -16,6 +16,7 @@ import SatelliteAltIcon from "@mui/icons-material/SatelliteAlt";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { Toolbar } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
+import Email from "@mui/icons-material/Email";
 
 export const PageContext = React.createContext({
   tabIndex: 0,
@@ -84,12 +85,12 @@ const NavigationTab = () => {
                 style={styles.tab} />
               <Tab
                 label={TAB_CONFIG[2].label}
-                icon={<EmailIcon />}
-                style={{ color: "#464a54", backgroundColor: "white" }} />
-              <Tab
-                label={TAB_CONFIG[3].label}
                 icon={<DashboardIcon />}
                 style={styles.tab} />
+              <Tab
+                label={TAB_CONFIG[3].label}
+                icon={<EmailIcon />}
+                style={{ color: "#464a54", backgroundColor: "white" }} />
             </Tabs>
           </Box>
         </Toolbar>
@@ -107,10 +108,10 @@ const NavigationTab = () => {
           <Tracker />
         </TabPanel>
         <TabPanel value={currentTabIndex} index={2}>
-          <EmailSignup />
+          <Dashboard />
         </TabPanel>
         <TabPanel value={currentTabIndex} index={3}>
-          <Dashboard />
+          <EmailSignup />
         </TabPanel>
       </PageContext.Provider>
     </Box>
