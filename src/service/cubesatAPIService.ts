@@ -1,5 +1,6 @@
 import { SERVER_URL } from "@/util/constant";
 import { LatLng } from "@/util/general.types";
+import { z } from "zod";
 import { getAvailableSatelliteValidator, getPathValidator, getPredictionValidator } from "./cubsesatAPIService.validators";
 export const getPrediction = async (latLng: LatLng, satellite: string) => {
   try {
@@ -26,7 +27,7 @@ export const getPrediction = async (latLng: LatLng, satellite: string) => {
   }
 };
 
-export const getAvailableSatellite = async () => {
+export const getAvailableSatellite = async (signal?: AbortSignal) => {
   try {
     const fetchResponse = await fetch(`${SERVER_URL}/available_satellite`, {
       method: "GET",
@@ -35,6 +36,7 @@ export const getAvailableSatellite = async () => {
         "Content-Type": "application/json",
         "accept": "application/json",
       },
+      signal
     });
     const response = await fetchResponse.json()
     return getAvailableSatelliteValidator.parse(response)
@@ -45,20 +47,15 @@ export const getAvailableSatellite = async () => {
   }
 };
 
-export const getPath = async () => {
-  try {
-    const fetchResponse = await fetch(`${SERVER_URL}/states?name=amicalsat`, {
-      method: "GET",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-        "accept": "application/json",
-      },
-    });
-    const response = await fetchResponse.json()
-    return getPathValidator.parse(response)
-  } catch (error) {
-    console.log(error);
-    return [];
-  }
+export const getPath = async (name: string, signal?: AbortSignal) => {
+  const fetchResponse = await fetch(`${SERVER_URL}/states?name=${name}`, {
+    method: "GET",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "accept": "application/json",
+    },
+  });
+  const response = await fetchResponse.json()
+  return getPathValidator.parse(response)
 };
