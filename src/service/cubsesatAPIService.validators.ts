@@ -17,7 +17,13 @@ export const getPathValidator = z.object({
     latLng: z.object({
         lat: z.number(),
         lng: z.number()
-    })
+    }),
+    latLngPath: z.array(z.tuple([
+        z.number(),
+        z.number()
+    ])),
+    latPath: z.array(z.number()),
+    lngPath: z.array(z.number())
 })
 
 export type getPathResponse = z.infer<typeof getPathValidator>
