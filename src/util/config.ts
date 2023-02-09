@@ -10,8 +10,13 @@ export const TAB_CONFIG = [
     index: 2,
   },
   {
+    name: "dashboard",
+    label: "Mission Control",
+    index: 3,
+  },
+  {
     name: "email",
     label: "Email Signup",
-    index: 3,
+    index: 4,
   },
 ];
