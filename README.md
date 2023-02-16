@@ -23,10 +23,12 @@ Map-related features of this project is entirely dependent on Mapbox's API.
 
 Since our GitHub repo is public, API tokens are hidden in a `.env` file and stored locally to prevent accidental billing charges
 
-1. Create .env file 
+Create .env file 
    1. Create a new file under the UCI-CubeSat-Dashboard root folder, named `.env`
    2. Get an API token after signing up for [Mapbox](https://www.mapbox.com).
-   3. Inside .env file, type `REACT_APP_MAPBOX_TOKEN=<Default_Public_Token>`
+   3. Inside .env file, type 
+      - `REACT_APP_MAPBOX_TOKEN=<Default_Public_Token>`
+      - `REACT_APP_SERVER_URL=http://127.0.0.1:5000`
 
 
 ## Installing prerequisite

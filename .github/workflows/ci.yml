@@ -27,6 +27,7 @@ jobs:
         run: npm run build
         env:
           REACT_APP_MAPBOX_TOKEN: ${{ secrets.REACT_APP_MAPBOX_TOKEN }}
+          REACT_APP_SERVER_URL: ${{ secrets.REACT_APP_MAPBOX_TOKEN }}
 
       - name: Upload production-ready build files
         uses: actions/upload-artifact@v2
