@@ -1,12 +1,9 @@
-import React, { useState } from "react";
 import MapLayer from "@/component/map/mapLayer";
-import { DEFAULT_CURSOR } from "@/util/constant";
 import CollapsibleTable from "@/component/table/collapsibleTable";
+import { DEFAULT_CURSOR } from "@/util/constant";
 import { Checkbox, Container, Grid, Typography } from "@mui/material";
-import { useQuery } from "react-query";
-// import { getAvailableSatellite, getPath } from "@/service/cubesatAPIService";
-import { getPathValidator } from "@/service/cubsesatAPIService.validators";
-import { z } from "zod";
+import React, { useState } from "react";
+
 
 
 
@@ -44,7 +41,7 @@ const Tracker: React.FC<{}> = () => {
   const isError = false;
   const allSateliteArr = [] as const;
   const filteredSatelliteArr = allSateliteArr ? allSateliteArr.filter(satelliteObj => !hideSatellites.has(satelliteObj[0])) : []
-  const finalSatelliteMap = filteredSatelliteArr.length > 0 ? new Map<string, z.infer<typeof getPathValidator>>(filteredSatelliteArr) : undefined
+  const finalSatelliteMap = filteredSatelliteArr.length > 0 ? new Map<string, unknown>(filteredSatelliteArr) : undefined
   return (
     <Grid container className="Map View">
       <Grid item style={{ width: `calc(${mapDim[0]}px + 40px)`, paddingLeft: "20px", paddingRight: "20px" }}>

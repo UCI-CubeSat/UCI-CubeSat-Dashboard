@@ -1,13 +1,10 @@
 /* eslint-disable*/
 
-import { getPathResponse } from '@/service/cubsesatAPIService.validators';
 import React from 'react';
-import { Layer, Marker, Source } from 'react-map-gl';
-import sateliteImage from '@/resource/icon.png'
 type Props = {
   isLoading: boolean,
   isError: boolean,
-  allSateliteMap?: Map<string, getPathResponse>,
+  allSateliteMap?: Map<string, unknown>,
 }
 
 const SatelliteLayer: React.FC<Props> = (props) => {
@@ -18,7 +15,7 @@ const SatelliteLayer: React.FC<Props> = (props) => {
   else {
     return (
       <React.Fragment>
-        {Array.from(allSateliteMap).map(([key, { latLng: { lat, lng }, latLngPath }], index) => (
+        {/* {Array.from(allSateliteMap).map(([key, { latLng: { lat, lng }, latLngPath }], index) => (
           // <Source type="image" url={sateliteImage} coordinates={[[lat, lng]]}>
           // </Source>
 
@@ -57,7 +54,7 @@ const SatelliteLayer: React.FC<Props> = (props) => {
                 } />
             </Source>
           </React.Fragment>
-        ))}
+        ))} */}
 
       </React.Fragment>
     )

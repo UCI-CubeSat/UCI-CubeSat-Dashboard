@@ -1,4 +1,3 @@
-import { getPathValidator } from "@/service/cubsesatAPIService.validators";
 import {
   DEFAULT_LATITUDE, DEFAULT_LONGITUDE, DEFAULT_MAP_SETTING, DEFAULT_VIEW_STATE, DEFAULT_ZOOM
 } from "@/util/constant";
@@ -8,7 +7,6 @@ import React, { useState } from "react";
 import ReactMap, {
   FullscreenControl, NavigationControl
 } from "react-map-gl";
-import { z } from "zod";
 import SatelliteLayer from "./satelliteLayer";
 
 type Props = {
@@ -17,7 +15,7 @@ type Props = {
   style?: React.CSSProperties
   isLoading: boolean,
   isError: boolean,
-  data?: Map<string, z.infer<typeof getPathValidator>>
+  data?: Map<string, unknown>
 }
 
 

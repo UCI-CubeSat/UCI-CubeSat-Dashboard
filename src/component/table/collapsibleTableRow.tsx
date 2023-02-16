@@ -1,5 +1,4 @@
 // import { getPrediction } from "@/service/cubesatAPIService";
-import { DEFAULT_CURSOR } from "@/util/constant";
 import { LatLng } from "@/util/general.types";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
@@ -65,7 +64,7 @@ const CollapsibleTableRow: React.FC<Props> = (props) => {
             </IconButton>
           </TableCell>
           <TableCell align="left" sx={{ bgcolor: "#242526", color: "white" }}>
-            {open ? "Detail Information" : dataContext.index !== undefined ? dataContext.arr[dataContext.index] : ""}
+            {/* {open ? "Detail Information" : dataContext.index !== undefined ? dataContext.arr[dataContext.index] : ""} */}
           </TableCell>
         </TableRow>
       </React.Fragment>
