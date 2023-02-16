@@ -1,7 +1,7 @@
 export const PROD_SERVER_URL =
   "https://uci-cubesat-server.herokuapp.com/api/v1";
 export const DEV_SERVER_URL =
-  "http://127.0.0.1:5000/api/v1";
+  "http://127.0.0.1:5000";
 export const SERVER_URL =
   import.meta.env.MODE === "production" ? PROD_SERVER_URL : DEV_SERVER_URL;
 export const DEFAULT_ZOOM = 8;

@@ -1,4 +1,4 @@
-import { getPrediction } from "@/service/cubesatAPIService";
+// import { getPrediction } from "@/service/cubesatAPIService";
 import { DEFAULT_CURSOR } from "@/util/constant";
 import { LatLng } from "@/util/general.types";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -31,13 +31,13 @@ const CollapsibleTableRow: React.FC<Props> = (props) => {
   useEffect(() => {
     const onExpand = async () => {
       if (dataContext.arr.length > 0 && dataContext.index !== undefined) {
-        setPrediction(await getPrediction(
-          {
-            lat: _.get(props.marker, "lat", DEFAULT_CURSOR.lat),
-            lng: _.get(props.marker, "lng", DEFAULT_CURSOR.lng),
-          },
-          dataContext.arr[dataContext.index]
-        ));
+        // setPrediction(await getPrediction(
+        //   {
+        //     lat: _.get(props.marker, "lat", DEFAULT_CURSOR.lat),
+        //     lng: _.get(props.marker, "lng", DEFAULT_CURSOR.lng),
+        //   },
+        //   dataContext.arr[dataContext.index]
+        // ));
       }
     };
 

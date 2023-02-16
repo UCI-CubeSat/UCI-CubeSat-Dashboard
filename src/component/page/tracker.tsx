@@ -4,42 +4,45 @@ import { DEFAULT_CURSOR } from "@/util/constant";
 import CollapsibleTable from "@/component/table/collapsibleTable";
 import { Checkbox, Container, Grid, Typography } from "@mui/material";
 import { useQuery } from "react-query";
-import { getAvailableSatellite, getPath } from "@/service/cubesatAPIService";
+// import { getAvailableSatellite, getPath } from "@/service/cubesatAPIService";
 import { getPathValidator } from "@/service/cubsesatAPIService.validators";
 import { z } from "zod";
 
 
 
-const getAllSatelitePaths = async (signal?: AbortSignal) => {
-  const allSateliteNames = await getAvailableSatellite(signal)
-  const sateliteInfoMap = new Array<[string, z.infer<typeof getPathValidator>]>()
-  await Promise.allSettled(allSateliteNames.slice(0, 4).map(async sateliteName => {
-    try {
-      const sateliteInfo = await getPath(sateliteName, signal)
-      sateliteInfoMap.push([sateliteName, sateliteInfo])
-    }
-    catch (e) {
-      console.error(`There was an error getting path for name=${sateliteName}`, e)
-    }
-  }))
+// const getAllSatelitePaths = async (signal?: AbortSignal) => {
+//   const allSateliteNames = await getAvailableSatellite(signal)
+//   const sateliteInfoMap = new Array<[string, z.infer<typeof getPathValidator>]>()
+//   await Promise.allSettled(allSateliteNames.slice(0, 4).map(async sateliteName => {
+//     try {
+//       const sateliteInfo = await getPath(sateliteName, signal)
+//       sateliteInfoMap.push([sateliteName, sateliteInfo])
+//     }
+//     catch (e) {
+//       console.error(`There was an error getting path for name=${sateliteName}`, e)
+//     }
+//   }))
 
-  if (sateliteInfoMap.length === 0) {
-    throw new Error(`Failed to retrieve any paths and/or satelites`)
-  }
+//   if (sateliteInfoMap.length === 0) {
+//     throw new Error(`Failed to retrieve any paths and/or satelites`)
+//   }
 
-  return sateliteInfoMap
-}
+//   return sateliteInfoMap
+// }
 
 const Tracker: React.FC<{}> = () => {
 
   const [marker, setMarker] = useState(DEFAULT_CURSOR);
   const mapDim = [1080, 600]
   const [hideSatellites, setHideSatellites] = useState(new Set<string>())
-  const { isLoading, isError, data: allSateliteArr, error } = useQuery({
-    queryKey: ['all-satelite-paths'],
-    queryFn: async ({ signal }) => await getAllSatelitePaths(signal),
-    staleTime: Infinity,
-  })
+  // const { isLoading, isError, data: allSateliteArr, error } = useQuery({
+  //   queryKey: ['all-satelite-paths'],
+  //   queryFn: async ({ signal }) => await getAllSatelitePaths(signal),
+  //   staleTime: Infinity,
+  // })
+  const isLoading = false;
+  const isError = false;
+  const allSateliteArr = [] as const;
   const filteredSatelliteArr = allSateliteArr ? allSateliteArr.filter(satelliteObj => !hideSatellites.has(satelliteObj[0])) : []
   const finalSatelliteMap = filteredSatelliteArr.length > 0 ? new Map<string, z.infer<typeof getPathValidator>>(filteredSatelliteArr) : undefined
   return (
