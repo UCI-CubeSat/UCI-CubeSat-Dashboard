@@ -58,7 +58,7 @@ const NavigationTab = () => {
   return (
     <Box sx={{ width: "100%", minHeight: "300vh", bgcolor: "#464a54" }}>
       <AppBar position="sticky">
-        <Toolbar sx={{ justifyContent: "space-between", bgcolor: "#464a54" }}>
+        <Toolbar sx={{ justifyContent: "space-between", bgcolor: "#000000" }}>
           <Box sx={{ marginTop: "8px" }}>
             <Logo />
           </Box>
@@ -71,14 +71,14 @@ const NavigationTab = () => {
               aria-label="Navigation Tab"
               TabIndicatorProps={{
                 sx: {
-                  bgcolor: "gray"
+                  bgcolor: "white"
                 }
               }}
             >
               <Tab
                 label={TAB_CONFIG[0].label}
                 icon={<SatelliteAltIcon />}
-                style={styles.tab} />
+                style={{ color: "#464a54", backgroundColor: "white" }} />
               <Tab
                 label={TAB_CONFIG[1].label}
                 icon={<LocationOnIcon />}
