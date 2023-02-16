@@ -29,6 +29,7 @@ package-lock.json
 .env.test.local
 .env.production.local
 *.local
+.vscode
 
 logs
 *.log

@@ -1,5 +1,3 @@
-import { getAvailableSatellite } from "@/service/cubesatAPIService";
-import { getAvailableSatelliteResponse } from "@/service/cubsesatAPIService.validators";
 import type { LatLng } from '@/util/general.types';
 import {
   Paper,
@@ -22,11 +20,12 @@ const CollapsibleTable: React.FC<Props> = (props) => {
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [data, setData] = React.useState<getAvailableSatelliteResponse>([]);
+  // const [data, setData] = React.useState<getAvailableSatelliteResponse>([]);
+  const [data, setData] = React.useState<Array<unknown>>([]);
 
   useEffect(() => {
     const getData = async () => {
-      setData(await getAvailableSatellite());
+      // setData(await getAvailableSatellite());
     };
 
     if (data.length === 0) {

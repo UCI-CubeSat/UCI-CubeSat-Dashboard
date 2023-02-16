@@ -1,5 +1,4 @@
-import { getPrediction } from "@/service/cubesatAPIService";
-import { DEFAULT_CURSOR } from "@/util/constant";
+// import { getPrediction } from "@/service/cubesatAPIService";
 import { LatLng } from "@/util/general.types";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
@@ -31,13 +30,13 @@ const CollapsibleTableRow: React.FC<Props> = (props) => {
   useEffect(() => {
     const onExpand = async () => {
       if (dataContext.arr.length > 0 && dataContext.index !== undefined) {
-        setPrediction(await getPrediction(
-          {
-            lat: _.get(props.marker, "lat", DEFAULT_CURSOR.lat),
-            lng: _.get(props.marker, "lng", DEFAULT_CURSOR.lng),
-          },
-          dataContext.arr[dataContext.index]
-        ));
+        // setPrediction(await getPrediction(
+        //   {
+        //     lat: _.get(props.marker, "lat", DEFAULT_CURSOR.lat),
+        //     lng: _.get(props.marker, "lng", DEFAULT_CURSOR.lng),
+        //   },
+        //   dataContext.arr[dataContext.index]
+        // ));
       }
     };
 
@@ -65,7 +64,7 @@ const CollapsibleTableRow: React.FC<Props> = (props) => {
             </IconButton>
           </TableCell>
           <TableCell align="left" sx={{ bgcolor: "#242526", color: "white" }}>
-            {open ? "Detail Information" : dataContext.index !== undefined ? dataContext.arr[dataContext.index] : ""}
+            {/* {open ? "Detail Information" : dataContext.index !== undefined ? dataContext.arr[dataContext.index] : ""} */}
           </TableCell>
         </TableRow>
       </React.Fragment>

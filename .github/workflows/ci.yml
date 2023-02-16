@@ -18,7 +18,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: 16
+          node-version: 18.13.0
 
       - name: Install dependencies
         run: npm i
@@ -27,6 +27,7 @@ jobs:
         run: npm run build
         env:
           REACT_APP_MAPBOX_TOKEN: ${{ secrets.REACT_APP_MAPBOX_TOKEN }}
+          REACT_APP_SERVER_URL: ${{ secrets.REACT_APP_MAPBOX_TOKEN }}
 
       - name: Upload production-ready build files
         uses: actions/upload-artifact@v2

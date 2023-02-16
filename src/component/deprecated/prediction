@@ -52,15 +52,15 @@ const Prediction = (props) => {
    */
   useEffect(() => {
     const getUpcomingPass = async () => {
-      setUpcomingPass(
-          await getPrediction(
-              {
-                lat: _.get(cursorLatLng, "lat", DEFAULT_CURSOR.lat),
-                lng: _.get(cursorLatLng, "lng", DEFAULT_CURSOR.lng),
-              },
-              satellite
-          )
-      );
+      // setUpcomingPass(
+      //     await getPrediction(
+      //         {
+      //           lat: _.get(cursorLatLng, "lat", DEFAULT_CURSOR.lat),
+      //           lng: _.get(cursorLatLng, "lng", DEFAULT_CURSOR.lng),
+      //         },
+      //         satellite
+      //     )
+      // );
     };
     getUpcomingPass().then();
   }, [satellite, cursorLatLng]);

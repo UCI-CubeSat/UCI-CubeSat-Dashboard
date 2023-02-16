@@ -1,4 +1,3 @@
-import { getAvailableSatelliteResponse } from "@/service/cubsesatAPIService.validators";
 import { LatLng } from "@/util/general.types";
 import {
   TableBody
@@ -7,13 +6,13 @@ import _ from "lodash";
 import React from "react";
 import CollapsibleTableRow from "./collapsibleTableRow";
 
-export const DataContext = React.createContext<{ arr: getAvailableSatelliteResponse, index?: number }>({
+export const DataContext = React.createContext<{ arr: Array<unknown>, index?: number }>({
   arr: [],
   index: undefined
 });
 
 type Props = {
-  data: getAvailableSatelliteResponse,
+  data: Array<unknown>,
   marker: LatLng,
   setMarker: (arg0: LatLng) => void
 }

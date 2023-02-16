@@ -1,4 +1,4 @@
-import logoImgFile from "@/resource/cubesat.png";
+import logoImgFile from "@/assets/cubesat.png";
 import React from "react";
 
 const Logo: React.FC<{}> = () => (

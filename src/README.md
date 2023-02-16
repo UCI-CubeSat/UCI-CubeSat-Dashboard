@@ -1,1 +1,0 @@
-# CubeSAT Satellite Dashboard

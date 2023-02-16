@@ -1,22 +1,21 @@
+import Time from "@/component/Clock/clock";
+import Logo from "@/component/Logo/logo";
+import Dashboard from "@/component/page/dashboard";
 import EmailSignup from "@/component/page/emailSignup";
 import Tracker from "@/component/page/tracker";
-import Dashboard from "@/component/page/dashboard";
-import Time from "@/component/util/clock";
-import Logo from "@/component/util/logo";
+import { TAB_CONFIG } from "@/util/config";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import Typography from "@mui/material/Typography";
 import React from "react";
-import { TAB_CONFIG } from "@/util/config";
 
+import DashboardIcon from "@mui/icons-material/Dashboard";
 import EmailIcon from "@mui/icons-material/Email";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SatelliteAltIcon from "@mui/icons-material/SatelliteAlt";
-import DashboardIcon from "@mui/icons-material/Dashboard";
 import { Toolbar } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
-import Email from "@mui/icons-material/Email";
 
 export const PageContext = React.createContext({
   tabIndex: 0,
