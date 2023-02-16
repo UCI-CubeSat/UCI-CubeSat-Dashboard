@@ -1,4 +1,4 @@
-import { ParsedLog } from "@/service/cubsesatAPIService.validators";
+import { ParsedLog } from "@/model/log";
 import type { LatLng } from '@/util/general.types';
 import {
   Paper,

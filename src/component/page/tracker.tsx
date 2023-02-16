@@ -1,6 +1,6 @@
 import MapLayer from "@/component/map/mapLayer";
 import CollapsibleTable from "@/component/table/collapsibleTable";
-import { DEFAULT_CURSOR } from "@/util/constant";
+import { DEFAULT_CURSOR } from "@/util/config";
 import { Checkbox, Container, Grid, Typography } from "@mui/material";
 import React, { useState } from "react";
 
