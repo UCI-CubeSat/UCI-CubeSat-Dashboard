@@ -1,8 +1,12 @@
 import logoImgFile from "@/assets/cubesat.png";
 import React from "react";
 
-const Logo: React.FC<{}> = () => (
-  <img src={logoImgFile} alt="Logo" height={"130px"} width={"130px"} />
+type Props = {
+  style: React.CSSProperties
+}
+const Logo = (props: Props) => (
+
+  <img src={logoImgFile} alt="Logo" style={props.style} />
 );
 
 export default Logo;
