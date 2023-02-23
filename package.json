@@ -13,6 +13,7 @@
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "@types/lodash": "^4.14.186",
+    "jotai": "^2.0.2",
     "mapbox-gl": "^2.8.1",
     "moment": "^2.29.3",
     "react": "^18.2.0",
@@ -22,6 +23,7 @@
     "react-scripts": "^5.0.1",
     "recharts": "^2.1.16",
     "web-vitals": "^1.1.2",
+    "wouter": "^2.10.0",
     "zod": "^3.19.1"
   },
   "devDependencies": {

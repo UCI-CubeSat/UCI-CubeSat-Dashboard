@@ -1,11 +1,16 @@
 import { ParsedLogValidator } from "@/model/log";
 import { env } from "@/service/env";
+import { z } from "zod";
 type PostSatelliteLogsRequestBody = {
   // Both start and end are positive numbers where end is after start
   start: number,
   end: number
 }
-export const satelliteLogs = async ({ start, end }: PostSatelliteLogsRequestBody = { start: 1, end: Date.now() }) => {
+const PostSatelliteLogsResponseBodyValidator = z.object({
+  logs: z.array(ParsedLogValidator)
+})
+
+export const satelliteLogs = async ({ start, end }: PostSatelliteLogsRequestBody) => {
   const fetchResponse = await fetch(`${env.REACT_APP_SERVER_URL}/satellite/logList`,
     {
       method: "POST",
@@ -19,5 +24,5 @@ export const satelliteLogs = async ({ start, end }: PostSatelliteLogsRequestBody
       },
     });
   const data = await fetchResponse.json();
-  return ParsedLogValidator.parse(data);
+  return PostSatelliteLogsResponseBodyValidator.parse(data)
 };
