@@ -1,4 +1,3 @@
-import MapLayer from "@/component/map/mapLayer";
 import CollapsibleTable from "@/component/table/collapsibleTable";
 import { DEFAULT_CURSOR } from "@/util/config";
 import { Checkbox, Container, Grid, Typography } from "@mui/material";
@@ -45,7 +44,7 @@ const Tracker: React.FC<{}> = () => {
   return (
     <Grid container className="Map View">
       <Grid item style={{ width: `calc(${mapDim[0]}px + 40px)`, paddingLeft: "20px", paddingRight: "20px" }}>
-        <MapLayer
+        {/* <MapLayer
           marker={marker}
           setMarker={setMarker}
           isLoading={isLoading}
@@ -55,7 +54,7 @@ const Tracker: React.FC<{}> = () => {
             width: mapDim[0],
             height: mapDim[1],
           }}
-        />
+        /> */}
       </Grid>
       <Grid item style={{ border: '1px solid white', width: `calc(100% - ${mapDim[0]}px - 40px)` }}>
         <Container style={{ width: 'calc(100% - 20px', height: "calc(100% - 20px)", padding: '10px' }}>
