@@ -1,8 +1,8 @@
+import { Point } from "@/model/point";
 import { env } from "@/service/env";
 import {
-  DEFAULT_LATITUDE, DEFAULT_LONGITUDE, DEFAULT_MAP_SETTING, DEFAULT_VIEW_STATE, DEFAULT_ZOOM
+  DEFAULT_MAP_SETTING, DEFAULT_VIEW_STATE
 } from "@/util/config";
-import type { LatLng } from "@/util/general.types";
 import "mapbox-gl/dist/mapbox-gl.css";
 import React, { useState } from "react";
 import ReactMap, {
@@ -11,12 +11,8 @@ import ReactMap, {
 import SatelliteLayer from "./satelliteLayer";
 
 type Props = {
-  marker: LatLng,
-  setMarker: (arg0: LatLng) => void
-  style?: React.CSSProperties
-  isLoading: boolean,
-  isError: boolean,
-  data?: Map<string, unknown>
+  style?: React.CSSProperties,
+  coordinates: Array<Point>,
 }
 
 
@@ -24,16 +20,12 @@ type Props = {
 
 
 const MapLayer: React.FC<Props> = (props) => {
+  const { coordinates } = props
   const [viewState, setViewState] = useState(DEFAULT_VIEW_STATE);
 
   return (
     <ReactMap
       style={props.style}
-      initialViewState={{
-        longitude: DEFAULT_LONGITUDE,
-        latitude: DEFAULT_LATITUDE,
-        zoom: DEFAULT_ZOOM,
-      }}
       {...viewState}
       {...DEFAULT_MAP_SETTING}
       mapStyle="mapbox://styles/mapbox/dark-v10"
@@ -43,9 +35,7 @@ const MapLayer: React.FC<Props> = (props) => {
       <FullscreenControl position="bottom-right" />
       <NavigationControl position="bottom-right" />
       <SatelliteLayer
-        isError={props.isError}
-        isLoading={props.isLoading}
-        allSateliteMap={props.data}
+        coordinates={coordinates}
       />
     </ReactMap>
   );
