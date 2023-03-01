@@ -1,12 +1,12 @@
 import { ParsedLog } from "@/model/log"
 import { Typography } from '@mui/material'
-import React from "react"
 import TableComp from "../TableComp/Table"
 import MapLayer from "../map/mapLayer"
 
 const MapHeaders = {
     timestamp: {
-        title: "Timestamp", transform: (value: number | string | null) => {
+        title: "Timestamp",
+        transform: (value: number | string | null) => {
             if (value === null) {
                 return "Invalid date"
             }
@@ -29,33 +29,31 @@ type Props = {
 export default function Map(props: Props) {
     const { logs } = props
     return (
-        <React.Fragment>
-            <div
-                style={{
-                    width: "100%",
-                    padding: "20px"
-                }}
+        <div
+            style={{
+                width: "100%",
+                padding: "20px"
+            }}
+        >
+            <Typography
+                variant="h4"
+                gutterBottom
             >
-                <Typography
-                    variant="h4"
-                    gutterBottom
-                >
-                    Map
-                </Typography>
-                <MapLayer
-                    coordinates={logs}
-                    style={{
-                        height: "400px",
-                        width: "100%"
-                    }}
-                />
-                <TableComp
-                    id="Map"
-                    tableHeaders={MapHeaders}
-                    data={logs}
-                    style={{ maxHeight: "300px", marginTop: "20px" }}
-                />
-            </div>
-        </React.Fragment>
+                Map
+            </Typography>
+            <MapLayer
+                coordinates={logs}
+                style={{
+                    height: "400px",
+                    width: "100%"
+                }}
+            />
+            <TableComp
+                id="Map"
+                tableHeaders={MapHeaders}
+                data={logs}
+                style={{ maxHeight: "300px", marginTop: "20px" }}
+            />
+        </div>
     )
 }
