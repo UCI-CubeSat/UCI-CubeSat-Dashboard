@@ -1,64 +1,57 @@
 /* eslint-disable*/
-
+import sateliteImage from '@/assets/icon.png';
+import { Point } from '@/model/point';
 import React from 'react';
+import { Layer, Marker, Source } from 'react-map-gl';
 type Props = {
-  isLoading: boolean,
-  isError: boolean,
-  allSateliteMap?: Map<string, unknown>,
+  coordinates: Array<Point>,
 }
 
+const NUM_POINTS_ON_MAP = 20
+
 const SatelliteLayer: React.FC<Props> = (props) => {
-  const { isLoading, isError, allSateliteMap } = props
-  if (isLoading || isError || !allSateliteMap) {
-    return null
-  }
-  else {
-    return (
-      <React.Fragment>
-        {/* {Array.from(allSateliteMap).map(([key, { latLng: { lat, lng }, latLngPath }], index) => (
-          // <Source type="image" url={sateliteImage} coordinates={[[lat, lng]]}>
-          // </Source>
+  const { coordinates } = props
 
-          <React.Fragment key={`satelite-${index}-path`}>
-            <Marker
-              latitude={lat}
-              longitude={lng}
-            >
-              <img src={sateliteImage} style={{ width: '50px' }} />
-            </Marker>
-            <Source
-              type="geojson"
-              data={{
-                type: "Feature",
-                properties: {},
-                id: `satelite-${index}-path`,
-                geometry: {
-                  type: 'LineString',
-                  coordinates: latLngPath
-                }
-              }}
-            >
-              <Layer
-                id={`satelite-${index}-path`}
-                type='line'
-                source={`satelite-${index}-path`}
-                layout={{
-                  'line-join': 'round',
-                  'line-cap': 'round'
-                }}
-                paint={
-                  {
-                    'line-color': '#888',
-                    'line-width': 8
-                  }
-                } />
-            </Source>
-          </React.Fragment>
-        ))} */}
-
-      </React.Fragment>
-    )
-  }
+  return (
+    <React.Fragment >
+      {coordinates.length > 0
+        ?
+        <Marker
+          latitude={coordinates[0].lat}
+          longitude={coordinates[0].lon}
+        >
+          <img src={sateliteImage} style={{ width: '50px' }} />
+        </Marker>
+        :
+        null}
+      <Source
+        type="geojson"
+        data={{
+          type: "Feature",
+          properties: {},
+          id: `satelite-path`,
+          geometry: {
+            type: 'LineString',
+            coordinates: coordinates.slice(0, NUM_POINTS_ON_MAP).map(({ lat, lon }) => [lat, lon])
+          }
+        }}
+      >
+        <Layer
+          type='line'
+          source={`satelite-path`}
+          layout={{
+            'line-join': 'round',
+            'line-cap': 'round'
+          }}
+          paint={
+            {
+              'line-color': '#888',
+              'line-width': 8
+            }
+          } />
+      </Source>
+    </React.Fragment>
+  )
 };
 
 export default SatelliteLayer;
