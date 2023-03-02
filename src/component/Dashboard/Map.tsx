@@ -1,4 +1,5 @@
 import { ParsedLog } from "@/model/log"
+import { transformNumberToDate } from "@/util/transform"
 import { Typography } from '@mui/material'
 import TableComp from "../TableComp/Table"
 import MapLayer from "../map/mapLayer"
@@ -6,14 +7,7 @@ import MapLayer from "../map/mapLayer"
 const MapHeaders = {
     timestamp: {
         title: "Timestamp",
-        transform: (value: number | string | null) => {
-            if (value === null) {
-                return "Invalid date"
-            }
-            else {
-                return new Date(value).toLocaleDateString()
-            }
-        }
+        transform: transformNumberToDate
     },
     lat: { title: "Latitude" },
     lon: { title: "Longitude" },
