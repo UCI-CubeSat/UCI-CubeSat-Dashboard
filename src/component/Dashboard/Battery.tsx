@@ -2,9 +2,8 @@ import { ParsedLog } from "@/model/log"
 import { transformNumberToDate } from "@/util/transform"
 import { Typography } from "@mui/material"
 import Box from '@mui/material/Box'
-import Tab from '@mui/material/Tab'
-import Tabs from '@mui/material/Tabs'
 import * as React from 'react'
+import TabSection from "../TabSection/TabSection"
 import TableComp from "../TableComp/Table"
 import TimeSeriesGraph from "../TimeSeriesGraph/TimeSeriesGraph"
 
@@ -89,149 +88,185 @@ export default function Battery(props: BatteryProps) {
                 Battery
             </Typography>
             <div
-                style={{
-                    width: "100%",
-                    padding: "10px",
-                    backgroundColor: "white"
-                }}
             >
-                <Box sx={{ width: '100%' }}>
-                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                        <Tabs value={value} onChange={handleChange} aria-label="BatteryTabs" sx={{
-                            bgcolor: "white",
-                            marginTop: "20px",
-                            padding: "15px",
-                            width: "100%",
-                            borderRadius: "5px"
-                        }}>
-                            <Tab label="Voltage" {...a11yProps(0)} />
-                            <Tab label="Current" {...a11yProps(1)} />
-                            <Tab label="Temperature" {...a11yProps(2)} />
-                            <Tab label="Is Charging" {...a11yProps(3)} />
-                            <Tab label="Charging Voltage" {...a11yProps(4)} />
-                            <Tab label="Battery Table" {...a11yProps(5)} />
-                        </Tabs>
-                    </Box>
-
-                    <TabPanel value={value} index={0} logs={logs}>
-                        <TimeSeriesGraph
-                            title="Battery Voltage"
-                            style={{
-                                marginTop: "20px",
-                                height: "400px",
-                                width: "100%",
-                                backgroundColor: "white",
-                                padding: "20px",
-                                borderRadius: "5px"
-                            }}
-                            timeSeriesData={[
-                                {
-                                    name: "Voltage",
-                                    color: "#8884d8",
-                                    data: logs.map(log => ({ time: log.timestamp, value: log.batteryVoltage }))
-                                },
-                            ]}
-                        />
-                    </TabPanel>
-                    <TabPanel value={value} index={1} logs={logs}>
-                        <TimeSeriesGraph
-                            title="Battery Current"
-                            style={{
-                                marginTop: "20px",
-                                height: "400px",
-                                width: "100%",
-                                backgroundColor: "white",
-                                padding: "20px",
-                                borderRadius: "5px"
-                            }}
-                            timeSeriesData={[
-                                {
-                                    name: "Current",
-                                    color: "#82ca9d",
-                                    data: logs.map(log => ({ time: log.timestamp, value: log.batteryCurrent }))
-                                }
-                            ]}
-                        />
-                    </TabPanel>
-                    <TabPanel value={value} index={2} logs={logs}>
-                        <TimeSeriesGraph
-                            title="Battery Temperature"
-                            style={{
-                                marginTop: "20px",
-                                height: "400px",
-                                width: "100%",
-                                backgroundColor: "white",
-                                padding: "20px",
-                                borderRadius: "5px"
-                            }}
-                            timeSeriesData={[
-                                {
-                                    name: "Temperature",
-                                    color: "#db8f4d",
-                                    data: logs.map(log => ({ time: log.timestamp, value: log.batteryTemp }))
-                                }
-                            ]}
-                        />
-                    </TabPanel>
-
-                    <TabPanel value={value} index={3} logs={logs}>
-                        <TimeSeriesGraph
-                            title="Is Charging"
-                            style={{
-                                marginTop: "20px",
-                                height: "400px",
-                                width: "100%",
-                                backgroundColor: "white",
-                                padding: "20px",
-                                borderRadius: "5px"
-                            }}
-                            timeSeriesData={[
-                                {
-                                    name: "Boolean",
-                                    color: "#48CAD3",
-                                    data: logs.map(log => ({ time: log.timestamp, value: log.isCharging ? 0 : 1 }))
-                                }
-                            ]}
-                        />
-                    </TabPanel>
-
-                    <TabPanel value={value} index={4} logs={logs}>
-                        <TimeSeriesGraph
-                            title="Charging Voltage"
-                            style={{
-                                marginTop: "20px",
-                                height: "400px",
-                                width: "100%",
-                                backgroundColor: "white",
-                                padding: "20px",
-                                borderRadius: "5px"
-                            }}
-                            timeSeriesData={[
-                                {
-                                    name: "Voltage",
-                                    color: "#5273de",
-                                    data: logs.map(log => ({ time: log.timestamp, value: log.chargingVoltage }))
-                                }
-                            ]}
-                        />
-                    </TabPanel>
-                    <TabPanel value={value} index={5} logs={logs}>
-                        <TableComp
-                            id="Battery"
-                            tableHeaders={BatteryHeaders}
-                            data={logs}
-                            style={{
-                                marginTop: "20px",
-                                height: "400px",
-                                width: "100%",
-                                backgroundColor: "white",
-                                padding: "20px",
-                                borderRadius: "5px"
-                            }}
-                        />
-                    </TabPanel>
-                </Box>
+                <TabSection
+                    sectionName="Battery"
+                    tabsStyle={{
+                        backgroundColor: "white",
+                        marginBottom: "20px",
+                        padding: "10px",
+                        width: "100%",
+                        borderRadius: "5px"
+                    }}
+                    tabContents={[
+                        {
+                            label: "Voltage",
+                            component: (
+                                <TimeSeriesGraph
+                                    title="Battery Voltage"
+                                    style={{
+                                        height: "400px",
+                                        width: "100%",
+                                        backgroundColor: "white",
+                                        padding: "20px",
+                                        borderRadius: "5px"
+                                    }}
+                                    timeSeriesData={[
+                                        {
+                                            name: "Voltage",
+                                            color: "#8884d8",
+                                            data: logs.map(log => ({ time: log.timestamp, value: log.batteryVoltage }))
+                                        },
+                                    ]}
+                                />
+                            )
+                        },
+                        {
+                            label: "Current",
+                            component: (
+                                <TimeSeriesGraph
+                                    title="Battery Current"
+                                    style={{
+                                        height: "400px",
+                                        width: "100%",
+                                        backgroundColor: "white",
+                                        padding: "20px",
+                                        borderRadius: "5px"
+                                    }}
+                                    timeSeriesData={[
+                                        {
+                                            name: "Current",
+                                            color: "#82ca9d",
+                                            data: logs.map(log => ({ time: log.timestamp, value: log.batteryCurrent }))
+                                        }
+                                    ]}
+                                />
+                            )
+                        },
+                        {
+                            label: "Temperature",
+                            component: (
+                                <TimeSeriesGraph
+                                    title="Battery Temperature"
+                                    style={{
+                                        height: "400px",
+                                        width: "100%",
+                                        backgroundColor: "white",
+                                        padding: "20px",
+                                        borderRadius: "5px"
+                                    }}
+                                    timeSeriesData={[
+                                        {
+                                            name: "Temperature",
+                                            color: "#db8f4d",
+                                            data: logs.map(log => ({ time: log.timestamp, value: log.batteryTemp }))
+                                        }
+                                    ]}
+                                />
+                            )
+                        },
+                        {
+                            label: "Is Charging",
+                            component: (
+                                <TimeSeriesGraph
+                                    title="Is Charging"
+                                    style={{
+                                        height: "400px",
+                                        width: "100%",
+                                        backgroundColor: "white",
+                                        padding: "20px",
+                                        borderRadius: "5px"
+                                    }}
+                                    timeSeriesData={[
+                                        {
+                                            name: "Boolean",
+                                            color: "#48CAD3",
+                                            data: logs.map(log => ({ time: log.timestamp, value: log.isCharging ? 0 : 1 }))
+                                        }
+                                    ]}
+                                />
+                            )
+                        },
+                        {
+                            label: "Charging Voltage",
+                            component: (
+                                <TimeSeriesGraph
+                                    title="Charging Voltage"
+                                    style={{
+                                        height: "400px",
+                                        width: "100%",
+                                        backgroundColor: "white",
+                                        padding: "20px",
+                                        borderRadius: "5px"
+                                    }}
+                                    timeSeriesData={[
+                                        {
+                                            name: "Voltage",
+                                            color: "#5273de",
+                                            data: logs.map(log => ({ time: log.timestamp, value: log.chargingVoltage }))
+                                        }
+                                    ]}
+                                />
+                            )
+                        },
+                        {
+                            label: "Battery Table",
+                            component: (
+                                <TableComp
+                                    id="Battery"
+                                    tableHeaders={BatteryHeaders}
+                                    data={logs}
+                                    style={{
+                                        height: "400px",
+                                        width: "100%",
+                                        backgroundColor: "white",
+                                        padding: "20px",
+                                        borderRadius: "5px"
+                                    }}
+                                />
+                            )
+                        }
+                    ]}
+                />
             </div>
         </div>
     );
 }
+
+/*
+<Tabs value={value} onChange={handleChange} aria-label="BatteryTabs" sx={{
+                    bgcolor: "white",
+                    marginBottom: "20px",
+                    padding: "10px",
+                    width: "100%",
+                    borderRadius: "5px"
+                }}>
+                    <Tab label="Voltage" {...a11yProps(0)} />
+                    <Tab label="Current" {...a11yProps(1)} />
+                    <Tab label="Temperature" {...a11yProps(2)} />
+                    <Tab label="Is Charging" {...a11yProps(3)} />
+                    <Tab label="Charging Voltage" {...a11yProps(4)} />
+                    <Tab label="Battery Table" {...a11yProps(5)} />
+                </Tabs>
+
+                <TabPanel value={value} index={0} logs={logs}>
+                    
+                </TabPanel>
+                <TabPanel value={value} index={1} logs={logs}>
+                    
+                </TabPanel>
+                <TabPanel value={value} index={2} logs={logs}>
+                    
+                </TabPanel>
+
+                <TabPanel value={value} index={3} logs={logs}>
+                    
+                </TabPanel>
+
+                <TabPanel value={value} index={4} logs={logs}>
+
+                </TabPanel>
+                <TabPanel value={value} index={5} logs={logs}>
+
+                </TabPanel>
+*/
