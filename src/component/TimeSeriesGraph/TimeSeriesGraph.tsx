@@ -1,6 +1,5 @@
-import { transformNumberToDate } from "@/util/transform"
-import { Typography } from "@mui/material"
-
+import { transformNumberToDate } from "@/util/transform";
+import { Typography } from "@mui/material";
 import {
     Legend,
     ResponsiveContainer,
@@ -8,9 +7,15 @@ import {
     ScatterChart,
     Tooltip,
     XAxis,
-    YAxis
-} from 'recharts'
+    YAxis,
+} from 'recharts';
 
+type ScatterPlotMargin = {
+    top?: number;
+    right?: number;
+    bottom?: number;
+    left?: number;
+}
 
 type TimeSeriesData = {
     name: string,
@@ -22,12 +27,35 @@ type TimeSeriesData = {
 }
 
 type Props = {
+    scatterPlotMargin?: ScatterPlotMargin,
     timeSeriesData: Array<TimeSeriesData>,
     style?: React.CSSProperties,
     title: string
 }
+
+const getDomain = (timeSeriesData: Array<TimeSeriesData>) => {
+    let maxValue: number | undefined = undefined
+    let minValue: number | undefined = undefined
+    for (let i = 0; i < timeSeriesData.length; i++) {
+        for (let j = 0; j < timeSeriesData[i].data.length; j++) {
+            const currentValue = timeSeriesData[i].data[j].value
+            if (currentValue !== null && (maxValue === undefined || currentValue > maxValue)) {
+                maxValue = currentValue
+            }
+            if (currentValue !== null && (minValue === undefined || currentValue < minValue)) {
+                maxValue = currentValue
+            }
+        }
+    }
+    return {
+        min: minValue,
+        max: maxValue
+    }
+}
+
 export default function TimeSeriesGraph(props: Props) {
     const { timeSeriesData, style, title } = props
+    const { min, max } = getDomain(timeSeriesData)
     return (
         <div style={style}>
             <Typography align="center" gutterBottom>
@@ -35,7 +63,7 @@ export default function TimeSeriesGraph(props: Props) {
             </Typography>
             <div style={{ width: "100%", height: "calc(100% - 24px)" }}>
                 <ResponsiveContainer width="100%" height="100%" >
-                    <ScatterChart>
+                    <ScatterChart margin={props.scatterPlotMargin}>
                         <XAxis
                             dataKey='time'
                             domain={['auto', 'auto']}
@@ -43,7 +71,11 @@ export default function TimeSeriesGraph(props: Props) {
                             tickFormatter={transformNumberToDate}
                             type='number'
                         />
-                        <YAxis dataKey='value' name='Value' />
+                        <YAxis
+                            dataKey='value'
+                            name='Value'
+                            style={{ width: "300px" }}
+                            domain={min !== undefined && max !== undefined ? [min, max] : undefined} />
                         <Tooltip<string | number, string>
                             formatter={(value, name, props) => {
                                 console.log(name)

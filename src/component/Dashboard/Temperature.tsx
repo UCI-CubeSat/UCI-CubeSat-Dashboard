@@ -50,6 +50,7 @@ export default function Temperature(props: Props) {
                         label: "Thermistor 1",
                         component: (
                             <TimeSeriesGraph //modifies style of time/series graph only
+                                scatterPlotMargin={{ left: 30, top: 10 }}
                                 title="Thermistor 1"
                                 style={{
                                     height: "400px",
@@ -73,6 +74,7 @@ export default function Temperature(props: Props) {
                         label: "Thermistor 2",
                         component: (
                             <TimeSeriesGraph //modifies style of time/series graph only
+                                scatterPlotMargin={{ left: 30, top: 10 }}
                                 title="Thermistor 2"
                                 style={{
                                     height: "400px",
@@ -95,6 +97,7 @@ export default function Temperature(props: Props) {
                         label: "Thermistor 3",
                         component: (
                             <TimeSeriesGraph //modifies style of time/series graph only
+                                scatterPlotMargin={{ left: 30, top: 10 }}
                                 title="Thermistor 3"
                                 style={{
                                     height: "400px",
@@ -117,6 +120,7 @@ export default function Temperature(props: Props) {
                         label: "Thermistor 4",
                         component: (
                             <TimeSeriesGraph //modifies style of time/series graph only
+                                scatterPlotMargin={{ left: 30, top: 10 }}
                                 title="Thermistor 4"
                                 style={{
                                     height: "400px",
