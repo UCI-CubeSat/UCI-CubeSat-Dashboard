@@ -39,14 +39,15 @@ export default function Map(props: Props) {
                 coordinates={logs}
                 style={{
                     height: "400px",
-                    width: "100%"
+                    width: "100%",
+                    marginBottom: "20px"
                 }}
             />
             <TableComp
                 id="Map"
                 tableHeaders={MapHeaders}
                 data={logs}
-                style={{ maxHeight: "300px", marginTop: "20px" }}
+                style={{ maxHeight: "300px" }}
             />
         </div>
     )
