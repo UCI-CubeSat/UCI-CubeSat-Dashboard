@@ -1,8 +1,9 @@
 import { ParsedLog } from "@/model/log"
 import { transformNumberToDate } from "@/util/transform"
 import { Typography } from '@mui/material'
+import TabSection from "../TabSection/TabSection"
 import TableComp from "../TableComp/Table"
-import MapLayer from "../map/mapLayer"
+import { MemoMapLayer } from "../map/mapLayer"
 
 const MapHeaders = {
     timestamp: {
@@ -35,20 +36,47 @@ export default function Location(props: Props) {
             >
                 Map
             </Typography>
-            <MapLayer
-                coordinates={logs}
-                style={{
-                    height: "400px",
+            <TabSection
+                sectionName="Location"
+                tabsStyle={{
+                    backgroundColor: "white",
+                    marginBottom: "20px",
+                    padding: "10px",
                     width: "100%",
-                    marginBottom: "20px"
+                    borderRadius: "5px"
                 }}
-            />
-            <TableComp
-                id="Map"
-                tableHeaders={MapHeaders}
-                data={logs}
-                style={{ maxHeight: "300px" }}
+                tabContents={[
+                    {
+                        label: "Map",
+                        component: (
+                            <MemoMapLayer
+                                coordinates={logs}
+                                style={{
+                                    height: "400px",
+                                    width: "100%",
+                                }}
+                            />
+                        )
+
+                    },
+                    {
+                        label: "Location Table",
+                        component: (
+                            <TableComp
+                                id="Map"
+                                tableHeaders={MapHeaders}
+                                data={logs}
+                                style={{ maxHeight: "400px" }}
+                            />
+                        )
+                    }
+                ]}
             />
         </div>
     )
 }
+
+/*
+
+            
+*/

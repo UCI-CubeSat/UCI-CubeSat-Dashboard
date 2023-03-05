@@ -95,7 +95,12 @@ export default function Panel(props: Props) {
                                 id="Panel"
                                 tableHeaders={PanelHeaders}
                                 data={logs}
-                                style={{ maxHeight: "300px", marginTop: "20px" }}
+                                style={{
+                                    height: "400px",
+                                    width: "100%",
+                                    backgroundColor: "white",
+                                    borderRadius: "5px"
+                                }}
                             />
                         )
                     }
