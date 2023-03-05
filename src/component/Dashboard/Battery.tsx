@@ -220,7 +220,6 @@ export default function Battery(props: BatteryProps) {
                                         height: "400px",
                                         width: "100%",
                                         backgroundColor: "white",
-                                        padding: "20px",
                                         borderRadius: "5px"
                                     }}
                                 />

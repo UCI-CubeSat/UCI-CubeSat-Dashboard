@@ -42,3 +42,10 @@ const MapLayer: React.FC<Props> = (props) => {
 };
 
 export default MapLayer;
+
+
+const mapLayerArePropsEqual = (prevProps: Props, nextProps: Props) => {
+  return prevProps.coordinates === nextProps.coordinates && prevProps.style === nextProps.style
+}
+
+export const MemoMapLayer = React.memo(MapLayer, mapLayerArePropsEqual)
