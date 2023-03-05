@@ -1,6 +1,7 @@
 import { ParsedLog } from "@/model/log"
 import { transformNumberToDate } from "@/util/transform"
 import { Typography } from "@mui/material"
+import TabSection from "../TabSection/TabSection"
 import TableComp from "../TableComp/Table"
 import TimeSeriesGraph from "../TimeSeriesGraph/TimeSeriesGraph"
 
@@ -35,44 +36,119 @@ export default function Temperature(props: Props) {
                 Temperatures
             </Typography>
 
-            <TimeSeriesGraph //modifies style of time/series graph only
-                title="Temperatures"
-                style={{
-                    marginTop: "20px",
-                    height: "400px",
-                    width: "100%",
+            <TabSection
+                sectionName="Temperature"
+                tabsStyle={{
                     backgroundColor: "white",
-                    padding: "20px",
+                    marginBottom: "20px",
+                    padding: "10px",
+                    width: "100%",
                     borderRadius: "5px"
                 }}
-                timeSeriesData={[
+                tabContents={[
                     {
-                        name: "Themistor 1",
-                        color: "#006400",
-                        data: logs.map(log => ({ time: log.timestamp, value: log.themistor1 }))
+                        label: "Thermistor 1",
+                        component: (
+                            <TimeSeriesGraph //modifies style of time/series graph only
+                                title="Thermistor 1"
+                                style={{
+                                    height: "400px",
+                                    width: "100%",
+                                    backgroundColor: "white",
+                                    padding: "20px",
+                                    borderRadius: "5px"
+                                }}
+                                timeSeriesData={[
+                                    {
+                                        name: "Temperature",
+                                        color: "#006400",
+                                        data: logs.map(log => ({ time: log.timestamp, value: log.themistor1 }))
+                                    },
+                                ]}
+                            />
+                        )
+
                     },
                     {
-                        name: "Themistor 2",
-                        color: "#FF0000",
-                        data: logs.map(log => ({ time: log.timestamp, value: log.themistor2 }))
+                        label: "Thermistor 2",
+                        component: (
+                            <TimeSeriesGraph //modifies style of time/series graph only
+                                title="Thermistor 2"
+                                style={{
+                                    height: "400px",
+                                    width: "100%",
+                                    backgroundColor: "white",
+                                    padding: "20px",
+                                    borderRadius: "5px"
+                                }}
+                                timeSeriesData={[
+                                    {
+                                        name: "Temperature",
+                                        color: "#FF0000",
+                                        data: logs.map(log => ({ time: log.timestamp, value: log.themistor2 }))
+                                    },
+                                ]}
+                            />
+                        )
                     },
                     {
-                        name: "Themistor 3",
-                        color: "#0000FF",
-                        data: logs.map(log => ({ time: log.timestamp, value: log.themistor3 }))
+                        label: "Thermistor 3",
+                        component: (
+                            <TimeSeriesGraph //modifies style of time/series graph only
+                                title="Thermistor 3"
+                                style={{
+                                    height: "400px",
+                                    width: "100%",
+                                    backgroundColor: "white",
+                                    padding: "20px",
+                                    borderRadius: "5px"
+                                }}
+                                timeSeriesData={[
+                                    {
+                                        name: "Temperature",
+                                        color: "#0000FF",
+                                        data: logs.map(log => ({ time: log.timestamp, value: log.themistor3 }))
+                                    },
+                                ]}
+                            />
+                        )
                     },
                     {
-                        name: "Themistor 4",
-                        color: "#FFA500",
-                        data: logs.map(log => ({ time: log.timestamp, value: log.themistor4 }))
-                    }
+                        label: "Thermistor 4",
+                        component: (
+                            <TimeSeriesGraph //modifies style of time/series graph only
+                                title="Thermistor 4"
+                                style={{
+                                    height: "400px",
+                                    width: "100%",
+                                    backgroundColor: "white",
+                                    padding: "20px",
+                                    borderRadius: "5px"
+                                }}
+                                timeSeriesData={[
+                                    {
+                                        name: "Temperature",
+                                        color: "#FFA500",
+                                        data: logs.map(log => ({ time: log.timestamp, value: log.themistor4 }))
+                                    },
+                                ]}
+                            />
+                        )
+                    },
+                    {
+                        label: "Temperature Table",
+                        component: (
+                            <TableComp
+                                id="Temperature"
+                                tableHeaders={TemperatureHeaders}
+                                data={logs}
+                                style={{ maxHeight: "400px" }}
+                            />
+                        )
+                    },
+
                 ]}
-            />
-            <TableComp
-                id="Temperature"
-                tableHeaders={TemperatureHeaders}
-                data={logs}
-                style={{ maxHeight: "300px", marginTop: "20px" }}
+
             />
 
         </div>
