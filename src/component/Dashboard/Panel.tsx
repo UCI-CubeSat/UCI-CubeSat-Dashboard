@@ -1,6 +1,7 @@
 import { ParsedLog } from "@/model/log"
 import { transformNumberToDate } from "@/util/transform"
 import { Typography } from "@mui/material"
+import TabSection from "../TabSection/TabSection"
 import TableComp from "../TableComp/Table"
 import TimeSeriesGraph from "../TimeSeriesGraph/TimeSeriesGraph"
 
@@ -32,49 +33,83 @@ export default function Panel(props: Props) {
             >
                 Panel
             </Typography>
-            <TimeSeriesGraph
-                title="Panel Voltage"
-                style={{
-                    height: "400px",
-                    width: "100%",
+            <TabSection
+                sectionName="Panel"
+                tabsStyle={{
                     backgroundColor: "white",
-                    padding: "20px",
+                    marginBottom: "20px",
+                    padding: "10px",
+                    width: "100%",
                     borderRadius: "5px"
                 }}
-                timeSeriesData={[
+                tabContents={[
                     {
-                        name: "Voltage",
-                        color: "#8884d8",
-                        data: logs.map(log => ({ time: log.timestamp, value: log.panelVoltage }))
+                        label: "Voltage",
+                        component: (
+                            <TimeSeriesGraph
+                                title="Panel Voltage"
+                                style={{
+                                    height: "400px",
+                                    width: "100%",
+                                    backgroundColor: "white",
+                                    padding: "20px",
+                                    borderRadius: "5px"
+                                }}
+                                timeSeriesData={[
+                                    {
+                                        name: "Voltage",
+                                        color: "#8884d8",
+                                        data: logs.map(log => ({ time: log.timestamp, value: log.panelVoltage }))
+                                    },
+                                ]}
+                            />
+                        ),
                     },
-                ]}
-            />
-
-            <TimeSeriesGraph
-                title="Panel Current"
-                style={{
-                    marginTop: "20px",
-                    height: "400px",
-                    width: "100%",
-                    backgroundColor: "white",
-                    padding: "20px",
-                    borderRadius: "5px"
-                }}
-                timeSeriesData={[
                     {
-                        name: "Current",
-                        color: "#82ca9d",
-                        data: logs.map(log => ({ time: log.timestamp, value: log.panelCurrent }))
+                        label: "Current",
+                        component: (
+                            <TimeSeriesGraph
+                                title="Panel Current"
+                                style={{
+                                    marginTop: "20px",
+                                    height: "400px",
+                                    width: "100%",
+                                    backgroundColor: "white",
+                                    padding: "20px",
+                                    borderRadius: "5px"
+                                }}
+                                timeSeriesData={[
+                                    {
+                                        name: "Current",
+                                        color: "#82ca9d",
+                                        data: logs.map(log => ({ time: log.timestamp, value: log.panelCurrent }))
+                                    }
+                                ]}
+                            />
+                        )
+                    },
+                    {
+                        label: "Panel Table",
+                        component: (
+                            <TableComp
+                                id="Panel"
+                                tableHeaders={PanelHeaders}
+                                data={logs}
+                                style={{ maxHeight: "300px", marginTop: "20px" }}
+                            />
+                        )
                     }
                 ]}
-            />
-            <TableComp
-                id="Panel"
-                tableHeaders={PanelHeaders}
-                data={logs}
-                style={{ maxHeight: "300px", marginTop: "20px" }}
+
             />
 
         </div>
     )
 }
+
+/*
+
+
+
+
+*/
