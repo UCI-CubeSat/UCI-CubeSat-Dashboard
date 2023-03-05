@@ -20,7 +20,7 @@ type Props = {
     logs: Array<ParsedLog>
 }
 // This component should show lat, lon, and alt
-export default function Map(props: Props) {
+export default function Location(props: Props) {
     const { logs } = props
     return (
         <div

@@ -3,7 +3,7 @@ import { Grid } from '@mui/material'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
 import Battery from './Battery'
-import Map from './Map'
+import Location from './Location'
 import Panel from './Panel'
 import StateInfo from './StateInfo'
 import Temperature from './Temperature'
@@ -31,7 +31,7 @@ export default function Dashboard() {
         return (
             <Grid container>
                 <Grid item lg={6} xs={12}>
-                    <Map logs={logs} />
+                    <Location logs={logs} />
                 </Grid>
                 <Grid item lg={6} xs={12}>
                     <Panel logs={logs} />
