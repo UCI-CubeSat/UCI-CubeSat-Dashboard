@@ -6,6 +6,7 @@ import * as React from 'react'
 import TabSection from "../TabSection/TabSection"
 import TableComp from "../TableComp/Table"
 import TimeSeriesGraph from "../TimeSeriesGraph/TimeSeriesGraph"
+import TimeSeriesGraphDiscrete from "../TimeSeriesGraph/TimeSeriesGraphDiscrete"
 
 // This constant defines an object that contains the headers for the battery logs.
 const BatteryHeaders = {
@@ -168,7 +169,8 @@ export default function Battery(props: BatteryProps) {
                         {
                             label: "Is Charging",
                             component: (
-                                <TimeSeriesGraph
+                                <TimeSeriesGraphDiscrete
+                                    scatterPlotMargin={{ left: 20, top: 10 }}
                                     title="Is Charging"
                                     style={{
                                         height: "400px",
@@ -181,9 +183,13 @@ export default function Battery(props: BatteryProps) {
                                         {
                                             name: "Boolean",
                                             color: "#48CAD3",
-                                            data: logs.map(log => ({ time: log.timestamp, value: log.isCharging ? 0 : 1 }))
+                                            data: logs.map(log => ({ time: log.timestamp, value: log.isCharging ? 1 as const : 0 as const })),
                                         }
                                     ]}
+                                    labelMapping={{
+                                        1: "Charging",
+                                        0: "Not Charging"
+                                    } as const}
                                 />
                             )
                         },

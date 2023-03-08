@@ -17,45 +17,28 @@ type ScatterPlotMargin = {
     left?: number;
 }
 
-type TimeSeriesData = {
+type TimeSeriesDataDiscrete<T> = {
     name: string,
     color: string,
     data: Array<{
         time: number,
-        value: number | null
+        value: T
     }>
 }
 
-type Props = {
+type Props<T extends number | string | symbol> = {
     scatterPlotMargin?: ScatterPlotMargin,
-    timeSeriesData: Array<TimeSeriesData>,
+    timeSeriesData: Array<TimeSeriesDataDiscrete<T>>,
     style?: React.CSSProperties,
-    title: string
+    title: string,
+    labelMapping: Record<T, string>
 }
 
-const getDomain = (timeSeriesData: Array<TimeSeriesData>) => {
-    let maxValue: number | undefined = undefined
-    let minValue: number | undefined = undefined
-    for (let i = 0; i < timeSeriesData.length; i++) {
-        for (let j = 0; j < timeSeriesData[i].data.length; j++) {
-            const currentValue = timeSeriesData[i].data[j].value
-            if (currentValue !== null && (maxValue === undefined || currentValue > maxValue)) {
-                maxValue = currentValue
-            }
-            if (currentValue !== null && (minValue === undefined || currentValue < minValue)) {
-                maxValue = currentValue
-            }
-        }
-    }
-    return {
-        min: minValue,
-        max: maxValue
-    }
-}
 
-export default function TimeSeriesGraph(props: Props) {
-    const { timeSeriesData, style, title } = props
-    const { min, max } = getDomain(timeSeriesData)
+
+export default function TimeSeriesGraphDiscrete<T extends number | string | symbol>(props: Props<T>) {
+    const { timeSeriesData, style, title, labelMapping } = props
+
     return (
         <div style={style}>
             <Typography align="center" gutterBottom>
@@ -73,18 +56,19 @@ export default function TimeSeriesGraph(props: Props) {
                         />
                         <YAxis
                             dataKey='value'
+                            ticks={Object.keys(labelMapping)}
                             name='Value'
+                            tickFormatter={(value: T) => labelMapping[value]}
                             style={{ width: "300px" }}
-                            domain={min !== undefined && max !== undefined ? [min, max] : undefined} />
+                        />
                         <Tooltip<string | number, string>
-                            formatter={(value, name, props) => {
-                                console.log(name)
+                            formatter={(value, name) => {
                                 if (name === "Time") {
 
                                     return [transformNumberToDate(value), name]
                                 }
                                 else {
-                                    return [value, name]
+                                    return [labelMapping[value as T], name]
                                 }
                             }}
                         />
