@@ -28,7 +28,7 @@ type TimeSeriesDataDiscrete<T> = {
 
 type Props<T extends number | string | symbol> = {
     scatterPlotMargin?: ScatterPlotMargin,
-    timeSeriesData: Array<TimeSeriesDataDiscrete<T>>,
+    timeSeriesData: Array<TimeSeriesDataDiscrete<T | null>>,
     style?: React.CSSProperties,
     title: string,
     labelMapping: Record<T, string>
