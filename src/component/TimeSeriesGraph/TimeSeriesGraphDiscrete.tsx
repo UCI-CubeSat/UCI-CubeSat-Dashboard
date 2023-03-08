@@ -38,7 +38,6 @@ type Props<T extends number | string | symbol> = {
 
 export default function TimeSeriesGraphDiscrete<T extends number | string | symbol>(props: Props<T>) {
     const { timeSeriesData, style, title, labelMapping } = props
-
     return (
         <div style={style}>
             <Typography align="center" gutterBottom>
@@ -58,7 +57,7 @@ export default function TimeSeriesGraphDiscrete<T extends number | string | symb
                             dataKey='value'
                             ticks={Object.keys(labelMapping)}
                             name='Value'
-                            tickFormatter={(value: T) => labelMapping[value]}
+                            tickFormatter={(value: T) => value === null ? value : labelMapping[value]}
                             style={{ width: "300px" }}
                         />
                         <Tooltip<string | number, string>
@@ -68,7 +67,7 @@ export default function TimeSeriesGraphDiscrete<T extends number | string | symb
                                     return [transformNumberToDate(value), name]
                                 }
                                 else {
-                                    return [labelMapping[value as T], name]
+                                    return [value === null ? value : labelMapping[value as T], name]
                                 }
                             }}
                         />
