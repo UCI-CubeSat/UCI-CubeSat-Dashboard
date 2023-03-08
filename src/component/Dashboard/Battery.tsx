@@ -65,15 +65,6 @@ function TabPanel(props: TabPanelProps) {
 // This component should show batteryVoltage, batteryCurrent, batteryTemp, chargingVoltage, and isCharging
 export default function Battery(props: BatteryProps) {
     const { logs } = props
-    const [value, setValue] = React.useState(0);
-
-    // This function updates the selected tab.
-    const handleChange = (
-        event: React.SyntheticEvent,
-        newValue: number
-    ) => {
-        setValue(newValue);
-    };
 
     return (
         <div
