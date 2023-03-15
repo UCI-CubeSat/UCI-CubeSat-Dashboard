@@ -15,7 +15,7 @@
     "@types/lodash": "^4.14.186",
     "jotai": "^2.0.2",
     "mapbox-gl": "^2.8.1",
-    "moment": "^2.29.3",
+    "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-map-gl": "^7.0.10",
