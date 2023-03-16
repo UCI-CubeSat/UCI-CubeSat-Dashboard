@@ -44,6 +44,7 @@ export default function Filter(props: FilterProps) {
 
     const [open, setOpen] = useState(false)
     const [mode, setMode] = useState(props.queryParams.mode)
+    const [count, setCount] = useState(props.queryParams.mode === "offset" ? props.queryParams.count : null)
 
     return (
         <React.Fragment>

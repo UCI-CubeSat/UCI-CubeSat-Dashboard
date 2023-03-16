@@ -66,7 +66,7 @@ export default function Location(props: Props) {
                                 id="Map"
                                 tableHeaders={MapHeaders}
                                 data={logs}
-                                style={{ maxHeight: "400px" }}
+                                style={{ height: "400px", }}
                             />
                         )
                     }

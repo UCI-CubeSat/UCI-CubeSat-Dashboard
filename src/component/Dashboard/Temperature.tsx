@@ -146,7 +146,7 @@ export default function Temperature(props: Props) {
                                 id="Temperature"
                                 tableHeaders={TemperatureHeaders}
                                 data={logs}
-                                style={{ maxHeight: "400px" }}
+                                style={{ height: "400px", }}
                             />
                         )
                     },

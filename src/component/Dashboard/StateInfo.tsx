@@ -174,7 +174,7 @@ export default function StateInfo(props: Props) {
                                 id="StateInfo"
                                 tableHeaders={StateInfoHeaders}
                                 data={logs}
-                                style={{ maxHeight: "400px" }}
+                                style={{ height: "400px", }}
                             />
                         )
                     }
