@@ -24,27 +24,21 @@ export const satellitesByTimeRange = async ({ start, end }: PostTimeRangeRequest
       },
     });
   const data = await fetchResponse.json();
-  return PostTimeRangeResponseBodyValidator.parse(data)
+  return { type: "timeRange" as const, ...PostTimeRangeResponseBodyValidator.parse(data) }
 };
 
-type PostPaginatedRequestBody = {
-  type: "offset",
-  index: number, // Indexed log is always included
+type PostOffetRequestBody = {
+  pageNo: number,
   count: number,
-} | {
-  type: "cursor",
-  cursor: number, // Cursor log is never provided
-  count: number,
-  direction: "forward" | "backward"
 }
-const PostPaginatedResponseBodyValidator = z.object({
+const PostOffsetResponseBodyValidator = z.object({
   logs: z.array(ParsedLogValidator),
   numLogsBefore: z.number(),
   numLogsAfter: z.number()
 })
 
-export const satellitesByPagination = async (body: PostPaginatedRequestBody) => {
-  const fetchResponse = await fetch(`${env.REACT_APP_SERVER_URL}/satellite/by_time_range`,
+export const satellitesByOffset = async (body: PostOffetRequestBody) => {
+  const fetchResponse = await fetch(`${env.REACT_APP_SERVER_URL}/satellite/by_offset`,
     {
       method: "POST",
       body: JSON.stringify(body),
@@ -54,5 +48,5 @@ export const satellitesByPagination = async (body: PostPaginatedRequestBody) => 
       },
     });
   const data = await fetchResponse.json();
-  return PostPaginatedResponseBodyValidator.parse(data)
+  return { type: "offset" as const, ...PostOffsetResponseBodyValidator.parse(data) }
 }

@@ -1,140 +1,149 @@
-import { Radio, Typography } from "@mui/material"
-import moment from "moment"
-import React from "react"
+import FilterListIcon from '@mui/icons-material/FilterList';
+import { Button, Grid, IconButton, Modal, Radio, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { z } from 'zod';
 
-const TEN_DAYS_IN_MS = 8.64e+8
+// const TEN_DAYS_IN_MS = 8.64e+8
 
-export type TimeRange = {
-    start: number,
-    end: number
-} | {
-    start: null,
-    end: null
+// const calcValue = (start: number | null, end: number | null) => {
+//     if (start === null && end === null) {
+//         return "all"
+//     }
+//     else {
+//         return "timeRange"
+//     }
+// }
+
+// const getDateString = (timeInMS: number) => {
+//     return moment.unix(Math.floor(timeInMS / 1000)).format("YYYY-MM-DD")
+// }
+
+export const DashboardQueryParamValidator = z.discriminatedUnion("mode", [
+    z.object({
+        mode: z.literal("timeRange"),
+        start: z.preprocess(Number, z.number().min(0)),
+        end: z.preprocess(Number, z.number().min(0))
+    }),
+    z.object({
+        mode: z.literal("offset"),
+        pageNo: z.preprocess(Number, z.number().min(1)),
+        count: z.preprocess(Number, z.number().min(1)),
+    }),
+])
+export type DashboardQueryParam = z.infer<typeof DashboardQueryParamValidator>
+
+
+type FilterProps = {
+    queryParams: DashboardQueryParam,
+    // Following only apply if using offset
+    numLogsAfter: number | null,
+    numLogsBefore: number | null
 }
 
-const calcValue = (start: number | null, end: number | null) => {
-    if (start === null && end === null) {
-        return "all"
-    }
-    else {
-        return "timeRange"
-    }
-}
+export default function Filter(props: FilterProps) {
 
-const getDateString = (timeInMS: number) => {
-    return moment.unix(Math.floor(timeInMS / 1000)).format("YYYY-MM-DD")
-}
+    const [open, setOpen] = useState(false)
+    const [mode, setMode] = useState(props.queryParams.mode)
 
-
-type Props = TimeRange & {
-    setRange: React.Dispatch<React.SetStateAction<TimeRange>>
-}
-export default function Filter(props: Props) {
-    const value = calcValue(props.start, props.end)
     return (
-        <div
-            style={{
-                width: "100%",
-                padding: "20px"
-            }}
-        >
-            <Typography
-                variant="h4"
-                gutterBottom
-            >
-                Select
-            </Typography>
+        <React.Fragment>
             <div
                 style={{
                     display: "flex",
                     flexDirection: "row",
-                    alignItems: "center"
+                    justifyContent: "flex-end",
+                    alignItems: "center",
+                    paddingRight: "10px",
+                    paddingTop: "10px"
                 }}
             >
-                <Radio
-                    checked={value === "all"}
-                    onClick={() => {
-                        props.setRange({
-                            start: null,
-                            end: null
-                        })
+                <Typography
+                    display="inline-block"
+                    variant="h6"
+                    style={{
+                        marginRight: "5px"
                     }}
-                />
-                <Typography>
-                    All
+                >
+                    Filter:
                 </Typography>
-                <Radio
-                    checked={value === "timeRange"}
-                    onClick={() => {
-                        props.setRange({
-                            start: Date.now() - TEN_DAYS_IN_MS,
-                            end: Date.now()
-                        })
+                <IconButton
+                    onClick={() => setOpen(true)}
+                >
+                    <FilterListIcon />
+                </IconButton>
+            </div>
+            <Modal
+                open={open}
+                onClose={() => setOpen(false)}
+            >
+                <div
+                    style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: "400px",
+                        borderRadius: "10px",
+                        backgroundColor: "white",
+                        padding: "15px"
                     }}
-                />
-                <Typography>
-                    Time Range
-                </Typography>
-                {
-                    props.start !== null ?
-                        <div style={{
-                            marginLeft: "20px"
-                        }}>
-                            <label
-                                style={{ marginRight: "5px" }}
-                            >
-                                Start:
-                            </label>
-
-                            <input
-                                style={{
-                                    height: "30px",
-                                    fontSize: "16px",
-                                    outline: "none"
-                                }}
-                                type="date"
-                                value={getDateString(props.start)}
-                                onChange={(e) => {
-                                    if (e.target.value.length > 0) {
-                                        const newStart = moment(e.target.value).startOf('day').unix() * 1000
-                                        if (props.start !== newStart && newStart < props.end && newStart > 0) {
-                                            props.setRange({
-                                                start: newStart,
-                                                end: props.end
-                                            })
-                                        }
-                                    }
-
-                                }} />
-                            <label
-                                style={{ marginRight: "5px", marginLeft: "10px" }}
-                            >
-                                End:
-                            </label>
-                            <input
-                                style={{
-                                    height: "30px",
-                                    fontSize: "16px"
-                                }}
-                                type="date"
-                                value={getDateString(props.end)}
-                                onChange={(e) => {
-                                    if (e.target.value.length > 0) {
-                                        const newEnd = moment(e.target.value).endOf('day').unix() * 1000
-                                        if (props.end !== newEnd && newEnd > props.start) {
-                                            props.setRange({
-                                                start: props.start,
-                                                end: newEnd
-                                            })
-                                        }
-                                    }
+                >
+                    <Grid container spacing={2} style={{ height: "100%" }}>
+                        <Grid item xs={12}>
+                            <Typography variant='h5'>
+                                Filter
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Radio
+                                checked={mode === "offset"}
+                                onClick={() => {
+                                    setMode("offset")
                                 }}
                             />
-                        </div>
-                        : null
-
-                }
-            </div>
-        </div>
+                            <Typography display="inline-block">
+                                Paginated
+                            </Typography>
+                            <Radio
+                                checked={mode === "timeRange"}
+                                onClick={() => {
+                                    setMode("timeRange")
+                                }}
+                            />
+                            <Typography display="inline-block">
+                                Time Range
+                            </Typography>
+                        </Grid>
+                        <Grid item>
+                            form
+                        </Grid>
+                        <Grid item xs={12}
+                            style={{
+                                position: "sticky",
+                                bottom: 0
+                            }}
+                        >
+                            <Grid container spacing={1} justifyContent="right">
+                                <Grid item>
+                                    <Button variant="contained" onClick={() => setOpen(false)}>
+                                        <Typography style={{ textTransform: "none" }}>
+                                            Close
+                                        </Typography>
+                                    </Button>
+                                </Grid>
+                                <Grid item>
+                                    <Button variant="contained">
+                                        <Typography style={{ textTransform: "none" }}>
+                                            Save
+                                        </Typography>
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </div>
+            </Modal>
+        </React.Fragment>
     )
 }
+
