@@ -1,4 +1,4 @@
-import { satelliteLogs } from '@/api/satetllite'
+import { satellitesByTimeRange } from '@/api/satetllite'
 import { Grid } from '@mui/material'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
@@ -15,7 +15,7 @@ export default function Dashboard() {
     const [end, setEnd] = useState<number | null>(null)
     const response = useQuery({
         queryKey: ['satellite', 'logList', start, end],
-        queryFn: async () => await satelliteLogs({ start: start ?? 1, end: end ?? Date.now() }),
+        queryFn: async () => await satellitesByTimeRange({ start: start ?? 1, end: end ?? Date.now() }),
         retry: false,
         staleTime: TEN_MINUTES_IN_MS
     })
