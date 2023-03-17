@@ -4,7 +4,7 @@ import Dashboard from "@/component/page/dashboard";
 import EmailSignup from "@/component/page/emailSignup";
 import Tracker from "@/component/page/tracker";
 import { TAB_CONFIG } from "@/util/config";
-import Box from "@mui/material/Box";
+import { Box } from "@mui/material";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import Typography from "@mui/material/Typography";

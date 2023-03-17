@@ -1,17 +1,18 @@
-import { errorAtom, loadingAtom } from "@/store";
+import { errorAtom, } from "@/store";
 import { Alert, LinearProgress, Snackbar } from "@mui/material";
 import { useAtom } from "jotai";
 import React from "react";
+import { useIsFetching } from "react-query";
 import Logo from "../Logo/logo";
 import { appBarHeight } from "./HeaderUtils";
 
 export default function Header() {
-    const loading = useAtom(loadingAtom)[0]
     const [error, setError] = useAtom(errorAtom)
+    const isFetching = useIsFetching()
     return (
         <React.Fragment>
             {
-                loading ?
+                isFetching ?
                     <div
                         style={{
                             position: "absolute",

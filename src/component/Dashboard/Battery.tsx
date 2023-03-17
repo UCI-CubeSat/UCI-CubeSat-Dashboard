@@ -1,7 +1,6 @@
 import { ParsedLog } from "@/model/log"
 import { transformNumberToDate } from "@/util/transform"
-import { Typography } from "@mui/material"
-import Box from '@mui/material/Box'
+import { Box, Typography } from "@mui/material"
 import * as React from 'react'
 import TabSection from "../TabSection/TabSection"
 import TableComp from "../TableComp/Table"

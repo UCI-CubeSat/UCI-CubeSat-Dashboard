@@ -1,5 +1,5 @@
 import { satellitesByOffset, satellitesByTimeRange } from '@/api/satetllite'
-import { errorAtom, loadingAtom } from '@/store'
+import { errorAtom } from '@/store'
 import { GenericErrorClass } from '@/util/errorHandling'
 import { encodeGetParams, getQueryParamsGivenSearch } from '@/util/queryParams'
 import { Grid } from '@mui/material'
@@ -55,7 +55,6 @@ type DashboardContentProps = {
     queryParams: DashboardQueryParam
 }
 const DashboardContent = (props: DashboardContentProps) => {
-    const setLoading = useAtom(loadingAtom)[1]
     const setError = useAtom(errorAtom)[1]
     const response = useQuery({
         queryKey: [
@@ -94,14 +93,6 @@ const DashboardContent = (props: DashboardContentProps) => {
         cacheTime: 0,
         keepPreviousData: true
     })
-
-    if (response.isFetching) {
-        setLoading(true)
-    }
-    else {
-        setLoading(false)
-    }
-
 
     const logs = response.data?.logs
     const numLogsAfter = response.data?.type === "offset" ? response.data.numLogsAfter : null

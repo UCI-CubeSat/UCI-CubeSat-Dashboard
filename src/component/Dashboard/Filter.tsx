@@ -3,12 +3,12 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { Button, Fab, Grid, Modal, Radio, TextField, Typography } from "@mui/material";
-import { DateTimeField } from '@mui/x-date-pickers';
 import { isEqual } from 'lodash';
 import moment from 'moment';
 import React, { useState } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
+import DateTimeField from '../Form/DateTimeField';
 const TEN_DAYS_IN_MS = 8.64e+8
 
 export const DashboardQueryParamValidator = z.discriminatedUnion("mode", [
@@ -110,7 +110,20 @@ export default function Filter(props: FilterProps) {
                 open={open}
                 onClose={() => setOpen(false)}
             >
-                <FilterForm queryParams={props.queryParams} close={() => setOpen(false)} />
+                <div
+                    style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: "400px",
+                        borderRadius: "10px",
+                        backgroundColor: "white",
+                        padding: "15px"
+                    }}
+                >
+                    <FilterForm queryParams={props.queryParams} close={() => setOpen(false)} />
+                </div>
             </Modal>
         </React.Fragment>
     )
@@ -184,121 +197,109 @@ function FilterForm(props: { queryParams: DashboardQueryParam, close: () => void
     }
 
     return (
-        <div
-            style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: "400px",
-                borderRadius: "10px",
-                backgroundColor: "white",
-                padding: "15px"
-            }}
-        >
-            <Grid container spacing={2} style={{ height: "100%" }}>
-                <Grid item xs={12}>
-                    <Typography variant='h5'>
-                        Filter
-                    </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                    <Radio
-                        checked={mode === "offset"}
-                        onClick={() => {
-                            setMode("offset")
-                        }}
-                    />
-                    <Typography display="inline-block">
-                        Page Number
-                    </Typography>
-                    <Radio
-                        checked={mode === "timeRange"}
-                        onClick={() => {
-                            setMode("timeRange")
-                        }}
-                    />
-                    <Typography display="inline-block">
-                        Time Range
-                    </Typography>
-                </Grid>
-                {
-                    mode === "offset" ?
+
+        <Grid container spacing={2} style={{ height: "100%" }}>
+            <Grid item xs={12}>
+                <Typography variant='h5'>
+                    Filter
+                </Typography>
+            </Grid>
+            <Grid item xs={12}>
+                <Radio
+                    checked={mode === "offset"}
+                    onClick={() => {
+                        setMode("offset")
+                    }}
+                />
+                <Typography display="inline-block">
+                    Page Number
+                </Typography>
+                <Radio
+                    checked={mode === "timeRange"}
+                    onClick={() => {
+                        setMode("timeRange")
+                    }}
+                />
+                <Typography display="inline-block">
+                    Time Range
+                </Typography>
+            </Grid>
+            {
+                mode === "offset" ?
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            label="Number of logs per page"
+                            value={countString}
+                            onChange={(e) => {
+                                const stringValue = e.target.value
+                                if (z.coerce.number().min(1).int().safeParse(stringValue).success) {
+                                    setCount(Number(stringValue))
+                                }
+                                else {
+                                    setCount(null)
+                                }
+                                if (stringValue === "" || z.coerce.number()) {
+                                    setCountString(stringValue)
+                                }
+                            }}
+                            variant="outlined"
+                        />
+                    </Grid>
+                    :
+                    <React.Fragment>
                         <Grid item xs={12}>
-                            <TextField
+                            <DateTimeField
                                 fullWidth
-                                label="Number of logs per page"
-                                value={countString}
-                                onChange={(e) => {
-                                    const stringValue = e.target.value
-                                    if (z.coerce.number().min(1).int().safeParse(stringValue).success) {
-                                        setCount(Number(stringValue))
-                                    }
-                                    else {
-                                        setCount(null)
-                                    }
-                                    if (stringValue === "" || z.coerce.number()) {
-                                        setCountString(stringValue)
-                                    }
-                                }}
                                 variant="outlined"
+                                label="Start time"
+                                value={startDateTime}
+                                onChange={(newStartDateTime) => setStartDateTime(newStartDateTime)}
+                            />
+
+                        </Grid>
+                        <Grid item xs={12}>
+                            <DateTimeField
+                                fullWidth
+                                variant="outlined"
+                                label="End time"
+                                value={endDateTime}
+                                onChange={(newEndDateTime) => setEndDateTime(newEndDateTime)}
                             />
                         </Grid>
-                        :
-                        <React.Fragment>
-                            <Grid item xs={12}>
-                                <DateTimeField
-                                    fullWidth
-                                    variant="outlined"
-                                    label="Start time"
-                                    value={startDateTime}
-                                    onChange={(newStartDateTime) => setStartDateTime(newStartDateTime)}
-                                />
-
-                            </Grid>
-                            <Grid item xs={12}>
-                                <DateTimeField
-                                    fullWidth
-                                    variant="outlined"
-                                    label="End time"
-                                    value={endDateTime}
-                                    onChange={(newEndDateTime) => setEndDateTime(newEndDateTime)}
-                                />
-                            </Grid>
-                        </React.Fragment>
-                }
-                <Grid item xs={12}
-                    style={{
-                        position: "sticky",
-                        bottom: 0
-                    }}
-                >
-                    <Grid container spacing={1} justifyContent="right">
-                        <Grid item>
-                            <Button variant="contained" onClick={props.close}>
-                                <Typography style={{ textTransform: "none" }}>
-                                    Close
-                                </Typography>
-                            </Button>
-                        </Grid>
-                        <Grid item>
-                            <Button
-                                variant="contained"
-                                disabled={!applyButtonEnabled()}
-                                onClick={() => {
-                                    applyQueryParams()
-                                    props.close()
-                                }}
-                            >
-                                <Typography style={{ textTransform: "none" }}>
-                                    Save
-                                </Typography>
-                            </Button>
-                        </Grid>
+                    </React.Fragment>
+            }
+            <Grid item xs={12}
+                style={{
+                    position: "sticky",
+                    bottom: 0
+                }}
+            >
+                <Grid container spacing={1} justifyContent="right">
+                    <Grid item>
+                        <Button variant="contained" onClick={props.close}>
+                            <Typography style={{ textTransform: "none" }}>
+                                Close
+                            </Typography>
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <Button
+                            variant="contained"
+                            disabled={!applyButtonEnabled()}
+                            onClick={() => {
+                                applyQueryParams()
+                                props.close()
+                            }}
+                        >
+                            <Typography style={{ textTransform: "none" }}>
+                                Save
+                            </Typography>
+                        </Button>
                     </Grid>
                 </Grid>
             </Grid>
-        </div>
+        </Grid>
     )
 }
 
