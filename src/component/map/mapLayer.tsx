@@ -4,9 +4,10 @@ import {
   DEFAULT_MAP_SETTING, DEFAULT_VIEW_STATE
 } from "@/util/config";
 import "mapbox-gl/dist/mapbox-gl.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactMap, {
-  FullscreenControl, NavigationControl
+  FullscreenControl,
+  NavigationControl
 } from "react-map-gl";
 import SatelliteLayer from "./satelliteLayer";
 
@@ -22,9 +23,18 @@ type Props = {
 const MapLayer: React.FC<Props> = (props) => {
   const { coordinates } = props
   const [viewState, setViewState] = useState(DEFAULT_VIEW_STATE);
-
+  useEffect(() => {
+    if (coordinates.length > 0) {
+      setViewState({
+        ...viewState,
+        latitude: coordinates[0].lat,
+        longitude: coordinates[0].lon
+      })
+    }
+  }, [coordinates])
   return (
     <ReactMap
+      reuseMaps
       style={props.style}
       {...viewState}
       {...DEFAULT_MAP_SETTING}

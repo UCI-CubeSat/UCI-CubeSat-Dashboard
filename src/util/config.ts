@@ -21,7 +21,7 @@ export const TAB_CONFIG = [
   },
 ];
 
-export const DEFAULT_ZOOM = 8;
+export const DEFAULT_ZOOM = 0.5;
 export const DEFAULT_LATITUDE = 33.6405;
 export const DEFAULT_LONGITUDE = -117.8443;
 export const DEFAULT_CURSOR = {
