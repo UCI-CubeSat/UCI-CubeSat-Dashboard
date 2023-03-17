@@ -1,4 +1,4 @@
-import { Route, Switch } from "wouter";
+import { Route, Routes } from "react-router-dom";
 import AuthWall from "../AuthWall/AuthWall";
 import Dashboard from "../Dashboard/Dashboard";
 import { appBarHeight } from "../Header/HeaderUtils";
@@ -12,13 +12,13 @@ export default function Body() {
                 backgroundColor: "#d6d3d1"
             }}
         >
-            <Switch>
-                <Route path="">
+            <Routes>
+                <Route path="" element={
                     <AuthWall>
                         <Dashboard />
                     </AuthWall>
-                </Route>
-            </Switch>
+                } />
+            </Routes>
         </div>
     )
 }

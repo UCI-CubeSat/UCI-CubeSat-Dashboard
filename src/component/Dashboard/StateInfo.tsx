@@ -27,7 +27,7 @@ type Props = {
 
 const obcStates = { "FAILED": 0, "DEGRADED": 1, "OPERATIONAL": 2 } as const
 const operationStates = { "LOW_POWER": 0, "ANTENNA_DEPLOYED": 1, "HELLO_WORLD": 2, "IDLE": 3 } as const
-const satEventHistoryStates = { "BATTERY_CHARGED": 0, "ANTENNA_DEPLOYED": 1, "INITIAL_FLASH": 2, "NULL": 3 } as const
+const satEventHistoryStates = { "BATTERY_CHARGED": 3, "ANTENNA_DEPLOYED": 1, "INITIAL_FLASH": 2, "NULL": 0 } as const
 
 
 
@@ -45,7 +45,7 @@ export default function StateInfo(props: Props) {
                 variant="h4"
                 gutterBottom
             >
-                StateInfo
+                State Information
             </Typography>
 
             <TabSection
@@ -62,7 +62,7 @@ export default function StateInfo(props: Props) {
                         label: "Error Count",
                         component: (
                             <TimeSeriesGraph
-                                scatterPlotMargin={{ left: 30, top: 10 }}
+                                scatterPlotMargin={{ left: 0, top: 10 }}
                                 title="Error Count"
                                 style={{
                                     height: "400px",
@@ -85,7 +85,7 @@ export default function StateInfo(props: Props) {
                         label: "OBC",
                         component: (
                             <TimeSeriesGraphDiscrete
-                                scatterPlotMargin={{ left: 30, top: 10 }}
+                                scatterPlotMargin={{ left: 40, top: 10 }}
                                 title="OBC"
                                 style={{
                                     height: "400px",
@@ -142,7 +142,7 @@ export default function StateInfo(props: Props) {
                         label: "SAT Event History",
                         component: (
                             <TimeSeriesGraphDiscrete
-                                scatterPlotMargin={{ left: 30, top: 10 }}
+                                scatterPlotMargin={{ left: 20, top: 20 }}
                                 title="OBC"
                                 style={{
                                     height: "400px",
@@ -155,14 +155,14 @@ export default function StateInfo(props: Props) {
                                     {
                                         name: "StateInfo",
                                         color: "#FC8955",
-                                        data: logs.map(log => ({ time: log.timestamp, value: log.satEventHistory === null ? 3 : satEventHistoryStates[log.satEventHistory] }))
+                                        data: logs.map(log => ({ time: log.timestamp, value: log.satEventHistory === null ? 0 : satEventHistoryStates[log.satEventHistory] }))
                                     }
                                 ]}
                                 labelMapping={{
-                                    3: "Null",
+                                    0: "Null",
                                     2: "Initial Flash",
                                     1: "Antenna Deployed",
-                                    0: "Battery Charged"
+                                    3: "Battery Charged"
                                 } as const}
                             />
                         )
@@ -174,7 +174,7 @@ export default function StateInfo(props: Props) {
                                 id="StateInfo"
                                 tableHeaders={StateInfoHeaders}
                                 data={logs}
-                                style={{ maxHeight: "400px" }}
+                                style={{ height: "400px", }}
                             />
                         )
                     }

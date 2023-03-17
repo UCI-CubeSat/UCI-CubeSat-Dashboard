@@ -215,9 +215,6 @@ export default function Battery(props: BatteryProps) {
                                     data={logs}
                                     style={{
                                         height: "400px",
-                                        width: "100%",
-                                        backgroundColor: "white",
-                                        borderRadius: "5px"
                                     }}
                                 />
                             )

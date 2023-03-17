@@ -1,7 +1,7 @@
 import { authAtom } from "@/store";
 import { useAtom } from "jotai";
 import { ReactElement } from "react";
-import { Redirect } from "wouter";
+import { redirect } from "react-router";
 
 type Props = {
     children: ReactElement<any, any>
@@ -13,6 +13,7 @@ export default function AuthWall(props: Props) {
         return props.children
     }
     else {
-        return <Redirect to='/400' />
+        redirect('/400')
+        return null
     }
 }

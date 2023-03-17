@@ -78,7 +78,6 @@ export default function TimeSeriesGraph(props: Props) {
                             domain={min !== undefined && max !== undefined ? [min, max] : undefined} />
                         <Tooltip<string | number, string>
                             formatter={(value, name, props) => {
-                                console.log(name)
                                 if (name === "Time") {
 
                                     return [transformNumberToDate(value), name]

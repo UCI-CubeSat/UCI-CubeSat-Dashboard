@@ -1,5 +1,5 @@
 /* eslint-disable*/
-import sateliteImage from '@/assets/icon.png';
+import sateliteImage from '@/assets/icon.svg';
 import { Point } from '@/model/point';
 import React from 'react';
 import { Layer, Marker, Source } from 'react-map-gl';
@@ -7,21 +7,27 @@ type Props = {
   coordinates: Array<Point>,
 }
 
-const NUM_POINTS_ON_MAP = 20
-
 const SatelliteLayer: React.FC<Props> = (props) => {
   const { coordinates } = props
-
   return (
     <React.Fragment >
       {coordinates.length > 0
         ?
-        <Marker
-          latitude={coordinates[0].lat}
-          longitude={coordinates[0].lon}
-        >
-          <img src={sateliteImage} style={{ width: '50px' }} />
-        </Marker>
+        <React.Fragment>
+          <Marker
+            latitude={coordinates[0].lat}
+            longitude={coordinates[0].lon}
+
+          >
+            <img src={sateliteImage} style={{ width: '50px' }} />
+          </Marker>
+          <Marker
+            latitude={coordinates[coordinates.length - 1].lat}
+            longitude={coordinates[coordinates.length - 1].lon}
+
+          />
+        </React.Fragment>
+
         :
         null}
       <Source
@@ -32,7 +38,7 @@ const SatelliteLayer: React.FC<Props> = (props) => {
           id: `satelite-path`,
           geometry: {
             type: 'LineString',
-            coordinates: coordinates.slice(0, NUM_POINTS_ON_MAP).map(({ lat, lon }) => [lat, lon])
+            coordinates: coordinates.map(({ lat, lon }) => [lon, lat])
           }
         }}
       >
@@ -46,7 +52,7 @@ const SatelliteLayer: React.FC<Props> = (props) => {
           paint={
             {
               'line-color': '#888',
-              'line-width': 8
+              'line-width': 1
             }
           } />
       </Source>
