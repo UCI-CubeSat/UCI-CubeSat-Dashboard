@@ -1,5 +1,6 @@
 import { ParsedLogValidator } from "@/model/log";
 import { env } from "@/service/env";
+import { extractError } from "@/util/errorHandling";
 import { z } from "zod";
 type PostTimeRangeRequestBody = {
   // Both start and end are positive numbers where end is after start
@@ -23,8 +24,13 @@ export const satellitesByTimeRange = async ({ start, end }: PostTimeRangeRequest
         "accept": "application/json",
       },
     });
-  const data = await fetchResponse.json();
-  return { type: "timeRange" as const, ...PostTimeRangeResponseBodyValidator.parse(data) }
+  if (fetchResponse.ok) {
+    const data = await fetchResponse.json();
+    return { type: "timeRange" as const, ...PostTimeRangeResponseBodyValidator.parse(data) }
+  }
+  else {
+    await extractError(fetchResponse)
+  }
 };
 
 type PostOffetRequestBody = {
@@ -47,6 +53,11 @@ export const satellitesByOffset = async (body: PostOffetRequestBody) => {
         "accept": "application/json",
       },
     });
-  const data = await fetchResponse.json();
-  return { type: "offset" as const, ...PostOffsetResponseBodyValidator.parse(data) }
+  if (fetchResponse.ok) {
+    const data = await fetchResponse.json();
+    return { type: "offset" as const, ...PostOffsetResponseBodyValidator.parse(data) }
+  }
+  else {
+    await extractError(fetchResponse)
+  }
 }

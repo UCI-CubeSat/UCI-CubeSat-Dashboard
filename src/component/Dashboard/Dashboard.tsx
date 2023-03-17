@@ -1,6 +1,9 @@
 import { satellitesByOffset, satellitesByTimeRange } from '@/api/satetllite'
+import { errorAtom, loadingAtom } from '@/store'
+import { GenericErrorClass } from '@/util/errorHandling'
 import { encodeGetParams, getQueryParamsGivenSearch } from '@/util/queryParams'
 import { Grid } from '@mui/material'
+import { useAtom } from 'jotai'
 import { isEqual } from 'lodash'
 import React, { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
@@ -24,7 +27,6 @@ const DEFAULT_QUERY_PARAMS: DashboardQueryParam = {
 
 export default function Dashboard() {
     const location = useLocation()
-    console.log(window.location.href)
     const navigate = useNavigate();
     const [queryParams, setQueryParams] = useState<DashboardQueryParam | null>(null)
 
@@ -53,9 +55,18 @@ type DashboardContentProps = {
     queryParams: DashboardQueryParam
 }
 const DashboardContent = (props: DashboardContentProps) => {
-
+    const setLoading = useAtom(loadingAtom)[1]
+    const setError = useAtom(errorAtom)[1]
     const response = useQuery({
-        queryKey: ['satellite', 'logs', props.queryParams],
+        queryKey: [
+            'satellite',
+            'logs',
+            props.queryParams.mode,
+            props.queryParams.mode === "timeRange" ? props.queryParams.start : null,
+            props.queryParams.mode === "timeRange" ? props.queryParams.end : null,
+            props.queryParams.mode === "offset" ? props.queryParams.pageNo : null,
+            props.queryParams.mode === "offset" ? props.queryParams.count : null
+        ],
         queryFn: async () => {
             if (props.queryParams.mode === "offset") {
                 return await satellitesByOffset({ pageNo: props.queryParams.pageNo, count: props.queryParams.count })
@@ -64,46 +75,77 @@ const DashboardContent = (props: DashboardContentProps) => {
                 return await satellitesByTimeRange({ start: props.queryParams.start, end: props.queryParams.end })
             }
         },
+        onError: (error) => {
+            if (error instanceof GenericErrorClass) {
+                setError(error.message)
+            }
+            else if (error instanceof ZodError) {
+                setError("The payload received failed validation")
+            }
+            else if (error instanceof Error) {
+                setError(error.message)
+            }
+            else {
+                setError(`Unknown error occured: ${error}`)
+            }
+        },
         retry: false,
         staleTime: FIVE_MINUTES_IN_MS,
-        cacheTime: 0
+        cacheTime: 0,
+        keepPreviousData: true
     })
-    const logs = response.data?.logs ?? []
+
+    if (response.isFetching) {
+        setLoading(true)
+    }
+    else {
+        setLoading(false)
+    }
+
+
+    const logs = response.data?.logs
     const numLogsAfter = response.data?.type === "offset" ? response.data.numLogsAfter : null
     const numLogsBefore = response.data?.type === "offset" ? response.data.numLogsBefore : null
     return (
-        <Grid container>
-            <Grid item xs={12}>
-                <Filter
-                    queryParams={props.queryParams}
-                    numLogsAfter={numLogsAfter}
-                    numLogsBefore={numLogsBefore}
-                />
-            </Grid>
+        <Grid
+            container
+            style={{
+                paddingBottom: "16px",
+                paddingRight: "16px",
+                paddingLeft: "16px",
+                paddingTop: "16px"
+            }}
+        >
             {
-                response.isLoading ? <span>Loading...</span> :
-                    response.isError ?
-                        <span>{response.error instanceof ZodError ? "There was an issue validating the data" : "There was an error in fetching data"}</span>
-                        :
-                        (
-                            <React.Fragment>
-                                <Grid item lg={6} xs={12}>
-                                    <Location logs={logs} />
-                                </Grid>
-                                <Grid item lg={6} xs={12}>
-                                    <Panel logs={logs} />
-                                </Grid>
-                                <Grid item lg={6} xs={12}>
-                                    <Battery logs={logs} />
-                                </Grid>
-                                <Grid item lg={6} xs={12}>
-                                    <Temperature logs={logs} />
-                                </Grid>
-                                <Grid item lg={6} xs={12}>
-                                    <StateInfo logs={logs} />
-                                </Grid>
-                            </React.Fragment>
-                        )}
+                logs ?
+
+                    (
+                        <React.Fragment>
+                            <Grid item xs={12}>
+                                <Filter
+                                    queryParams={props.queryParams}
+                                    numLogsAfter={numLogsAfter}
+                                    numLogsBefore={numLogsBefore}
+                                />
+                            </Grid>
+                            <Grid item lg={6} xs={12}>
+                                <Location logs={logs} />
+                            </Grid>
+                            <Grid item lg={6} xs={12}>
+                                <Panel logs={logs} />
+                            </Grid>
+                            <Grid item lg={6} xs={12}>
+                                <Battery logs={logs} />
+                            </Grid>
+                            <Grid item lg={6} xs={12}>
+                                <Temperature logs={logs} />
+                            </Grid>
+                            <Grid item lg={6} xs={12}>
+                                <StateInfo logs={logs} />
+                            </Grid>
+                        </React.Fragment>
+                    )
+                    : null}
         </Grid>
     )
 }
