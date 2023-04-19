@@ -1,4 +1,4 @@
-import { ParsedLog } from "@/model/log"
+import { Log } from "@/model/log"
 import { transformNumberToDate } from "@/util/transform"
 import { Typography } from "@mui/material"
 import TabSection from "../TabSection/TabSection"
@@ -17,7 +17,7 @@ const TemperatureHeaders = {
 } as const
 
 type Props = {
-    logs: Array<ParsedLog>
+    logs: Array<Log>
 }
 // This component should show themistor1, themistor2, themistor3, and themistor4
 export default function Temperature(props: Props) {

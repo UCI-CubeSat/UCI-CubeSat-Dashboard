@@ -1,4 +1,4 @@
-import { ParsedLog } from "@/model/log"
+import { Log } from "@/model/log"
 import { transformNumberToDate } from "@/util/transform"
 import { Typography } from "@mui/material"
 import TabSection from "../TabSection/TabSection"
@@ -15,7 +15,7 @@ const PanelHeaders = {
 } as const
 
 type Props = {
-    logs: Array<ParsedLog>
+    logs: Array<Log>
 }
 // This component should show panelVoltage and panelCurrent
 export default function Panel(props: Props) {

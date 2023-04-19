@@ -1,4 +1,4 @@
-import { ParsedLog } from "@/model/log"
+import { Log } from "@/model/log"
 import { transformNumberToDate } from "@/util/transform"
 import { Typography } from "@mui/material"
 import TabSection from "../TabSection/TabSection"
@@ -17,12 +17,8 @@ const StateInfoHeaders = {
     satEventHistory: { title: "SAT Event History" }
 } as const
 
-const OBCHeaders = {
-    obc: { title: "OBC" }
-} as const
-
 type Props = {
-    logs: Array<ParsedLog>
+    logs: Array<Log>
 }
 
 const obcStates = { "FAILED": 0, "DEGRADED": 1, "OPERATIONAL": 2 } as const

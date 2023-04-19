@@ -1,4 +1,4 @@
-import { ParsedLog } from "@/model/log"
+import { Log } from "@/model/log"
 import { transformNumberToDate } from "@/util/transform"
 import { Typography } from '@mui/material'
 import TabSection from "../TabSection/TabSection"
@@ -18,7 +18,7 @@ const MapHeaders = {
 
 
 type Props = {
-    logs: Array<ParsedLog>
+    logs: Array<Log>
 }
 // This component should show lat, lon, and alt
 export default function Location(props: Props) {

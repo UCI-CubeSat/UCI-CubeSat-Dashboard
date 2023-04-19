@@ -1,4 +1,4 @@
-import { ParsedLog } from "@/model/log"
+import { Log } from "@/model/log"
 import { transformNumberToDate } from "@/util/transform"
 import { Box, Typography } from "@mui/material"
 import * as React from 'react'
@@ -24,14 +24,14 @@ const BatteryHeaders = {
 
 // This type defines the props for the Battery component.
 type TabPanelProps = {
-    logs: Array<ParsedLog>,
+    logs: Array<Log>,
     children?: React.ReactNode,
     index: number,
     value: number
 };
 
 type BatteryProps = {
-    logs: Array<ParsedLog>,
+    logs: Array<Log>,
 }
 
 // This function returns the accessibility properties for the specified tab index.

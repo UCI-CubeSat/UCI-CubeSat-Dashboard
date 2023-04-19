@@ -1,4 +1,4 @@
-import { ParsedLogValidator } from "@/model/log";
+import { Log } from "@/model/log";
 import { env } from "@/service/env";
 import { extractError } from "@/util/errorHandling";
 import { z } from "zod";
@@ -8,7 +8,7 @@ type PostTimeRangeRequestBody = {
   end: number
 }
 const PostTimeRangeResponseBodyValidator = z.object({
-  logs: z.array(ParsedLogValidator)
+  logs: z.array(z.unknown())
 })
 
 export const satellitesByTimeRange = async ({ start, end }: PostTimeRangeRequestBody) => {
@@ -26,7 +26,8 @@ export const satellitesByTimeRange = async ({ start, end }: PostTimeRangeRequest
     });
   if (fetchResponse.ok) {
     const data = await fetchResponse.json();
-    return { type: "timeRange" as const, ...PostTimeRangeResponseBodyValidator.parse(data) }
+    const response = PostTimeRangeResponseBodyValidator.parse(data)
+    return { type: "timeRange" as const, logs: response.logs as Log[] }
   }
   else {
     await extractError(fetchResponse)
@@ -38,7 +39,7 @@ type PostOffetRequestBody = {
   count: number,
 }
 const PostOffsetResponseBodyValidator = z.object({
-  logs: z.array(ParsedLogValidator),
+  logs: z.array(z.unknown()),
   numLogsBefore: z.number(),
   numLogsAfter: z.number()
 })
@@ -55,7 +56,13 @@ export const satellitesByOffset = async (body: PostOffetRequestBody) => {
     });
   if (fetchResponse.ok) {
     const data = await fetchResponse.json();
-    return { type: "offset" as const, ...PostOffsetResponseBodyValidator.parse(data) }
+    const response = PostOffsetResponseBodyValidator.parse(data)
+    return {
+      type: "offset" as const,
+      logs: response.logs as Log[],
+      numLogsAfter: response.numLogsAfter,
+      numLogsBefore: response.numLogsBefore
+    }
   }
   else {
     await extractError(fetchResponse)
