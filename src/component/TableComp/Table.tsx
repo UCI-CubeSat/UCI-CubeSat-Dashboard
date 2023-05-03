@@ -1,5 +1,5 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 
 type BaseHeader = {
@@ -32,6 +32,10 @@ export default function TableComp<T extends BaseHeader>(props: Props<T>) {
     ) => {
         setPage(newPage);
     };
+
+    useEffect(() => {
+        setPage(0)
+    }, [data])
 
     return (
         <TableContainer component={Paper} style={style}>

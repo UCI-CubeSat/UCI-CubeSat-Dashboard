@@ -9,7 +9,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 import DateTimeField from '../Form/DateTimeField';
-const TEN_DAYS_IN_MS = 8.64e+8
+const TEN_DAYS_IN_SECONDS = 864000
 
 export const DashboardQueryParamValidator = z.discriminatedUnion("mode", [
     z.object({
@@ -136,11 +136,11 @@ function FilterForm(props: { queryParams: DashboardQueryParam, close: () => void
     const [countString, setCountString] = useState(`${props.queryParams.mode === "offset" ? props.queryParams.count : 40}`)
     const [count, setCount] = useState<number | null>(props.queryParams.mode === "offset" ? props.queryParams.count : 40)
     const [startDateTime, setStartDateTime] = useState<moment.Moment | null>(props.queryParams.mode === "timeRange"
-        ? moment.unix(Math.floor(props.queryParams.start / 1000))
-        : moment.unix(Math.floor((Date.now() - TEN_DAYS_IN_MS) / 1000))
+        ? moment.unix(Math.floor(props.queryParams.start))
+        : moment.unix(Math.floor((Date.now() / 1000 - TEN_DAYS_IN_SECONDS)))
     )
     const [endDateTime, setEndDateTime] = useState<moment.Moment | null>(props.queryParams.mode === "timeRange"
-        ? moment.unix(Math.floor(props.queryParams.end / 1000))
+        ? moment.unix(Math.floor(props.queryParams.end))
         : moment.unix(Math.floor(Date.now() / 1000))
     )
 
@@ -161,8 +161,8 @@ function FilterForm(props: { queryParams: DashboardQueryParam, close: () => void
             else {
                 return {
                     mode,
-                    start: startDateTime.unix() * 1000,
-                    end: endDateTime.unix() * 1000
+                    start: startDateTime.unix(),
+                    end: endDateTime.unix()
                 }
             }
         }
