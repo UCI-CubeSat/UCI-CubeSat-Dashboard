@@ -1,33 +1,7 @@
-export const TAB_CONFIG = [
-  {
-    name: "landing page",
-    label: "Landing",
-    index: 1,
-  },
-  {
-    name: "tracker",
-    label: "Live Satellite Tracker",
-    index: 2,
-  },
-  {
-    name: "dashboard",
-    label: "Mission Control",
-    index: 3,
-  },
-  {
-    name: "email",
-    label: "Email Signup",
-    index: 4,
-  },
-];
-
 export const DEFAULT_ZOOM = 0.5;
 export const DEFAULT_LATITUDE = 33.6405;
 export const DEFAULT_LONGITUDE = -117.8443;
-export const DEFAULT_CURSOR = {
-  lat: DEFAULT_LATITUDE,
-  lng: DEFAULT_LONGITUDE,
-};
+
 export const DEFAULT_VIEW_STATE = {
   latitude: DEFAULT_LATITUDE,
   longitude: DEFAULT_LONGITUDE,
