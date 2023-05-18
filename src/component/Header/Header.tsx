@@ -1,4 +1,4 @@
-import { errorAtom, } from "@/store";
+import { errorAtom, userAtom, } from "@/store";
 import { Alert, LinearProgress, Snackbar } from "@mui/material";
 import { useAtom } from "jotai";
 import React from "react";
@@ -8,7 +8,9 @@ import { appBarHeight } from "./HeaderUtils";
 
 export default function Header() {
     const [error, setError] = useAtom(errorAtom)
+    const [user, setUser] = useAtom(userAtom)
     const isFetching = useIsFetching()
+    
     return (
         <React.Fragment>
             {
@@ -33,16 +35,13 @@ export default function Header() {
             </Snackbar>
             <div
                 style={{
-                    width: "100vw",
                     height: appBarHeight,
                     backgroundColor: "#4f46e5",
-                    display: "flex"
+                    display: "flex",
+                    justifyContent: "space-between",
                 }}
             >
                 <div
-                    style={{
-                        flexGrow: "1"
-                    }}
                 >
                     <Logo style={{
                         height: "100%",
@@ -50,6 +49,32 @@ export default function Header() {
                         objectFit: "cover",
                         padding: "8px"
                     }} />
+                </div>
+                <div
+                    style={{
+                        display: "flex",
+                        alignItems: "center",
+                        height: "75%",
+                        width: "150px",
+                        background: "LightSeaGreen",
+                        borderRadius: "5px",
+                        margin: "3px",
+                        alignSelf: "center",
+                        gap: ".5em",
+                        marginRight: "1em",
+                    }}
+                >
+                    <input
+                        type="checkbox"
+                        defaultChecked={user?.hasNotifs}
+                        onChange={e => setUser(prev => ({
+                            email: prev?.email ?? '',
+                            hasNotifs: e.target.checked
+                        }))}
+                    />
+                    <p style={{ fontSize: ".8em" }}>
+                        Subscribe to Email Notifications
+                    </p>
                 </div>
             </div>
         </React.Fragment>
