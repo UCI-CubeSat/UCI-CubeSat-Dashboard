@@ -62,6 +62,7 @@ export default function Header() {
             left: 0,
             width: "100vw",
             color: "#27272a",
+            zIndex: 30,
           }}
         >
           <LinearProgress color="inherit" />

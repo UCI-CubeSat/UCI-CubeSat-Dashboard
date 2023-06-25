@@ -5,9 +5,7 @@ export const getToken = async (tempId: string) => {
   const fetchResponse = await fetch(
     `${env.REACT_APP_SERVER_URL}/auth/get_token`,
     {
-      mode: "cors",
       method: "POST",
-      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
